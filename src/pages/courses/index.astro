@@ -1,0 +1,162 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Курсы">
+  <h1>Наши курсы</h1>
+  <p>Выберите подходящее направление и запишитесь на занятие.</p>
+
+  <section>
+    <h2>Детям</h2>
+    <div class="courses-grid">
+      <a href="/courses/accompaniment" class="course-card">
+        <h3>Сопровождение в обучении</h3>
+        <div class="course-meta">
+          <span>до 2 часов</span>
+          <span>от 1500 ₽</span>
+        </div>
+        <p class="course-description">Индивидуальное или групповое сопровождение по типу коворкинга для детей с особенностями эмоционально-волевой сферы.</p>
+      </a>
+      <a href="/courses/tutoring" class="course-card">
+        <h3>Репетиторство</h3>
+        <div class="course-meta">
+          <span>30-45 минут</span>
+          <span>от 1200 ₽</span>
+        </div>
+        <p class="course-description">Репетиторство по школьным предметам, подготовка к школе. Программы 7, 8, 9 вида.</p>
+      </a>
+      <a href="/courses/creative-workshops" class="course-card">
+        <h3>Творческие мастерские</h3>
+        <div class="course-meta">
+          <span>30-60 минут</span>
+          <span>от 1000 ₽</span>
+        </div>
+        <p class="course-description">Художественная мастерская, анимация, кулинарная мастерская, лепка, рисование, аппликация.</p>
+      </a>
+      <a href="/courses/support-groups" class="course-card">
+        <h3>Группы общения и поддержки</h3>
+        <div class="course-meta">
+          <span>60 минут</span>
+          <span>1000 ₽</span>
+        </div>
+        <p class="course-description">Группы общения для всех возрастов. Выбираем темы вместе с участниками.</p>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Подросткам</h2>
+    <div class="courses-grid">
+      <a href="/courses/social-training" class="course-card">
+        <h3>Тренинг социальных навыков</h3>
+        <div class="course-meta">
+          <span>60 минут</span>
+          <span>от 1000 ₽</span>
+        </div>
+        <p class="course-description">По социальным историям (видео, комиксы и тексты), отыгрываем в сценках, обсуждаем.</p>
+      </a>
+      <a href="/courses/reading-club" class="course-card">
+        <h3>Читательский клуб</h3>
+        <div class="course-meta">
+          <span>40 минут</span>
+          <span>от 1100 ₽</span>
+        </div>
+        <p class="course-description">Совместное чтение и обсуждение книг. Возможна индивидуальная тренировка чтения.</p>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Взрослым</h2>
+    <div class="courses-grid">
+      <a href="/courses/support-groups" class="course-card">
+        <h3>Группы поддержки</h3>
+        <div class="course-meta">
+          <span>60 минут</span>
+          <span>от 1000 ₽</span>
+        </div>
+        <p class="course-description">Общая группа поддержки, для пользователей АДК, для людей с опытом эмиграции, коворкинг.</p>
+      </a>
+      <a href="/courses/peer-consulting" class="course-card">
+        <h3>Равное консультирование</h3>
+        <div class="course-meta">
+          <span>по договорённости</span>
+          <span>донат от 500 ₽</span>
+        </div>
+        <p class="course-description">Свободная беседа с педагогами про свои интересы, сложности и жизнь.</p>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Специалистам</h2>
+    <div class="courses-grid">
+      <a href="/join" class="course-card">
+        <h3>Обмен опытом</h3>
+        <div class="course-meta">
+          <span>созвон или текст</span>
+          <span>донат</span>
+        </div>
+        <p class="course-description">Обмен опытом с педагогами. Созвон или текст.</p>
+      </a>
+      <a href="/join" class="course-card">
+        <h3>Стажировка</h3>
+        <div class="course-meta">
+          <span>1 месяц</span>
+          <span>8000 ₽</span>
+        </div>
+        <p class="course-description">Посещение занятий, проведение своих. Любое количество в течение месяца.</p>
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  section {
+    margin-bottom: 3rem;
+  }
+
+  h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .course-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+
+  .course-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-color: #0066cc;
+  }
+
+  .course-card h3 {
+    margin-bottom: 0.75rem;
+    color: #333;
+  }
+
+  .course-meta {
+    display: flex;
+    gap: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .course-description {
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+</style>

@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'sonya' } },
+    { params: { slug: 'sasha' } },
+  ];
+}
+
+const { slug } = Astro.params;
+const [teacher] = await getCollection('teachers', t => t.id.includes(slug));
+const { Content } = await render(teacher);
+---
+
+<BaseLayout title={teacher?.data.name || 'Педагог'}>
+  <a href="/teachers">&larr; Все педагоги</a>
+
+  {teacher && (
+    <>
+      <h1>{teacher.data.name}</h1>
+      <p>Языки: {teacher.data.languages?.join(', ')}</p>
+      <p>Опыт: {teacher.data.totalExperience}</p>
+
+      {teacher.data.education && <div set:html={teacher.data.education} />}
+
+      {teacher.data.areasOfWork?.length > 0 && (
+        <>
+          <h2>Сферы работы</h2>
+          <ul>
+            {teacher.data.areasOfWork.map((area: string) => (
+              <li>{area}</li>
+            ))}
+          </ul>
+        </>
+      )}
+
+      {teacher.data.consultingTopics?.length > 0 && (
+        <>
+          <h2>Темы равного консультирования</h2>
+          <ul>
+            {teacher.data.consultingTopics.map((topic: string) => (
+              <li>{topic}</li>
+            ))}
+          </ul>
+        </>
+      )}
+
+      <Content />
+    </>
+  )}
+
+  <a href="/contacts">Записаться на занятие</a>
+</BaseLayout>

@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'accompaniment' } },
+    { params: { slug: 'tutoring' } },
+    { params: { slug: 'support-groups' } },
+    { params: { slug: 'creative-workshops' } },
+    { params: { slug: 'social-training' } },
+    { params: { slug: 'reading-club' } },
+    { params: { slug: 'peer-consulting' } },
+  ];
+}
+---
+
+<BaseLayout title="Курс">
+  <a href="/courses">&larr; Все курсы</a>
+  <h1>Сопровождение в обучении</h1>
+  <p>Цена: от 1500 ₽ / 7000 ֏</p>
+  <p>Длительность: до 2 часов</p>
+  <a href="/contacts">Записаться</a>
+</BaseLayout>

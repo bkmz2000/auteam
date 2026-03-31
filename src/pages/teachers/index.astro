@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const teachers = await getCollection('teachers');
+---
+
+<BaseLayout title="Педагоги">
+  <h1>Наши педагоги</h1>
+  <p>Выберите педагога, чтобы узнать подробнее о его опыте.</p>
+
+  <div class="teachers-grid">
+    {teachers.map((teacher) => (
+      <a href={`/teachers/${teacher.data.slug}`} class="teacher-card">
+        <h2>{teacher.data.name}</h2>
+        <p>{teacher.data.languages?.join(', ')}</p>
+        <p>{teacher.data.totalExperience}</p>
+      </a>
+    ))}
+  </div>
+</BaseLayout>

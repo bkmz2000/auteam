@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Контакты">
+  <h1>Контакты</h1>
+
+  <section>
+    <h2>Свяжитесь с нами</h2>
+    <p>Если у вас есть вопросы, предложения или вы хотите записаться на занятие — пишите нам!</p>
+    
+    <div class="contact-methods">
+      <div class="contact-item">
+        <h3>Email</h3>
+        <p><a href="mailto:info@neurootlichnie.example">info@neurootlichnie.example</a></p>
+      </div>
+      
+      <div class="contact-item">
+        <h3>WhatsApp</h3>
+        <p><a href="https://wa.me/1234567890">+1 234 567 890</a></p>
+      </div>
+      
+      <div class="contact-item">
+        <h3>Telegram</h3>
+        <p><a href="https://t.me/neurootlichnie">@neurootlichnie</a></p>
+      </div>
+      
+      <div class="contact-item">
+        <h3>VK</h3>
+        <p><a href="https://vk.com/neurootlichnie">vk.com/neurootlichnie</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Задать вопрос</h2>
+    <p>У вас есть вопросы о занятиях, педагогах или оплате? Напишите нам!</p>
+    <a href="https://forms.gle/questionnaire" class="button">Задать вопрос</a>
+  </section>
+
+  <section>
+    <h2>Пробное занятие</h2>
+    <p>Хотите познакомиться с педагогом перед началом занятий? Запишитесь на пробное занятие или встречу-знакомство.</p>
+    <a href="https://forms.gle/trial" class="button">Записаться на пробное</a>
+  </section>
+
+  <section>
+    <h2>Хочу в команду</h2>
+    <p>Мы всегда рады новым педагогам! Если вы нейроотличный человек или близкий друг/родственник нейроотличного, у вас есть релевантный опыт и желание работать онлайн — присоединяйтесь!</p>
+    <a href="/join" class="button">Подробнее о вакансиях</a>
+  </section>
+</BaseLayout>
+
+<style>
+  section {
+    margin-bottom: 3rem;
+  }
+
+  h2 {
+    margin-bottom: 1rem;
+  }
+
+  .contact-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+
+  .contact-item h3 {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-item p {
+    margin: 0;
+  }
+
+  .contact-item a {
+    color: #0066cc;
+    text-decoration: none;
+  }
+</style>

@@ -1,0 +1,127 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Платформа для нейроотличных детей, подростков, взрослых и их близких" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} | Нейроотличные нейроотличным</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/">Главная</a>
+        <a href="/about">О нас</a>
+        <a href="/courses">Курсы</a>
+        <a href="/teachers">Педагоги</a>
+        <a href="/materials">Материалы</a>
+        <a href="/news">Новости</a>
+        <a href="/feedback">Отзывы</a>
+        <a href="/join">Хочу в команду</a>
+        <a href="/contacts">Контакты</a>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <p>&copy; 2024 Нейроотличные нейроотличным</p>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  header {
+    background: #f5f5f5;
+    padding: 1rem;
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  nav a {
+    color: #333;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+  }
+
+  nav a:hover {
+    background: #e0e0e0;
+  }
+
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  footer {
+    background: #f5f5f5;
+    padding: 2rem;
+    text-align: center;
+    margin-top: 4rem;
+  }
+
+  h1, h2, h3 {
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
+  }
+
+  a {
+    color: #0066cc;
+  }
+
+  .button {
+    display: inline-block;
+    background: #0066cc;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-top: 1rem;
+  }
+
+  .button:hover {
+    background: #0052a3;
+  }
+</style>
