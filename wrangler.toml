@@ -1,7 +1,0 @@
-name = "auteam"
-compatibility_date = "2024-01-01"
-main = "dist/_worker.js"
-
-[vars]
-GITHUB_CLIENT_ID = "Ov23liNpduRuS16UCSXV"
-GITHUB_CLIENT_SECRET = "33b1de4dc6e5339ac9cf00857658b6ccabab72f7"
