@@ -24,3 +24,9 @@ pnpm-debug.log*
 .idea/
 auteam-fresh/wrangler.jsonc
 auteam-fresh/wrangler.toml
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
