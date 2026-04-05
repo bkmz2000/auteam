@@ -12,6 +12,9 @@
   ],
   "assets": {
     "binding": "ASSETS",
-    "directory": "dist"
+    "directory": "dist",
+    "cache_control": {
+      "max_age": 0
+    }
   }
 }

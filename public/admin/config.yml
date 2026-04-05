@@ -1,9 +1,6 @@
 backend:
-  name: github
-  repo: bkmz2000/auteam
+  name: git-gateway
   branch: main
-  base_url: "https://billowing-dawn-a92d.bkmz2000.workers.dev"
-  auth_endpoint: /api/auth
 
 media_folder: "src/assets/images"
 public_folder: "src/assets/images"
