@@ -1,7 +1,7 @@
 export const prerender = false;
 
 export async function GET({ request, env }: { request: Request; env: Env }) {
-  const client_id = env.GITHUB_CLIENT_ID;
+  const client_id = env?.GITHUB_CLIENT_ID || import.meta.env.GITHUB_CLIENT_ID;
   const url = new URL(request.url);
   const redirectUrl = new URL('https://github.com/login/oauth/authorize');
   redirectUrl.searchParams.set('client_id', client_id);
