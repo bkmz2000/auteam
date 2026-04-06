@@ -38,8 +38,8 @@ export default isLocal
       databaseAdapter: new RedisLevel<string, Record<string, any>>({
         redis: {
           // Try UPSTASH format first, then Vercel KV format
-          url: cleanEnv(process.env.UPSTASH_REDIS_REST_URL) || cleanEnv(process.env.KV_REST_API_URL) || cleanEnv(process.env.KV_URL),
-          token: cleanEnv(process.env.UPSTASH_REDIS_REST_TOKEN) || cleanEnv(process.env.KV_REST_API_TOKEN),
+          url: cleanEnv(process.env.UPSTASH_REDIS_REST_URL) || cleanEnv(process.env.KV_REST_API_URL) || cleanEnv(process.env.KV_URL) || "",
+          token: cleanEnv(process.env.UPSTASH_REDIS_REST_TOKEN) || cleanEnv(process.env.KV_REST_API_TOKEN) || "",
         },
         debug: process.env.DEBUG === "true" || false,
       }),
