@@ -21,7 +21,7 @@ if (!branch) {
 }
 
 // Helper to clean whitespace from env vars
-const cleanUrl = (url: string | undefined) => url?.trim() || undefined;
+const cleanUrl = (url: string | undefined): string | undefined => url?.trim() || undefined;
 
 export default isLocal
   ? createLocalDatabase()
@@ -34,8 +34,8 @@ export default isLocal
       }),
       databaseAdapter: new RedisLevel<string, Record<string, any>>({
         redis: {
-          url: cleanUrl(process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL),
-          token: process.env.UPSTASH_REDIS_REST_TOKEN?.trim() || process.env.KV_REST_API_TOKEN?.trim(),
+          url: (process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL || "").trim(),
+          token: (process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN || "").trim(),
         },
         debug: process.env.DEBUG === "true" || false,
       }),
