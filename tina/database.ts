@@ -20,8 +20,11 @@ if (!branch) {
   );
 }
 
-// Helper to clean whitespace from env vars
-const cleanUrl = (url: string | undefined): string | undefined => url?.trim() || undefined;
+// Helper to clean env vars - remove whitespace and newlines
+const cleanEnv = (val: string | undefined) => {
+  const cleaned = val?.replace(/\s/g, "").trim()
+  return cleaned && cleaned.length > 0 ? cleaned : undefined
+}
 
 export default isLocal
   ? createLocalDatabase()
@@ -34,8 +37,9 @@ export default isLocal
       }),
       databaseAdapter: new RedisLevel<string, Record<string, any>>({
         redis: {
-          url: (process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL || "").trim(),
-          token: (process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN || "").trim(),
+          // Try UPSTASH format first, then Vercel KV format
+          url: cleanEnv(process.env.UPSTASH_REDIS_REST_URL) || cleanEnv(process.env.KV_REST_API_URL) || cleanEnv(process.env.KV_URL),
+          token: cleanEnv(process.env.UPSTASH_REDIS_REST_TOKEN) || cleanEnv(process.env.KV_REST_API_TOKEN),
         },
         debug: process.env.DEBUG === "true" || false,
       }),
