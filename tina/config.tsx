@@ -1,7 +1,4 @@
-import {
-  UsernamePasswordAuthJSProvider,
-  TinaUserCollection,
-} from "tinacms-authjs/dist/tinacms";
+import { TinaUserCollection } from "tinacms-authjs/dist/tinacms";
 import { defineConfig, LocalAuthProvider } from "tinacms";
 
 import { PageCollection } from "./collections/page";
@@ -9,10 +6,13 @@ import { PageCollection } from "./collections/page";
 const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === "true";
 
 export default defineConfig({
-  authProvider: isLocal
-    ? new LocalAuthProvider()
-    : new UsernamePasswordAuthJSProvider(),
   contentApiUrlOverride: "/api/tina/gql",
+  clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID!,
+  admin: {
+    auth: {
+      useLocalAuth: isLocal,
+    },
+  },
   build: {
     publicFolder: "public",
     outputFolder: "admin",
