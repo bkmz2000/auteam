@@ -4,11 +4,10 @@ import databaseClient from "../../../tina/__generated__/databaseClient"
 
 const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === "true"
 
-const options = isLocal
-  ? {}
-  : {
-      secret: process.env.NEXTAUTH_SECRET,
-      providers: [],
-    }
-
-export default NextAuth(TinaAuthJSOptions({ databaseClient, ...options }))
+export default NextAuth(
+  TinaAuthJSOptions({
+    databaseClient,
+    secret: process.env.NEXTAUTH_SECRET,
+    ...(isLocal ? {} : { providers: [] }),
+  })
+)
