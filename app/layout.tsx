@@ -1,11 +1,9 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
+import { Layout } from "./components/Layout";
 
 export const metadata = {
-  title: "Self Hosted Tina App",
-  description: "A Next.js app with TinaCMS",
+  title: "Нейроотличные нейроотличным",
+  description: "Платформа для нейроотличных детей, подростков, взрослых и их близких в Армении",
 };
 
 export default function RootLayout({
@@ -14,8 +12,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="ru">
+      <body>
+        <Layout>{children}</Layout>
+      </body>
     </html>
   );
 }
