@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: bkmz2000/auteam
   branch: main
 
 media_folder: "src/assets/images"

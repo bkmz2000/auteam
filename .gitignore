@@ -31,3 +31,6 @@ auteam-fresh/wrangler.toml
 !.dev.vars.example
 !.env.example
 log.txt
+
+# Local Netlify folder
+.netlify
