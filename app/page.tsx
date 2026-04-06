@@ -1,6 +1,14 @@
 import Link from "next/link";
 import { client } from "../tina/__generated__/databaseClient";
 
+function formatCoursePrice(pricePerHour?: number, currency?: string): string {
+  if (!pricePerHour) return "по договорённости";
+  if (currency) {
+    return `${pricePerHour} ${currency}`;
+  }
+  return `от ${pricePerHour} рублей`;
+}
+
 export const dynamic = "force-dynamic";
 
 const categories = [
@@ -182,7 +190,7 @@ export default async function HomePage() {
                   {course.pricing?.pricePerHour && (
                     <div className="flex items-center justify-between">
                       <span className="text-lg font-bold text-gray-900">
-                        от {course.pricing.pricePerHour} {course.pricing.currency || "₽"}
+                        {formatCoursePrice(course.pricing.pricePerHour, course.pricing.currency)}
                       </span>
                       <Link
                         href="/contacts"

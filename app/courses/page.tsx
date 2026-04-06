@@ -3,6 +3,14 @@ import { client } from "../../tina/__generated__/databaseClient";
 
 export const dynamic = "force-dynamic";
 
+function formatPrice(pricePerHour?: number, currency?: string): string {
+  if (!pricePerHour) return "по договорённости";
+  if (currency) {
+    return `от ${pricePerHour} ${currency}`;
+  }
+  return `от ${pricePerHour} рублей`;
+}
+
 export default async function CoursesPage() {
   let courses: any[] = [];
   try {
@@ -16,7 +24,7 @@ export default async function CoursesPage() {
   const grouped = {
     "Детям": courses.filter((c) =>
       c.ageGroup?.toLowerCase().includes("дет") ||
-      c.format?.minAge < 12
+      (c.format?.minAge >= 5 && c.format?.maxAge <= 12)
     ),
     "Подросткам": courses.filter((c) =>
       c.ageGroup?.toLowerCase().includes("подрост") ||
@@ -28,42 +36,127 @@ export default async function CoursesPage() {
     ),
     "Специалистам": courses.filter((c) =>
       c.ageGroup?.toLowerCase().includes("специал") ||
-      c.name?.toLowerCase().includes("стажировк")
+      c.name?.toLowerCase().includes("стажировк") ||
+      c.name?.toLowerCase().includes("обмен")
     ),
   };
 
-  // Fallback: if no courses, show sample data
   const hasCourses = courses.length > 0;
 
+  // Sample courses with correct Russian pricing from reference document
   const ageGroups = [
     {
       key: "Детям",
       title: "Детям",
-      subtitle: "Занятия для детей от 5 до 10 лет",
+      subtitle: "Занятия для детей от 5 лет",
       icon: "🎈",
       color: "from-pink-400 to-rose-500",
       sampleCourses: [
-        { name: "Сопровождение в обучении", teacherName: "Соня", description: "Помощь ребёнку сосредоточиться и выполнить домашнюю программу", price: "от 1300 ₽", ageGroup: "5-12 лет" },
-        { name: "Репетиторство по школьным предметам", teacherName: "Соня", description: "Математика, русский, чтение, окружающий мир", price: "от 1200 ₽", ageGroup: "6-12 лет" },
-        { name: "Творческие мастерские", teacherName: "Соня", description: "Рисование, лепка, аппликация по образцу", price: "от 1000 ₽", ageGroup: "5-12 лет" },
-        { name: "Группы общения и поддержки", teacherName: "Соня", description: "Созвон, выбор тем вместе с участниками", price: "от 1000 ₽", ageGroup: "6-12 лет" },
-        { name: "Блоггинг", teacherName: "Соня", description: "Учимся рассказывать о себе через видео и тексты", price: "от 1000 ₽", ageGroup: "5-10 лет" },
-        { name: "Совместное чтение", teacherName: "Соня", description: "Читаем и обсуждаем книги в группе", price: "от 1100 ₽", ageGroup: "6-12 лет" },
+        {
+          name: "Сопровождение в обучении",
+          teacherName: "Соня",
+          description: "Помощь ребёнку сосредоточиться и выполнить домашнюю программу. Созвоны/активная поддержка в чате по времени, до двух часов.",
+          price: "1800 рублей / 8500 драмов",
+          priceNote: "в группе — 1300 рублей / 6000 драмов",
+          ageGroup: "5–18 лет",
+        },
+        {
+          name: "Репетиторство по школьным предметам",
+          teacherName: "Соня",
+          description: "Математика, русский, чтение, язык и речевая практика, речь и альтернативная коммуникация, окружающий мир, английский, музыка, ИЗО, технология, физкультура.",
+          price: "от 1200 рублей / 5400 драмов",
+          priceNote: "30–45 минут",
+          ageGroup: "6–18 лет",
+        },
+        {
+          name: "Совместное чтение",
+          teacherName: "Соня",
+          description: "Созвон или чат с голосовыми сообщениями, группы по уровням.",
+          price: "1400 рублей / 6500 драмов",
+          priceNote: "индивидуально, 40 минут; в группе — 1100 рублей / 5000 драмов",
+          ageGroup: "6–18 лет",
+        },
+        {
+          name: "Творческие мастерские",
+          teacherName: "Соня",
+          description: "Рисование, лепка, аппликация по образцу с постепенным увеличением творческого компонента. Для невербальных детей с навыками имитации или вместе с родителем.",
+          price: "1000 рублей / 4600 драмов",
+          priceNote: "30 минут",
+          ageGroup: "5–18 лет",
+        },
+        {
+          name: "Блоггинг",
+          teacherName: "Соня",
+          description: "Учимся рассказывать о себе через видео, тексты и картинки. Для вербальных и невербальных детей.",
+          price: "1100 рублей / 5000 драмов",
+          priceNote: "группа, 60 минут; индивидуально — 1000 рублей / 4600 драмов",
+          ageGroup: "5–10 лет",
+        },
+        {
+          name: "Группы общения и поддержки",
+          teacherName: "Соня",
+          description: "Созвон, выбор тем вместе с участниками, составление расписания.",
+          price: "1000 рублей / 4600 драмов",
+          priceNote: "60 минут",
+          ageGroup: "6–18 лет",
+        },
       ],
     },
     {
       key: "Подросткам",
       title: "Подросткам",
-      subtitle: "Занятия для подростков от 11 до 17 лет",
+      subtitle: "Занятия для подростков от 11 лет",
       icon: "🎮",
       color: "from-violet-400 to-purple-500",
       sampleCourses: [
-        { name: "Репетиторство по школьным предметам", teacherName: "Саша", description: "Математика, английский, история", price: "от 1200 ₽", ageGroup: "11-17 лет" },
-        { name: "Ролевые игры", teacherName: "Соня и Саша", description: "Разговорные, текстовые, создание этюдов", price: "от 1000 ₽", ageGroup: "11-17 лет" },
-        { name: "Киноклуб", teacherName: "Саша", description: "Смотрим и обсуждаем фильмы", price: "от 500 ₽", ageGroup: "12+ лет" },
-        { name: "Тренинг социальных навыков", teacherName: "Соня", description: "По социальным историям, отыгрываем сценки", price: "от 1000 ₽", ageGroup: "12+ лет" },
-        { name: "Любовь и отношения", teacherName: "Соня", description: "Важные темы для старших подростков от 14 лет", price: "от 1000 ₽", ageGroup: "14+ лет" },
-        { name: "Цифровая безопасность", teacherName: "Соня", description: "Безопасность в интернете для подростков", price: "от 1400 ₽", ageGroup: "9-11 лет" },
+        {
+          name: "Репетиторство по школьным предметам",
+          teacherName: "Саша",
+          description: "Математика, английский язык, история.",
+          price: "от 1200 рублей / 5400 драмов",
+          priceNote: "30–45 минут",
+          ageGroup: "11–17 лет",
+        },
+        {
+          name: "Ролевые игры",
+          teacherName: "Соня и Саша",
+          description: "Разговорные, текстовые, создание этюдов. Включаем важные социальные и коммуникативные ситуации.",
+          price: "от 1000 рублей / 4600 драмов",
+          priceNote: "60 минут",
+          ageGroup: "11–17 лет",
+        },
+        {
+          name: "Киноклуб",
+          teacherName: "Саша",
+          description: "Смотрим и обсуждаем фильмы.",
+          price: "от 500 рублей / 2000 драмов",
+          priceNote: "или за донат",
+          ageGroup: "12+ лет",
+        },
+        {
+          name: "Тренинг социальных навыков",
+          teacherName: "Соня",
+          description: "По социальным историям (видео, комиксы и тексты), отыгрываем в сценках, обсуждаем. Для вербальных и невербальных.",
+          price: "от 1000 рублей / 4600 драмов",
+          priceNote: "60 минут",
+          ageGroup: "12+ лет",
+        },
+        {
+          name: "Любовь и отношения",
+          teacherName: "Соня",
+          description: "Для старших подростков от 14 лет. Где искать партнёров, как знакомиться, признаваться в любви, что важно в отношениях и сексе, когда секс становится насильственным.",
+          price: "от 1000 рублей / 4600 драмов",
+          priceNote: "60 минут",
+          ageGroup: "14+ лет",
+        },
+        {
+          name: "Введение в нейроразнообразие",
+          teacherName: "Соня",
+          description: "Лекционный групповой формат для вербальных людей.",
+          price: "1500 рублей / 7000 драмов",
+          priceNote: "60 минут",
+          ageGroup: "12+ лет",
+        },
       ],
     },
     {
@@ -73,12 +166,54 @@ export default async function CoursesPage() {
       icon: "🌟",
       color: "from-cyan-400 to-blue-500",
       sampleCourses: [
-        { name: "Группа поддержки", teacherName: "Соня", description: "Общая группа для взрослых", price: "от 1000 ₽", ageGroup: "18+ лет" },
-        { name: "Группа поддержки для эмигрантов", teacherName: "Соня", description: "Поддержка для людей с опытом эмиграции", price: "от 1000 ₽", ageGroup: "18+ лет" },
-        { name: "Английский язык", teacherName: "Саша", description: "Курсы английского для взрослых", price: "от 1200 ₽", ageGroup: "18+ лет" },
-        { name: "Коворкинг", teacherName: "Соня", description: "Совместная работа онлайн", price: "от 500 ₽", ageGroup: "18+ лет" },
-        { name: "Читательский клуб", teacherName: "Соня", description: "Совместное чтение и обсуждение книг", price: "от 1000 ₽", ageGroup: "18+ лет" },
-        { name: "Равное консультирование", teacherName: "Соня", description: "Беседа о жизни, интересах и сложностях", price: "донат от 500 ₽", ageGroup: "18+ лет" },
+        {
+          name: "Группа поддержки",
+          teacherName: "Соня",
+          description: "Общая группа поддержки для взрослых. Созвон или текст.",
+          price: "1000 рублей / 4600 драмов",
+          priceNote: "60 минут",
+          ageGroup: "18+ лет",
+        },
+        {
+          name: "Группа поддержки для эмигрантов",
+          teacherName: "Соня",
+          description: "Поддержка для людей с опытом эмиграции.",
+          price: "1000 рублей / 4600 драмов",
+          priceNote: "60 минут",
+          ageGroup: "18+ лет",
+        },
+        {
+          name: "Коворкинг",
+          teacherName: "Соня",
+          description: "Совместная работа онлайн.",
+          price: "от 500 рублей / 2000 драмов",
+          priceNote: "или за донат",
+          ageGroup: "18+ лет",
+        },
+        {
+          name: "Английский язык",
+          teacherName: "Саша",
+          description: "Курсы английского для взрослых.",
+          price: "от 1200 рублей / 5400 драмов",
+          priceNote: "30–45 минут",
+          ageGroup: "18+ лет",
+        },
+        {
+          name: "Читательский клуб",
+          teacherName: "Соня",
+          description: "Совместное чтение и обсуждение выбранных книг. Созвон или чат с голосовыми сообщениями.",
+          price: "1400 рублей / 6500 драмов",
+          priceNote: "индивидуально, 40 минут; в группе — 1100 рублей / 5000 драмов",
+          ageGroup: "18+ лет",
+        },
+        {
+          name: "Равное консультирование",
+          teacherName: "Соня",
+          description: "Свободная беседа о жизни, интересах и сложностях. Созвон или чат.",
+          price: "донат от 500 рублей / 2500 драмов",
+          priceNote: "по времени как получится",
+          ageGroup: "18+ лет",
+        },
       ],
     },
     {
@@ -88,10 +223,38 @@ export default async function CoursesPage() {
       icon: "👩‍🏫",
       color: "from-amber-400 to-orange-500",
       sampleCourses: [
-        { name: "Обмен опытом", teacherName: "Педагоги", description: "Созвон или текст с коллегами", price: "донат" },
-        { name: "Стажировка (месяц)", teacherName: "Команда", description: "Посещение интересующих занятий, проведение своих", price: "8000 ₽" },
-        { name: "Стажировка (неделя)", teacherName: "Команда", description: "Одна-три недели стажировки", price: "от 2000 ₽" },
-        { name: "Проведение занятия/лекции", teacherName: "Вы", description: "Бесплатно или за донат, с переводчиком или без", price: "бесплатно" },
+        {
+          name: "Обмен опытом",
+          teacherName: "Педагоги",
+          description: "Созвон или текст с коллегами.",
+          price: "донат",
+          priceNote: "",
+          ageGroup: "для специалистов",
+        },
+        {
+          name: "Стажировка",
+          teacherName: "Команда",
+          description: "Посещение занятий, которые интересны, по желанию проведение своих. В течение месяца (любое количество).",
+          price: "8000 рублей / 37000 драмов",
+          priceNote: "месяц; по неделям — 2000 рублей / 9200 драмов",
+          ageGroup: "для специалистов",
+        },
+        {
+          name: "Проведение занятия/лекции",
+          teacherName: "Вы",
+          description: "Бесплатно или за донат. С переводчиком или без. Провести может любой человек, не только нейроотличный.",
+          price: "бесплатно",
+          priceNote: "или за донат",
+          ageGroup: "для специалистов",
+        },
+        {
+          name: "Другое сотрудничество",
+          teacherName: "Команда",
+          description: "Не упомянутое выше сотрудничество — напишите нам.",
+          price: "по договорённости",
+          priceNote: "",
+          ageGroup: "для специалистов",
+        },
       ],
     },
   ];
@@ -112,11 +275,8 @@ export default async function CoursesPage() {
       <section className="py-16 lg:py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           {ageGroups.map((group) => {
-            const displayCourses = hasCourses
-              ? grouped[group.key as keyof typeof grouped]?.length > 0
-                ? grouped[group.key as keyof typeof grouped]
-                : group.sampleCourses
-              : group.sampleCourses;
+            const tinaCourses = grouped[group.key as keyof typeof grouped] || [];
+            const displayCourses = hasCourses && tinaCourses.length > 0 ? tinaCourses : group.sampleCourses;
 
             return (
               <div key={group.key}>
@@ -148,10 +308,15 @@ export default async function CoursesPage() {
                           />
                         </div>
                       )}
-                      <div className="flex items-center gap-2 mb-2">
+                      <div className="flex flex-wrap items-center gap-2 mb-2">
                         <span className="text-xs font-medium text-violet-600 bg-violet-50 px-2 py-1 rounded-full">
                           {course.ageGroup || group.title}
                         </span>
+                        {course.format?.duration && (
+                          <span className="text-xs text-gray-500">
+                            {course.format.duration} мин
+                          </span>
+                        )}
                       </div>
                       <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-violet-600 transition-colors">
                         {course.name}
@@ -161,19 +326,28 @@ export default async function CoursesPage() {
                           Педагог: {course.teacherName}
                         </p>
                       )}
-                      <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                      <p className="text-gray-600 text-sm mb-4 line-clamp-3">
                         {course.description}
                       </p>
-                      <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <span className="text-lg font-bold text-gray-900">
-                          {course.price}
-                        </span>
-                        <Link
-                          href="/contacts"
-                          className="text-sm font-medium text-violet-600 hover:text-violet-700 transition-colors"
-                        >
-                          Записаться →
-                        </Link>
+                      <div className="pt-4 border-t border-gray-100">
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <span className="text-base font-bold text-gray-900">
+                              {course.price}
+                            </span>
+                            {course.priceNote && (
+                              <p className="text-xs text-gray-500 mt-0.5">
+                                {course.priceNote}
+                              </p>
+                            )}
+                          </div>
+                          <Link
+                            href="/contacts"
+                            className="text-sm font-medium text-violet-600 hover:text-violet-700 transition-colors whitespace-nowrap"
+                          >
+                            Записаться →
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   ))}

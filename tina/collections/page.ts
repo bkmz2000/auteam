@@ -27,7 +27,8 @@ export const PageCollection: Collection = {
       label: "Links",
       ui: {
         itemProps: (item) => {
-          return { label: item?.header };
+          if (!item) return { label: "Untitled" };
+          return { label: item.header || "Untitled" };
         },
       },
       fields: [
