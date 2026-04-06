@@ -31,7 +31,7 @@ export default isLocal
       }),
       databaseAdapter: new RedisLevel<string, Record<string, any>>({
         redis: {
-          url: (process.env.KV_URL as string) || "http://localhost:8079",
+          url: "rediss://wired-alpaca-92960.upstash.io:6379",
           token: (process.env.KV_REST_API_TOKEN as string) || "example_token",
         },
         debug: process.env.DEBUG === "true" || false,
