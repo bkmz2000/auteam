@@ -1,7 +1,12 @@
 import { TinaUserCollection } from "tinacms-authjs/dist/tinacms";
-import { defineConfig, LocalAuthProvider } from "tinacms";
+import { defineConfig } from "tinacms";
 
 import { PageCollection } from "./collections/page";
+import { TeacherCollection } from "./collections/teacher";
+import { CategoryCollection } from "./collections/category";
+import { CourseCollection } from "./collections/course";
+import { NewsCollection } from "./collections/news";
+import { FeedbackCollection } from "./collections/feedback";
 
 const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === "true";
 
@@ -20,6 +25,14 @@ export default defineConfig({
     },
   },
   schema: {
-    collections: [TinaUserCollection, PageCollection],
+    collections: [
+      TinaUserCollection,
+      PageCollection,
+      TeacherCollection,
+      CategoryCollection,
+      CourseCollection,
+      NewsCollection,
+      FeedbackCollection,
+    ],
   },
 });

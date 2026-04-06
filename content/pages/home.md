@@ -1,20 +1,38 @@
 ---
-header: Get Started by editing app/page/tsx
+title: АутИмя — Помощь детям с ОПФР
+slug: home
 logo:
-  url: /next.svg
-  alt: NextJS
+  url: /logo.svg
+  alt: АутИмя
 links:
-  - header: Docs
-    description: Find in-depth information about Next.js features and API.
-    url: 'https://nextjs.org/docs?utm_source=create-next-app'
-  - header: Learn
-    description: Learn about Next.js in an interactive course with quizzes!
-    url: 'https://nextjs.org/learn?utm_source=create-next-app'
-  - header: Templates
-    description: Explore the Next.js 13 playground.
-    url: 'https://vercel.com/templates?framework=next.js'
-  - header: Deploy
-    description: Instantly deploy your Next.js site to a shareable URL with Vercel.
-    url: 'https://vercel.com/new?utm_source=create-next-app'
+  - header: О нас
+    description: Узнайте больше о нашей команде и подходе
+    url: /about
+  - header: Направления
+    description: Творчество, обучение и поддержка
+    url: /categories
+  - header: Преподаватели
+    description: Наши специалисты
+    url: /teachers
+  - header: Контакты
+    description: Свяжитесь с нами
+    url: /contact
 ---
 
+# Добро пожаловать в АутИмя!
+
+Мы — команда специалистов, которая помогает детям с особенностями психофизического развития учиться, развиваться и социализироваться.
+
+**Наши принципы:**
+
+- Индивидуальный подход к каждому ребёнку
+- Безопасная и поддерживающая среда
+- Работа в команде с родителями
+- Постепенное развитие навыков
+
+**Что мы предлагаем:**
+
+- Тьюторское сопровождение
+- Творческие мастерские
+- Психологическое консультирование
+- Группа поддержки для родителей

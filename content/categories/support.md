@@ -1,0 +1,8 @@
+---
+name: Поддержка
+slug: support
+description: ""
+icon:
+  svg: '<svg height="48" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><rect fill="white"></rect><path d="M200,48H136V16a8,8,0,0,0-16,0V48H56A32,32,0,0,0,24,80V192a32,32,0,0,0,32,32H168a32,32,0,0,0,32-32V160h8a8,8,0,0,0,0-16H200V80A32,32,0,0,0,200,48ZM168,192H56a16,16,0,0,1-16-16V80a16,16,0,0,1,16-16h40V96a8,8,0,0,0,16,0V64h40a16,16,0,0,1,16,16v96A16,16,0,0,1,168,192Zm16-32H56a8,8,0,0,1,0-16h8v-8a8,8,0,0,1,8-8H184a8,8,0,0,1,8,8v8h8a8,8,0,0,1,0,16Z" fill="currentColor"></path></svg>'
+  name: headphones
+order: 1
