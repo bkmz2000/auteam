@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AgeNav } from "../components/AgeNav";
 import { client } from "../../tina/__generated__/databaseClient";
 
