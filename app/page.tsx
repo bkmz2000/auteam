@@ -133,7 +133,7 @@ export default async function HomePage() {
                 </div>
                 <p className="text-sm text-textSecondary mb-4 leading-relaxed">{t.bio}</p>
                 <div className="flex gap-2">
-                  <Link href="/teachers" className="text-sm font-semibold bg-textPrimary text-background px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Страница педагога</Link>
+                  <Link href={`/teachers/${t.name === "Соня" ? "sonya" : "sasha"}`} className="text-sm font-semibold bg-textPrimary text-background px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Страница педагога</Link>
                   <Link href="/children" className="text-sm font-semibold bg-surface text-textPrimary border border-border px-4 py-2 rounded-lg hover:bg-hover transition-colors">Курсы</Link>
                 </div>
               </div>
