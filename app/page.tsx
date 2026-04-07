@@ -118,8 +118,8 @@ export default async function HomePage() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[
-            { name: "Соня", role: "Основатель, нейроотличный педагог — 9,5 лет", langs: ["русский", "английский B1"], bio: "Специализируется на сопровождении детей с РАС, ЗПР, интеллектуальными нарушениями. Ведёт арт-терапию, игровые занятия, группы общения, блоггинг.", areas: ["РАС", "ЗПР", "Арт-терапия", "АДК"] },
-            { name: "Саша", role: "Педагог-тьютор — 4,5 года", langs: ["русский", "english"], bio: "Тьютор и педагог-психолог. Ведёт математику, английский, историю, ролевые игры и киноклуб.", areas: ["Математика", "English", "Ролевые игры", "КИНОКЛУБ"] },
+            { name: "Соня", slug: "sonya", role: "Основатель, нейроотличный педагог — 9,5 лет", langs: ["русский", "английский B1"], bio: "Специализируется на сопровождении детей с РАС, ЗПР, интеллектуальными нарушениями. Ведёт арт-терапию, игровые занятия, группы общения, блоггинг.", areas: ["РАС", "ЗПР", "Арт-терапия", "АДК"] },
+            { name: "Саша", slug: "sasha", role: "Педагог-тьютор — 4,5 года", langs: ["русский", "english"], bio: "Тьютор и педагог-психолог. Ведёт математику, английский, историю, ролевые игры и киноклуб.", areas: ["Математика", "English", "Ролевые игры", "КИНОКЛУБ"] },
           ].map(t => (
             <div key={t.name} className="bg-surface border border-border rounded-2xl p-7 flex gap-5">
               <div className="w-20 h-20 rounded-full bg-hover border-2 border-border flex items-center justify-center text-3xl font-bold text-textSecondary flex-shrink-0">
@@ -131,9 +131,9 @@ export default async function HomePage() {
                 <div className="flex flex-wrap gap-2 mb-3">
                   {t.langs.map(l => <span key={l} className="text-xs bg-hover border border-border px-2 py-1 rounded text-textSecondary">{l}</span>)}
                 </div>
-                <p className="text-sm text-textSecondary mb-4 leading-relaxed">{t.bio}</p>
+                <p className="text-sm text-textSecondary mb-4 leading-relaxed">{t.bio || "Этот педагог пока ничего о себе не написал"}</p>
                 <div className="flex gap-2">
-                  <Link href={`/teachers/${t.name === "Соня" ? "sonya" : "sasha"}`} className="text-sm font-semibold bg-textPrimary text-background px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Страница педагога</Link>
+                  <Link href={`/teachers/${t.slug}`} className="text-sm font-semibold bg-textPrimary text-background px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Страница педагога</Link>
                   <Link href="/children" className="text-sm font-semibold bg-surface text-textPrimary border border-border px-4 py-2 rounded-lg hover:bg-hover transition-colors">Курсы</Link>
                 </div>
               </div>
