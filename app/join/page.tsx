@@ -135,7 +135,8 @@ export default function JoinPage() {
                 <button className="w-full bg-surface text-accent px-6 py-3 rounded-xl font-semibold hover:bg-hover transition-colors">
                   Заполнить анкету
                 </button>
-                  Мы хорошие, с нами приятно иметь дело! 🤗
+                <p className="text-textPrimary text-sm mt-4 text-center">
+                  Мы хорошие, с нами приятно иметь дело!
                 </p>
               </div>
 

@@ -8,13 +8,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "#FDFCF9",
+        background: "#F5F3F0",
         surface: "#FFFFFF",
-        border: "#E8E4DF",
+        border: "#CEC9C2",
         textPrimary: "#1A1A1A",
-        textSecondary: "#6B6560",
+        textSecondary: "#5C574F",
         accent: "#C4956A",
-        hoverSurface: "#F4F1EC",
+        hover: "#E8E5E0",
       },
       fontFamily: {
         sans: ["Segoe UI", "system-ui", "-apple-system", "sans-serif"],

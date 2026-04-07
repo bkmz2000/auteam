@@ -4,21 +4,22 @@ export default function AboutPage() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-violet-600 via-purple-600 to-violet-800 text-white py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-6">О нас</h1>
-          <p className="text-xl text-violet-100 max-w-3xl">
+      <section className="bg-background border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+          <p className="text-sm font-semibold uppercase tracking-widest text-accent mb-4">О нас</p>
+          <h1 className="text-4xl lg:text-5xl font-bold text-textPrimary mb-6">О нас</h1>
+          <p className="text-xl text-textSecondary max-w-3xl">
             Платформа для нейроотличных детей, подростков, взрослых, а также их близких родственников или друзей в Армении
           </p>
         </div>
       </section>
 
       {/* Mission */}
-      <section className="py-16 lg:py-24 bg-white">
+      <section className="py-16 lg:py-24 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Наша миссия</h2>
-            <div className="prose prose-lg text-gray-600">
+            <h2 className="text-3xl font-bold text-textPrimary mb-6">Наша миссия</h2>
+            <div className="prose prose-lg text-textSecondary">
               <p className="mb-4">
                 Платформу основал педагог Соня — нейроотличный помогающий специалист. Соня использует они/их (they/them) pronouns.
                 Здесь нейроотличные люди и их близкие могут:
@@ -40,9 +41,9 @@ export default function AboutPage() {
       </section>
 
       {/* Principles */}
-      <section className="py-16 lg:py-24 bg-gray-50">
+      <section className="py-16 lg:py-24 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">Наши принципы</h2>
+          <h2 className="text-3xl font-bold text-textPrimary mb-12 text-center">Наши принципы</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
@@ -76,10 +77,10 @@ export default function AboutPage() {
                 icon: "✨",
               },
             ].map((principle) => (
-              <div key={principle.title} className="bg-white rounded-2xl p-6 shadow-md border border-gray-100">
+              <div key={principle.title} className="bg-surface rounded-2xl p-6 border border-border">
                 <div className="text-4xl mb-4">{principle.icon}</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{principle.title}</h3>
-                <p className="text-gray-600 text-sm">{principle.description}</p>
+                <h3 className="text-xl font-bold text-textPrimary mb-2">{principle.title}</h3>
+                <p className="text-textSecondary text-sm">{principle.description}</p>
               </div>
             ))}
           </div>
@@ -87,28 +88,28 @@ export default function AboutPage() {
       </section>
 
       {/* Payment System */}
-      <section className="py-16 lg:py-24 bg-white">
+      <section className="py-16 lg:py-24 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Система оплаты</h2>
-            <div className="bg-violet-50 rounded-2xl p-6 mb-6">
-              <p className="text-gray-700">
+            <h2 className="text-3xl font-bold text-textPrimary mb-6">Система оплаты</h2>
+            <div className="bg-background rounded-2xl p-6 mb-6 border border-border">
+              <p className="text-textSecondary">
                 <strong>Цены педагоги устанавливают сами</strong>, поэтому они разнятся.
                 Мы добавляем к стоимости занятий <strong>500 рублей</strong> в пользу организации
                 для оплаты налогов и нужд проекта.
               </p>
             </div>
             <div className="space-y-4">
-              <p className="text-gray-600">
+              <p className="text-textSecondary">
                 Педагоги по своему желанию могут не брать деньги с отдельных групп населения
                 (например, с людей из зоны боевых действий). В этом случае наценка от организации не взимается.
               </p>
-              <p className="text-gray-600">
+              <p className="text-textSecondary">
                 В будущем планируем перейти на "прогрессирующие налоги" — разные проценты в зависимости
                 от заработка. Мы также открыты для финансовой помощи — часть пожертвований (40%) в конце месяца
                 делится поровну между всеми членами команды.
               </p>
-              <p className="text-gray-600">
+              <p className="text-textSecondary">
                 Также из пожертвований мы сможем пускать людей в ситуации бедности или другой уязвимости
                 на занятия бесплатно или со скидкой.
               </p>
@@ -118,16 +119,16 @@ export default function AboutPage() {
       </section>
 
       {/* Support CTA */}
-      <section className="py-16 lg:py-24 bg-gradient-to-br from-violet-600 to-purple-700 text-white">
+      <section className="py-16 lg:py-24 bg-background border-t border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Поддержите наш проект</h2>
-          <p className="text-xl text-violet-100 mb-8 max-w-2xl mx-auto">
+          <h2 className="text-3xl font-bold text-textPrimary mb-4">Поддержите наш проект</h2>
+          <p className="text-xl text-textSecondary mb-8 max-w-2xl mx-auto">
             Любая помощь важна — финансовая или информационная. Расскажите о нас друзьям!
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/contacts"
-              className="inline-flex items-center gap-2 bg-white text-violet-600 px-8 py-4 rounded-xl font-semibold hover:bg-violet-50 transition-colors"
+              className="inline-flex items-center gap-2 bg-accent text-white px-8 py-4 rounded-xl font-semibold hover:opacity-90 transition-opacity"
             >
               Связаться с нами
             </Link>
