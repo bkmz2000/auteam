@@ -60,10 +60,10 @@ export default function FeedbackPage() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-violet-600 via-purple-600 to-violet-800 text-white py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-background border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           <h1 className="text-4xl lg:text-5xl font-bold mb-4">Отзывы и предложения</h1>
-          <p className="text-xl text-violet-100 max-w-3xl">
+          <p className="text-xl text-textSecondary max-w-3xl">
             Здесь вы можете оставить отзыв о наших занятиях, предложить идеи или рассказать о своих потребностях
           </p>
         </div>
@@ -74,7 +74,7 @@ export default function FeedbackPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Tab Navigation */}
           <div className="flex flex-wrap gap-4 mb-8">
-            <button className="px-6 py-3 bg-violet-600 text-white rounded-xl font-semibold">
+            <button className="px-6 py-3 bg-accent text-textPrimary rounded-xl font-semibold">
               Отзывы
             </button>
             <button className="px-6 py-3 bg-white text-gray-600 rounded-xl font-semibold hover:bg-gray-100 transition-colors">
@@ -105,7 +105,7 @@ export default function FeedbackPage() {
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
                       placeholder="Анонимно"
                     />
                   </div>
@@ -116,7 +116,7 @@ export default function FeedbackPage() {
                     <select
                       value={formData.type}
                       onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
                     >
                       <option value="review">Отзыв</option>
                       <option value="suggestion">Предложение</option>
@@ -132,7 +132,7 @@ export default function FeedbackPage() {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     rows={5}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent resize-none"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent resize-none"
                     placeholder="Напишите ваш отзыв, предложение или расскажите о своих потребностях..."
                     required
                   />
@@ -143,7 +143,7 @@ export default function FeedbackPage() {
                     id="isPublic"
                     checked={formData.isPublic}
                     onChange={(e) => setFormData({ ...formData, isPublic: e.target.checked })}
-                    className="w-5 h-5 text-violet-600 border-gray-300 rounded focus:ring-violet-500"
+                    className="w-5 h-5 text-accent border-gray-300 rounded focus:ring-accent"
                   />
                   <label htmlFor="isPublic" className="text-sm text-gray-600">
                     Показать на сайте (если не отмечено, будет только для администрации)
@@ -151,7 +151,7 @@ export default function FeedbackPage() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full md:w-auto bg-violet-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-violet-700 transition-colors"
+                  className="w-full md:w-auto bg-accent text-textPrimary px-8 py-3 rounded-xl font-semibold hover:bg-hover transition-colors"
                 >
                   Отправить
                 </button>

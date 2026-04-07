@@ -49,10 +49,10 @@ export default async function TeachersPage() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-violet-600 via-purple-600 to-violet-800 text-white py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-background border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           <h1 className="text-4xl lg:text-5xl font-bold mb-4">Наши педагоги</h1>
-          <p className="text-xl text-violet-100 max-w-3xl">
+          <p className="text-xl text-textSecondary max-w-3xl">
             Все наши педагоги — нейроотличные люди или их близкие.
             У каждого есть очень подробная страничка, чтобы вы могли выбрать подходящего специалиста.
           </p>
@@ -75,7 +75,7 @@ export default async function TeachersPage() {
                     {teacher.name?.charAt(0)}
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-violet-600 transition-colors">
+                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-accent transition-colors">
                       {teacher.name}
                     </h3>
                     <p className="text-sm text-gray-500">
@@ -87,7 +87,7 @@ export default async function TeachersPage() {
                 {/* Languages */}
                 <div className="flex flex-wrap gap-1 mb-4">
                   {(teacher.languages || []).slice(0, 3).map((lang: any, i: number) => (
-                    <span key={i} className="text-xs bg-violet-50 text-violet-600 px-2 py-1 rounded-full">
+                    <span key={i} className="text-xs bg-background text-accent px-2 py-1 rounded-full">
                       {typeof lang === 'string' ? lang : lang.lang}
                     </span>
                   ))}
@@ -113,7 +113,7 @@ export default async function TeachersPage() {
                 )}
 
                 <div className="mt-4 text-center">
-                  <span className="text-sm font-medium text-violet-600 group-hover:text-violet-700 transition-colors">
+                  <span className="text-sm font-medium text-accent group-hover:text-accent transition-colors">
                     Подробнее →
                   </span>
                 </div>
@@ -137,7 +137,7 @@ export default async function TeachersPage() {
             </p>
             <p className="text-gray-600">
               Если после изучения описаний у вас остались вопросы, вы можете{" "}
-              <Link href="/contacts" className="text-violet-600 hover:underline">
+              <Link href="/contacts" className="text-accent hover:underline">
                 записаться на знакомство
               </Link>{" "}
               или походить на занятия как стажёр.

@@ -29,7 +29,7 @@ export default async function TeacherPage({ params }: PageProps) {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Педагог не найден</h1>
-          <Link href="/teachers" className="text-violet-600 hover:underline">
+          <Link href="/teachers" className="text-accent hover:underline">
             ← Вернуться к списку педагогов
           </Link>
         </div>
@@ -40,11 +40,11 @@ export default async function TeacherPage({ params }: PageProps) {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-violet-600 via-purple-600 to-violet-800 text-white py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-background border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           <Link
             href="/teachers"
-            className="inline-flex items-center gap-2 text-violet-200 hover:text-white mb-6 transition-colors"
+            className="inline-flex items-center gap-2 text-textSecondary hover:text-textPrimary mb-6 transition-colors"
           >
             ← Назад к педагогам
           </Link>
@@ -54,7 +54,7 @@ export default async function TeacherPage({ params }: PageProps) {
             </div>
             <div>
               <h1 className="text-4xl lg:text-5xl font-bold mb-2">{teacher.name}</h1>
-              <p className="text-xl text-violet-200 mb-4">{teacher.totalExperience}</p>
+              <p className="text-xl text-textSecondary mb-4">{teacher.totalExperience}</p>
               <div className="flex flex-wrap gap-2">
                 {(teacher.languages || []).map((lang: any, i: number) => (
                   <span key={i} className="text-sm bg-white/20 px-3 py-1 rounded-full">
@@ -90,7 +90,7 @@ export default async function TeacherPage({ params }: PageProps) {
                   <ul className="grid md:grid-cols-2 gap-2">
                     {(teacher.areasOfWork || []).map((area: any, i: number) => (
                       <li key={i} className="flex items-start gap-2 text-gray-600">
-                        <span className="text-violet-500 mt-1">•</span>
+                        <span className="text-accent mt-1">•</span>
                         {typeof area === 'string' ? area : area.area}
                       </li>
                     ))}
@@ -104,7 +104,7 @@ export default async function TeacherPage({ params }: PageProps) {
                   <h2 className="text-2xl font-bold text-gray-900 mb-4">Темы равного консультирования</h2>
                   <div className="flex flex-wrap gap-2">
                     {(teacher.consultingTopics || []).map((topic: any, i: number) => (
-                      <span key={i} className="text-sm bg-violet-50 text-violet-600 px-3 py-1 rounded-full">
+                      <span key={i} className="text-sm bg-background text-accent px-3 py-1 rounded-full">
                         {typeof topic === 'string' ? topic : topic.topic}
                       </span>
                     ))}
@@ -197,14 +197,14 @@ export default async function TeacherPage({ params }: PageProps) {
               )}
 
               {/* CTA */}
-              <div className="bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl p-6 text-white">
+              <div className="bg-accent rounded-2xl p-6 text-textPrimary">
                 <h3 className="text-lg font-bold mb-2">Записаться на занятие</h3>
-                <p className="text-violet-100 text-sm mb-4">
+                <p className="text-textSecondary text-sm mb-4">
                   Запишитесь на знакомство или пробное занятие с {teacher.name?.split(' ')[0]}
                 </p>
                 <Link
                   href="/contacts"
-                  className="block w-full text-center bg-white text-violet-600 px-4 py-3 rounded-xl font-semibold hover:bg-violet-50 transition-colors"
+                  className="block w-full text-center bg-surface text-accent px-4 py-3 rounded-xl font-semibold hover:bg-hover transition-colors"
                 >
                   Связаться
                 </Link>

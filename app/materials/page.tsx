@@ -89,10 +89,10 @@ export default function MaterialsPage() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-violet-600 via-purple-600 to-violet-800 text-white py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-background border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           <h1 className="text-4xl lg:text-5xl font-bold mb-4">Открытые материалы</h1>
-          <p className="text-xl text-violet-100 max-w-3xl">
+          <p className="text-xl text-textSecondary max-w-3xl">
             Делимся знаниями и опытом. Здесь вы найдёте тексты, документы, методички,
             доклады, видео и многое другое.
           </p>
@@ -111,7 +111,7 @@ export default function MaterialsPage() {
                 <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${section.color} flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform`}>
                   {section.icon}
                 </div>
-                <h2 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-violet-600 transition-colors">
+                <h2 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-accent transition-colors">
                   {section.title}
                 </h2>
                 <p className="text-gray-600 text-sm mb-4">
@@ -120,7 +120,7 @@ export default function MaterialsPage() {
                 <ul className="space-y-1">
                   {section.items.map((item, i) => (
                     <li key={i} className="text-sm text-gray-500 flex items-center gap-2">
-                      <span className="text-violet-400">•</span>
+                      <span className="text-textSecondary">•</span>
                       {item}
                     </li>
                   ))}
@@ -134,7 +134,7 @@ export default function MaterialsPage() {
       {/* Grants Section */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-br from-violet-50 to-purple-50 rounded-2xl p-8">
+          <div className="bg-background rounded-2xl p-8 border border-border">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Гранты и фонды</h2>
             <p className="text-gray-600 mb-6">
               Вот несколько фондов и грантов, куда можно обратиться за поддержкой:
@@ -154,7 +154,7 @@ export default function MaterialsPage() {
                   className="flex items-center gap-3 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow"
                 >
                   <span className="text-xl">🔗</span>
-                  <span className="text-violet-600 font-medium hover:underline">{grant.name}</span>
+                  <span className="text-accent font-medium hover:underline">{grant.name}</span>
                 </a>
               ))}
             </div>

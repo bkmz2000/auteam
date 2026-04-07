@@ -4,10 +4,10 @@ export default function JoinPage() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-violet-600 via-purple-600 to-violet-800 text-white py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-background border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           <h1 className="text-4xl lg:text-5xl font-bold mb-4">Хочу в команду!</h1>
-          <p className="text-xl text-violet-100 max-w-3xl">
+          <p className="text-xl text-textSecondary max-w-3xl">
             Присоединяйтесь к нам! Мы ищем нейроотличных педагогов, специалистов и волонтёров
           </p>
         </div>
@@ -30,8 +30,8 @@ export default function JoinPage() {
                   Направление может не совпадать по формату с теми, которые уже есть на сайте.
                   Например, вы можете вести чат, говорить по телефону, параллельно играть в игру, смотреть фильм и пр.
                 </p>
-                <div className="bg-violet-50 rounded-xl p-4">
-                  <p className="text-violet-700 font-medium">
+                <div className="bg-background rounded-xl p-4">
+                  <p className="text-textPrimary font-medium">
                     💡 Вы можете присоединиться, даже если не говорите устно,
                     но свободно используете средства АДК — вы нам очень нужны!
                   </p>
@@ -52,7 +52,7 @@ export default function JoinPage() {
                     "По возможности квир-френдли",
                   ].map((req, i) => (
                     <li key={i} className="flex items-start gap-3 text-gray-600">
-                      <span className="text-violet-500 mt-1">✓</span>
+                      <span className="text-accent mt-1">✓</span>
                       {req}
                     </li>
                   ))}
@@ -77,7 +77,7 @@ export default function JoinPage() {
                     "Штрафов нет, но все расстраиваются 😅",
                   ].map((cond, i) => (
                     <li key={i} className="flex items-start gap-3 text-gray-600">
-                      <span className="text-violet-500 mt-1">•</span>
+                      <span className="text-accent mt-1">•</span>
                       {cond}
                     </li>
                   ))}
@@ -98,7 +98,7 @@ export default function JoinPage() {
                 </p>
                 <div className="space-y-4">
                   <div className="flex gap-4">
-                    <div className="w-12 h-12 rounded-full bg-violet-100 text-violet-600 font-bold flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 rounded-full bg-hover text-accent font-bold flex items-center justify-center flex-shrink-0">
                       1
                     </div>
                     <div>
@@ -109,7 +109,7 @@ export default function JoinPage() {
                     </div>
                   </div>
                   <div className="flex gap-4">
-                    <div className="w-12 h-12 rounded-full bg-violet-100 text-violet-600 font-bold flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 rounded-full bg-hover text-accent font-bold flex items-center justify-center flex-shrink-0">
                       2
                     </div>
                     <div>
@@ -127,15 +127,14 @@ export default function JoinPage() {
             {/* Sidebar */}
             <div className="space-y-6">
               {/* CTA Card */}
-              <div className="bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl p-6 text-white sticky top-24">
+              <div className="bg-accent rounded-2xl p-6 text-textPrimary sticky top-24">
                 <h3 className="text-xl font-bold mb-2">Готовы присоединиться?</h3>
-                <p className="text-violet-100 text-sm mb-6">
+                <p className="text-textSecondary text-sm mb-6">
                   Заполните небольшую анкету — мы свяжемся с вами для собеседования
                 </p>
-                <button className="w-full bg-white text-violet-600 px-6 py-3 rounded-xl font-semibold hover:bg-violet-50 transition-colors">
+                <button className="w-full bg-surface text-accent px-6 py-3 rounded-xl font-semibold hover:bg-hover transition-colors">
                   Заполнить анкету
                 </button>
-                <p className="text-violet-200 text-xs mt-4 text-center">
                   Мы хорошие, с нами приятно иметь дело! 🤗
                 </p>
               </div>
@@ -149,7 +148,7 @@ export default function JoinPage() {
                 <ul className="space-y-2">
                   {["Русском", "Армянском", "Английском", "И других языках!"].map((lang, i) => (
                     <li key={i} className="flex items-center gap-2 text-gray-600 text-sm">
-                      <span className="text-violet-500">✓</span>
+                      <span className="text-accent">✓</span>
                       {lang}
                     </li>
                   ))}
@@ -169,7 +168,7 @@ export default function JoinPage() {
                     "Менеджер по продажам",
                   ].map((vacancy, i) => (
                     <li key={i} className="flex items-center gap-2 text-gray-600 text-sm">
-                      <span className="text-violet-500">•</span>
+                      <span className="text-accent">•</span>
                       {vacancy}
                     </li>
                   ))}

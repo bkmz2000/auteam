@@ -262,10 +262,10 @@ export default async function CoursesPage() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-violet-600 via-purple-600 to-violet-800 text-white py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-background border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           <h1 className="text-4xl lg:text-5xl font-bold mb-4">Курсы</h1>
-          <p className="text-xl text-violet-100 max-w-3xl">
+          <p className="text-xl text-textSecondary max-w-3xl">
             Выберите занятие по душе. Занятия на русском, армянском и английском языках.
           </p>
         </div>
@@ -309,7 +309,7 @@ export default async function CoursesPage() {
                         </div>
                       )}
                       <div className="flex flex-wrap items-center gap-2 mb-2">
-                        <span className="text-xs font-medium text-violet-600 bg-violet-50 px-2 py-1 rounded-full">
+                        <span className="text-xs font-medium text-accent bg-background px-2 py-1 rounded-full">
                           {course.ageGroup || group.title}
                         </span>
                         {course.format?.duration && (
@@ -318,7 +318,7 @@ export default async function CoursesPage() {
                           </span>
                         )}
                       </div>
-                      <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-violet-600 transition-colors">
+                      <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-accent transition-colors">
                         {course.name}
                       </h3>
                       {course.teacherName && (
@@ -343,7 +343,7 @@ export default async function CoursesPage() {
                           </div>
                           <Link
                             href="/contacts"
-                            className="text-sm font-medium text-violet-600 hover:text-violet-700 transition-colors whitespace-nowrap"
+                            className="text-sm font-medium text-accent hover:text-accent transition-colors whitespace-nowrap"
                           >
                             Записаться →
                           </Link>
@@ -369,7 +369,7 @@ export default async function CoursesPage() {
           </p>
           <Link
             href="/contacts"
-            className="inline-flex items-center gap-2 bg-violet-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-violet-700 transition-colors"
+            className="inline-flex items-center gap-2 bg-accent text-textPrimary px-8 py-4 rounded-xl font-semibold hover:bg-hover transition-colors"
           >
             Связаться с нами
           </Link>

@@ -66,21 +66,21 @@ export default async function HomePage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-violet-600 via-purple-600 to-violet-800 text-white">
+      <section className="bg-background border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
           <div className="max-w-3xl">
             <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight">
               Нейроотличные{" "}
-              <span className="text-violet-200">нейроотличным</span>
+              <span className="text-textSecondary">нейроотличным</span>
             </h1>
-            <p className="text-xl lg:text-2xl text-violet-100 mb-8 leading-relaxed">
+            <p className="text-xl lg:text-2xl text-textSecondary mb-8 leading-relaxed">
               Платформа для нейроотличных детей, подростков, взрослых и их близких.
               Здесь нейроотличные специалисты помогают нейроотличным клиентам всех возрастов.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link
                 href="/courses"
-                className="inline-flex items-center gap-2 bg-white text-violet-600 px-6 py-3 rounded-xl font-semibold hover:bg-violet-50 transition-colors shadow-lg"
+                className="inline-flex items-center gap-2 bg-surface text-accent px-6 py-3 rounded-xl font-semibold hover:bg-hover transition-colors shadow-lg"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -89,7 +89,7 @@ export default async function HomePage() {
               </Link>
               <Link
                 href="/join"
-                className="inline-flex items-center gap-2 bg-violet-700 text-white px-6 py-3 rounded-xl font-semibold hover:bg-violet-800 transition-colors border border-violet-500"
+                className="inline-flex items-center gap-2 bg-accent text-textPrimary px-6 py-3 rounded-xl font-semibold hover:bg-hover transition-colors border border-border"
               >
                 Присоединиться к команде
               </Link>
@@ -115,12 +115,12 @@ export default async function HomePage() {
               <Link
                 key={cat.title}
                 href={cat.href}
-                className="group bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-violet-200"
+                className="group bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-border"
               >
                 <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${cat.color} flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform`}>
                   {cat.icon}
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-violet-600 transition-colors">
+                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-accent transition-colors">
                   {cat.title}
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
@@ -147,7 +147,7 @@ export default async function HomePage() {
               </div>
               <Link
                 href="/courses"
-                className="hidden md:inline-flex items-center gap-2 text-violet-600 font-semibold hover:text-violet-700 transition-colors"
+                className="hidden md:inline-flex items-center gap-2 text-accent font-semibold hover:text-accent transition-colors"
               >
                 Все курсы
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -172,7 +172,7 @@ export default async function HomePage() {
                     </div>
                   )}
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-medium text-violet-600 bg-violet-50 px-2 py-1 rounded-full">
+                    <span className="text-xs font-medium text-accent bg-background px-2 py-1 rounded-full">
                       {course.ageGroup || "Для всех"}
                     </span>
                     {course.teacherName && (
@@ -181,7 +181,7 @@ export default async function HomePage() {
                       </span>
                     )}
                   </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-violet-600 transition-colors">
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-accent transition-colors">
                     {course.name}
                   </h3>
                   <p className="text-gray-600 text-sm mb-4 line-clamp-2">
@@ -194,7 +194,7 @@ export default async function HomePage() {
                       </span>
                       <Link
                         href="/contacts"
-                        className="text-sm font-medium text-violet-600 hover:text-violet-700 transition-colors"
+                        className="text-sm font-medium text-accent hover:text-accent transition-colors"
                       >
                         Записаться →
                       </Link>
@@ -206,7 +206,7 @@ export default async function HomePage() {
             <div className="text-center mt-8 md:hidden">
               <Link
                 href="/courses"
-                className="inline-flex items-center gap-2 bg-violet-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-violet-700 transition-colors"
+                className="inline-flex items-center gap-2 bg-accent text-textPrimary px-6 py-3 rounded-xl font-semibold hover:bg-hover transition-colors"
               >
                 Все курсы
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -240,7 +240,7 @@ export default async function HomePage() {
                   <div className="w-20 h-20 rounded-full bg-gradient-to-br from-violet-400 to-purple-500 mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
                     {teacher.name?.charAt(0)}
                   </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-violet-600 transition-colors">
+                  <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-accent transition-colors">
                     {teacher.name}
                   </h3>
                   <p className="text-sm text-gray-500 mb-2">
@@ -259,7 +259,7 @@ export default async function HomePage() {
             <div className="text-center mt-8">
               <Link
                 href="/teachers"
-                className="inline-flex items-center gap-2 bg-violet-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-violet-700 transition-colors"
+                className="inline-flex items-center gap-2 bg-accent text-textPrimary px-6 py-3 rounded-xl font-semibold hover:bg-hover transition-colors"
               >
                 Все педагоги
               </Link>
@@ -269,19 +269,19 @@ export default async function HomePage() {
       )}
 
       {/* CTA Section */}
-      <section className="py-16 lg:py-24 bg-gradient-to-br from-violet-600 to-purple-700 text-white">
+      <section className="py-16 lg:py-24 bg-background border-t border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold mb-4">
             Готовы начать обучение?
           </h2>
-          <p className="text-xl text-violet-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-textSecondary mb-8 max-w-2xl mx-auto">
             Запишитесь на пробное занятие или знакомство с педагогом.
             Мы рады каждому!
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/contacts"
-              className="inline-flex items-center gap-2 bg-white text-violet-600 px-8 py-4 rounded-xl font-semibold hover:bg-violet-50 transition-colors shadow-lg"
+              className="inline-flex items-center gap-2 bg-surface text-accent px-8 py-4 rounded-xl font-semibold hover:bg-hover transition-colors shadow-lg"
             >
               Записаться на занятие
             </Link>

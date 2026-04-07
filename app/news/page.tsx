@@ -41,10 +41,10 @@ export default async function NewsPage() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-violet-600 via-purple-600 to-violet-800 text-white py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-background border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           <h1 className="text-4xl lg:text-5xl font-bold mb-4">Новости</h1>
-          <p className="text-xl text-violet-100 max-w-3xl">
+          <p className="text-xl text-textSecondary max-w-3xl">
             Актуальные новости нашего проекта, анонсы новых курсов и мероприятий
           </p>
         </div>
@@ -63,13 +63,13 @@ export default async function NewsPage() {
                 <div className="text-sm text-gray-500 mb-2">
                   {item.date || item._sys?.basename?.slice(0, 10) || ""}
                 </div>
-                <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-violet-600 transition-colors">
+                <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-accent transition-colors">
                   {item.title}
                 </h2>
                 <p className="text-gray-600 text-sm line-clamp-3">
                   {item.excerpt || item.body?.slice(0, 150) || ""}
                 </p>
-                <div className="mt-4 text-sm font-medium text-violet-600 group-hover:text-violet-700 transition-colors">
+                <div className="mt-4 text-sm font-medium text-accent group-hover:text-accent transition-colors">
                   Читать далее →
                 </div>
               </Link>

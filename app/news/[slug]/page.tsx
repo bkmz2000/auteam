@@ -26,7 +26,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
           </p>
           <Link
             href="/news"
-            className="inline-flex items-center gap-2 text-violet-600 hover:text-violet-700 font-medium"
+            className="inline-flex items-center gap-2 text-accent hover:text-accent font-medium"
           >
             ← Вернуться к новостям
           </Link>
@@ -38,15 +38,15 @@ export default async function NewsDetailPage({ params }: PageProps) {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-violet-600 via-purple-600 to-violet-800 text-white py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-background border-b border-border">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <Link
             href="/news"
-            className="inline-flex items-center gap-2 text-violet-200 hover:text-white mb-6 transition-colors"
+            className="inline-flex items-center gap-2 text-textSecondary hover:text-textPrimary mb-6 transition-colors"
           >
             ← Назад к новостям
           </Link>
-          <div className="text-sm text-violet-200 mb-2">
+          <div className="text-sm text-textSecondary mb-2">
             {newsItem.date || ""}
           </div>
           <h1 className="text-3xl lg:text-4xl font-bold">{newsItem.title}</h1>

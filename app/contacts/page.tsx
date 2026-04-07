@@ -21,10 +21,10 @@ export default function ContactsPage() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-violet-600 via-purple-600 to-violet-800 text-white py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-background border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           <h1 className="text-4xl lg:text-5xl font-bold mb-4">Контакты</h1>
-          <p className="text-xl text-violet-100 max-w-3xl">
+          <p className="text-xl text-textSecondary max-w-3xl">
             Свяжитесь с нами любым удобным способом. Мы рады ответить на вопросы и помочь!
           </p>
         </div>
@@ -41,29 +41,29 @@ export default function ContactsPage() {
                 <h2 className="text-xl font-bold text-gray-900 mb-4">Свяжитесь с нами</h2>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-violet-100 text-violet-600 flex items-center justify-center flex-shrink-0">
+                    <div className="w-10 h-10 rounded-lg bg-hover text-accent flex items-center justify-center flex-shrink-0">
                       📧
                     </div>
                     <div>
                       <div className="text-sm text-gray-500 mb-1">Email</div>
-                      <a href="mailto:info@neurodiverse.am" className="text-violet-600 hover:underline">
+                      <a href="mailto:info@neurodiverse.am" className="text-accent hover:underline">
                         info@neurodiverse.am
                       </a>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-violet-100 text-violet-600 flex items-center justify-center flex-shrink-0">
+                    <div className="w-10 h-10 rounded-lg bg-hover text-accent flex items-center justify-center flex-shrink-0">
                       💬
                     </div>
                     <div>
                       <div className="text-sm text-gray-500 mb-1">Telegram</div>
-                      <a href="https://t.me/neurodiverse_am" className="text-violet-600 hover:underline">
+                      <a href="https://t.me/neurodiverse_am" className="text-accent hover:underline">
                         @neurodiverse_am
                       </a>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-violet-100 text-violet-600 flex items-center justify-center flex-shrink-0">
+                    <div className="w-10 h-10 rounded-lg bg-hover text-accent flex items-center justify-center flex-shrink-0">
                       📍
                     </div>
                     <div>
@@ -75,9 +75,9 @@ export default function ContactsPage() {
               </div>
 
               {/* Support */}
-              <div className="bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl p-6 text-white">
+              <div className="bg-accent rounded-2xl p-6 text-textPrimary">
                 <h2 className="text-xl font-bold mb-4">Поддержать проект</h2>
-                <p className="text-violet-100 text-sm mb-4">
+                <p className="text-textSecondary text-sm mb-4">
                   Мы будем признательны за любую помощь. Часть пожертвований (40%)
                   в конце месяца делится между членами команды.
                 </p>
@@ -139,7 +139,7 @@ export default function ContactsPage() {
                           type="text"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
                           placeholder="Как вас зовут?"
                           required
                         />
@@ -152,7 +152,7 @@ export default function ContactsPage() {
                           type="email"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
                           placeholder="your@email.com"
                           required
                         />
@@ -165,7 +165,7 @@ export default function ContactsPage() {
                       <select
                         value={formData.topic}
                         onChange={(e) => setFormData({ ...formData, topic: e.target.value })}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
                       >
                         <option value="general">Общий вопрос</option>
                         <option value="course">Вопрос о курсах</option>
@@ -183,14 +183,14 @@ export default function ContactsPage() {
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         rows={6}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent resize-none"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent resize-none"
                         placeholder="Напишите ваш вопрос или сообщение..."
                         required
                       />
                     </div>
                     <button
                       type="submit"
-                      className="w-full md:w-auto bg-violet-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-violet-700 transition-colors"
+                      className="w-full md:w-auto bg-accent text-textPrimary px-8 py-3 rounded-xl font-semibold hover:bg-hover transition-colors"
                     >
                       Отправить
                     </button>
@@ -209,7 +209,7 @@ export default function ContactsPage() {
                     <div>
                       <div className="font-bold text-gray-900">Соня</div>
                       <div className="text-sm text-gray-500">Основатель проекта (они/их)</div>
-                      <a href="#" className="text-violet-600 text-sm hover:underline">
+                      <a href="#" className="text-accent text-sm hover:underline">
                         Написать →
                       </a>
                     </div>
@@ -221,7 +221,7 @@ export default function ContactsPage() {
                     <div>
                       <div className="font-bold text-gray-900">Саша</div>
                       <div className="text-sm text-gray-500">Организатор</div>
-                      <a href="#" className="text-violet-600 text-sm hover:underline">
+                      <a href="#" className="text-accent text-sm hover:underline">
                         Написать →
                       </a>
                     </div>
