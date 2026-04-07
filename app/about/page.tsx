@@ -21,7 +21,7 @@ export default function AboutPage() {
             <h2 className="text-3xl font-bold text-textPrimary mb-6">Наша миссия</h2>
             <div className="prose prose-lg text-textSecondary">
               <p className="mb-4">
-                Платформу основал педагог Соня — нейроотличный помогающий специалист. Соня использует они/их (they/them) pronouns.
+                Платформу основал педагог Соня — нейроотличный помогающий специалист.
                 Здесь нейроотличные люди и их близкие могут:
               </p>
               <ul className="list-disc list-inside space-y-2 mb-6">

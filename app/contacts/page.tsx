@@ -208,7 +208,7 @@ export default function ContactsPage() {
                     </div>
                     <div>
                       <div className="font-bold text-gray-900">Соня</div>
-                      <div className="text-sm text-gray-500">Основатель проекта (они/их)</div>
+                      <div className="text-sm text-gray-500">Основатель проекта</div>
                       <a href="#" className="text-accent text-sm hover:underline">
                         Написать →
                       </a>
