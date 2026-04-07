@@ -34,11 +34,6 @@ export default async function CoursesPage() {
       c.ageGroup?.toLowerCase().includes("взросл") ||
       c.format?.minAge >= 16
     ),
-    "Специалистам": courses.filter((c) =>
-      c.ageGroup?.toLowerCase().includes("специал") ||
-      c.name?.toLowerCase().includes("стажировк") ||
-      c.name?.toLowerCase().includes("обмен")
-    ),
   };
 
   const hasCourses = courses.length > 0;
@@ -49,8 +44,8 @@ export default async function CoursesPage() {
       key: "Детям",
       title: "Детям",
       subtitle: "Занятия для детей от 5 лет",
-      icon: "🎈",
-      color: "from-pink-400 to-rose-500",
+      icon: "",
+      color: "bg-gray-200",
       sampleCourses: [
         {
           name: "Сопровождение в обучении",
@@ -106,8 +101,8 @@ export default async function CoursesPage() {
       key: "Подросткам",
       title: "Подросткам",
       subtitle: "Занятия для подростков от 11 лет",
-      icon: "🎮",
-      color: "from-violet-400 to-purple-500",
+      icon: "",
+      color: "bg-gray-200",
       sampleCourses: [
         {
           name: "Репетиторство по школьным предметам",
@@ -163,8 +158,8 @@ export default async function CoursesPage() {
       key: "Взрослым",
       title: "Взрослым",
       subtitle: "Занятия для взрослых от 18 лет",
-      icon: "🌟",
-      color: "from-cyan-400 to-blue-500",
+      icon: "",
+      color: "bg-gray-200",
       sampleCourses: [
         {
           name: "Группа поддержки",
@@ -216,47 +211,6 @@ export default async function CoursesPage() {
         },
       ],
     },
-    {
-      key: "Специалистам",
-      title: "Специалистам",
-      subtitle: "Обмен опытом и стажировки для коллег",
-      icon: "👩‍🏫",
-      color: "from-amber-400 to-orange-500",
-      sampleCourses: [
-        {
-          name: "Обмен опытом",
-          teacherName: "Педагоги",
-          description: "Созвон или текст с коллегами.",
-          price: "донат",
-          priceNote: "",
-          ageGroup: "для специалистов",
-        },
-        {
-          name: "Стажировка",
-          teacherName: "Команда",
-          description: "Посещение занятий, которые интересны, по желанию проведение своих. В течение месяца (любое количество).",
-          price: "8000 рублей / 37000 драмов",
-          priceNote: "месяц; по неделям — 2000 рублей / 9200 драмов",
-          ageGroup: "для специалистов",
-        },
-        {
-          name: "Проведение занятия/лекции",
-          teacherName: "Вы",
-          description: "Бесплатно или за донат. С переводчиком или без. Провести может любой человек, не только нейроотличный.",
-          price: "бесплатно",
-          priceNote: "или за донат",
-          ageGroup: "для специалистов",
-        },
-        {
-          name: "Другое сотрудничество",
-          teacherName: "Команда",
-          description: "Не упомянутое выше сотрудничество — напишите нам.",
-          price: "по договорённости",
-          priceNote: "",
-          ageGroup: "для специалистов",
-        },
-      ],
-    },
   ];
 
   return (
@@ -282,7 +236,7 @@ export default async function CoursesPage() {
               <div key={group.key}>
                 {/* Section Header */}
                 <div className="flex items-center gap-4 mb-8">
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${group.color} flex items-center justify-center text-2xl`}>
+                  <div className={`w-14 h-14 rounded-xl ${group.color} flex items-center justify-center text-2xl`}>
                     {group.icon}
                   </div>
                   <div>
