@@ -1,5 +1,5 @@
 ---
-title: АутИмя — Помощь детям с ОПФР
+title: АутИмя — Помощь детям с ЗПР
 slug: home
 logo:
   url: /logo.svg
