@@ -1,299 +1,163 @@
 import Link from "next/link";
 import { client } from "../tina/__generated__/databaseClient";
 
-function formatCoursePrice(pricePerHour?: number, currency?: string): string {
-  if (!pricePerHour) return "по договорённости";
-  if (currency) {
-    return `${pricePerHour} ${currency}`;
-  }
-  return `от ${pricePerHour} рублей`;
-}
-
 export const dynamic = "force-dynamic";
 
-const categories = [
-  {
-    title: "Детям",
-    description: "Занятия для детей от 5 лет: подготовка к школе, сопровождение обучения, творческие мастерские",
-    icon: "🎈",
-    href: "/courses",
-    color: "from-pink-400 to-rose-500",
-  },
-  {
-    title: "Подросткам",
-    description: "Репетиторство, ролевые игры, киноклуб, тренинги социальных навыков для подростков",
-    icon: "🎮",
-    href: "/courses",
-    color: "from-violet-400 to-purple-500",
-  },
-  {
-    title: "Взрослым",
-    description: "Группы поддержки, курсы английского, творческие занятия, равное консультирование",
-    icon: "🌟",
-    href: "/courses",
-    color: "from-cyan-400 to-blue-500",
-  },
-  {
-    title: "Специалистам",
-    description: "Обмен опытом, стажировки, проведение занятий для коллег",
-    icon: "👩‍🏫",
-    href: "/courses",
-    color: "from-amber-400 to-orange-500",
-  },
-];
+// Reusable components inline or imported
+function CourseCard({ course }: { course: any }) {
+  const price = course.pricing?.price || "по договорённости";
+  const currency = course.pricing?.currency === "amd" ? "֏" : "₽";
+  const convertedPrice = course.pricing?.convertedPrice;
+  const convertedCurrency = course.pricing?.convertedCurrency === "amd" ? "֏" : "₽";
+  return (
+    <div className="bg-surface border border-border rounded-2xl p-6 hover:shadow-lg hover:border-gray-400 transition-all">
+      <span className="inline-block text-xs font-semibold uppercase tracking-wide text-textSecondary bg-hover px-2 py-1 rounded mb-3">
+        {course.ageGroup === "children" ? "Детям" : course.ageGroup === "teens" ? "Подросткам" : "Взрослым"}
+      </span>
+      <h3 className="text-lg font-bold text-textPrimary mb-2">{course.name}</h3>
+      <p className="text-sm text-textSecondary mb-4">{course.description}</p>
+      <div className="flex items-center justify-between pt-4 border-t border-border">
+        <div className="text-sm font-bold text-textPrimary">
+          {price} {currency}
+          {convertedPrice ? (
+            <span className="font-normal text-textSecondary">
+              {" "}/ {convertedPrice} {convertedCurrency}<sup>*</sup>
+            </span>
+          ) : null}
+        </div>
+        <span className="text-xs text-textSecondary">{course.format?.duration || "60 мин"}</span>
+      </div>
+    </div>
+  );
+}
 
 export default async function HomePage() {
-  // Fetch featured courses
   let courses: any[] = [];
   try {
-    const coursesRes = await client.queries.courseConnection({
-      first: 6,
-    });
-    courses = coursesRes.data.courseConnection?.edges?.map((e: any) => e.node) || [];
-  } catch (e) {
-    console.error("Error fetching courses:", e);
-  }
-
-  // Fetch teachers
-  let teachers: any[] = [];
-  try {
-    const teachersRes = await client.queries.teacherConnection({ first: 4 });
-    teachers = teachersRes.data.teacherConnection?.edges?.map((e: any) => e.node) || [];
-  } catch (e) {
-    console.error("Error fetching teachers:", e);
-  }
+    const r = await client.queries.courseConnection({ first: 6 });
+    courses = r.data.courseConnection?.edges?.map((e: any) => e.node) || [];
+  } catch {}
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="bg-background border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight">
-              Нейроотличные{" "}
-              <span className="text-textSecondary">нейроотличным</span>
-            </h1>
-            <p className="text-xl lg:text-2xl text-textSecondary mb-8 leading-relaxed">
-              Платформа для нейроотличных детей, подростков, взрослых и их близких.
-              Здесь нейроотличные специалисты помогают нейроотличным клиентам всех возрастов.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link
-                href="/courses"
-                className="inline-flex items-center gap-2 bg-surface text-accent px-6 py-3 rounded-xl font-semibold hover:bg-hover transition-colors shadow-lg"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-                Выбрать курс
-              </Link>
-              <Link
-                href="/join"
-                className="inline-flex items-center gap-2 bg-accent text-textPrimary px-6 py-3 rounded-xl font-semibold hover:bg-hover transition-colors border border-border"
-              >
-                Присоединиться к команде
-              </Link>
-            </div>
-          </div>
+      {/* Hero */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+        <p className="text-xs font-bold uppercase tracking-widest text-accent mb-4">Платформа в Армении</p>
+        <h1 className="text-4xl lg:text-6xl font-bold leading-tight mb-6 max-w-2xl">
+          Нейроотличные нейроотличным
+        </h1>
+        <p className="text-lg lg:text-xl text-textSecondary mb-8 max-w-xl leading-relaxed">
+          Сообщество для нейроотличных детей, подростков, взрослых и их близких. Здесь можно учиться, получать поддержку и находить понимающих специалистов.
+        </p>
+        <div className="flex gap-3 flex-wrap">
+          <Link href="/children" className="inline-flex items-center gap-2 bg-textPrimary text-background px-6 py-3 rounded-xl font-semibold hover:opacity-90 transition-opacity">
+            Найти занятие
+          </Link>
+          <Link href="/join" className="inline-flex items-center gap-2 bg-surface text-textPrimary border border-border px-6 py-3 rounded-xl font-semibold hover:bg-hover transition-colors">
+            Хочу в команду
+          </Link>
         </div>
       </section>
 
-      {/* For Whom Section */}
-      <section className="py-16 lg:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Для кого мы работаем
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Мы создаём пространство, где нейроотличные люди и их близкие могут учиться,
-              развиваться и поддерживать друг друга
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.map((cat) => (
-              <Link
-                key={cat.title}
-                href={cat.href}
-                className="group bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-border"
-              >
-                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${cat.color} flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform`}>
-                  {cat.icon}
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-accent transition-colors">
-                  {cat.title}
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {cat.description}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+      <div className="h-px bg-border max-w-7xl mx-auto" />
 
-      {/* Featured Courses */}
-      {courses.length > 0 && (
-        <section className="py-16 lg:py-24 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between mb-12">
-              <div>
-                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
-                  Популярные курсы
-                </h2>
-                <p className="text-gray-600">
-                  Выберите занятие по душе
-                </p>
-              </div>
-              <Link
-                href="/courses"
-                className="hidden md:inline-flex items-center gap-2 text-accent font-semibold hover:text-accent transition-colors"
-              >
-                Все курсы
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {courses.slice(0, 6).map((course) => (
-                <div
-                  key={course._sys?.filename}
-                  className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 group"
-                >
-                  {course.photo?.src && (
-                    <div className="relative h-40 mb-4 rounded-xl overflow-hidden">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={course.photo.src}
-                        alt={course.photo?.alt || course.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  )}
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-medium text-accent bg-background px-2 py-1 rounded-full">
-                      {course.ageGroup || "Для всех"}
-                    </span>
-                    {course.teacherName && (
-                      <span className="text-xs text-gray-500">
-                        {course.teacherName}
-                      </span>
-                    )}
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-accent transition-colors">
-                    {course.name}
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                    {course.description}
-                  </p>
-                  {course.pricing?.pricePerHour && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-lg font-bold text-gray-900">
-                        {formatCoursePrice(course.pricing.pricePerHour, course.pricing.currency)}
-                      </span>
-                      <Link
-                        href="/contacts"
-                        className="text-sm font-medium text-accent hover:text-accent transition-colors"
-                      >
-                        Записаться →
-                      </Link>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-            <div className="text-center mt-8 md:hidden">
-              <Link
-                href="/courses"
-                className="inline-flex items-center gap-2 bg-accent text-textPrimary px-6 py-3 rounded-xl font-semibold hover:bg-hover transition-colors"
-              >
-                Все курсы
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Teachers Preview */}
-      {teachers.length > 0 && (
-        <section className="py-16 lg:py-24 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                Наши педагоги
-              </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Нейроотличные специалисты с большим опытом работы
-              </p>
-            </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {teachers.map((teacher) => (
-                <Link
-                  key={teacher._sys?.filename}
-                  href={`/teachers/${teacher.slug}`}
-                  className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 text-center group"
-                >
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-violet-400 to-purple-500 mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
-                    {teacher.name?.charAt(0)}
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-accent transition-colors">
-                    {teacher.name}
-                  </h3>
-                  <p className="text-sm text-gray-500 mb-2">
-                    {teacher.totalExperience}
-                  </p>
-                  <div className="flex flex-wrap justify-center gap-1">
-                    {teacher.languages?.slice(0, 2).map((lang: any, i: number) => (
-                      <span key={i} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                        {lang.lang}
-                      </span>
-                    ))}
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="text-center mt-8">
-              <Link
-                href="/teachers"
-                className="inline-flex items-center gap-2 bg-accent text-textPrimary px-6 py-3 rounded-xl font-semibold hover:bg-hover transition-colors"
-              >
-                Все педагоги
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* CTA Section */}
-      <section className="py-16 lg:py-24 bg-background border-t border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-            Готовы начать обучение?
-          </h2>
-          <p className="text-xl text-textSecondary mb-8 max-w-2xl mx-auto">
-            Запишитесь на пробное занятие или знакомство с педагогом.
-            Мы рады каждому!
+      {/* About */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="bg-surface border border-border rounded-2xl p-8 mb-8">
+          <h2 className="text-2xl font-bold mb-4">О нас</h2>
+          <p className="text-textSecondary leading-relaxed">
+            Платформу создал Соня — нейроотличный педагог с 9,5 годами опыта. Здесь нейроотличные люди и их близкие могут официально зарабатывать на том, что любят, находить понимающих специалистов и получать поддержку. Мы верим в инклюзивное, самонаправленное общество.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              href="/contacts"
-              className="inline-flex items-center gap-2 bg-surface text-accent px-8 py-4 rounded-xl font-semibold hover:bg-hover transition-colors shadow-lg"
-            >
-              Записаться на занятие
-            </Link>
-            <Link
-              href="/about"
-              className="inline-flex items-center gap-2 bg-transparent text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/10 transition-colors border border-white/30"
-            >
-              Узнать больше о нас
-            </Link>
-          </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            { title: "Для всех возрастов", desc: "Занятия для детей от 5 лет, подростков и взрослых. Отдельные группы для родителей и опекунов." },
+            { title: "На разных языках", desc: "Занятия на русском, армянском и английском. Для невербальных детей — поддержка АДК." },
+            { title: "Квир-френдли", desc: "Мы открыты для всех, без исключения. Приходите такими, какие есть." },
+            { title: "Сообщество", desc: "Равное консультирование, группы поддержки и общение с людьми, которые понимают." },
+          ].map(v => (
+            <div key={v.title} className="bg-surface border border-border rounded-xl p-5">
+              <h3 className="font-bold text-base mb-2">{v.title}</h3>
+              <p className="text-sm text-textSecondary leading-relaxed">{v.desc}</p>
+            </div>
+          ))}
         </div>
       </section>
+
+      <div className="h-px bg-border max-w-7xl mx-auto" />
+
+      {/* Direction cards */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 className="text-2xl font-bold mb-6">Выберите направление</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {[
+            { age: "5–12 лет", title: "Детям", desc: "Сопровождение в обучении, творческие мастерские, группы общения, подготовка к школе.", href: "/children" },
+            { age: "12–17 лет", title: "Подросткам", desc: "Репетиторство, ролевые игры, цифровая безопасность, тренинг социальных навыков.", href: "/teens" },
+            { age: "18+", title: "Взрослым", desc: "Группы поддержки, английский язык, творчество, консультирование, настольные игры.", href: "/adults" },
+          ].map(c => (
+            <Link key={c.title} href={c.href} className="bg-surface border border-border rounded-2xl p-6 hover:shadow-lg hover:border-gray-400 transition-all block">
+              <span className="inline-block text-xs font-semibold uppercase tracking-wide text-textSecondary bg-hover px-2 py-1 rounded mb-3">{c.age}</span>
+              <h3 className="text-xl font-bold mb-2">{c.title}</h3>
+              <p className="text-sm text-textSecondary mb-4">{c.desc}</p>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-textSecondary">{courses.filter(co => co.ageGroup === (c.href === "/children" ? "children" : c.href === "/teens" ? "teens" : "adults")).length} курсов</span>
+                <span className="text-sm font-semibold text-accent">Смотреть</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <div className="h-px bg-border max-w-7xl mx-auto" />
+
+      {/* Teachers preview */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="flex items-baseline justify-between mb-6">
+          <h2 className="text-2xl font-bold">Наши педагоги</h2>
+          <Link href="/teachers" className="text-sm font-medium text-accent hover:underline">Все педагоги</Link>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {[
+            { name: "Соня", role: "Основатель, нейроотличный педагог — 9,5 лет", langs: ["русский", "английский B1"], bio: "Специализируется на сопровождении детей с РАС, ЗПР, интеллектуальными нарушениями. Ведёт арт-терапию, игровые занятия, группы общения, блоггинг.", areas: ["РАС", "ЗПР", "Арт-терапия", "АДК"] },
+            { name: "Саша", role: "Педагог-тьютор — 4,5 года", langs: ["русский", "english"], bio: "Тьютор и педагог-психолог. Ведёт математику, английский, историю, ролевые игры и киноклуб.", areas: ["Математика", "English", "Ролевые игры", "КИНОКЛУБ"] },
+          ].map(t => (
+            <div key={t.name} className="bg-surface border border-border rounded-2xl p-7 flex gap-5">
+              <div className="w-20 h-20 rounded-full bg-hover border-2 border-border flex items-center justify-center text-3xl font-bold text-textSecondary flex-shrink-0">
+                {t.name[0]}
+              </div>
+              <div>
+                <h3 className="text-xl font-bold mb-1">{t.name}</h3>
+                <p className="text-sm font-semibold text-accent mb-3">{t.role}</p>
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {t.langs.map(l => <span key={l} className="text-xs bg-hover border border-border px-2 py-1 rounded text-textSecondary">{l}</span>)}
+                </div>
+                <p className="text-sm text-textSecondary mb-4 leading-relaxed">{t.bio}</p>
+                <div className="flex gap-2">
+                  <Link href="/teachers" className="text-sm font-semibold bg-textPrimary text-background px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Страница педагога</Link>
+                  <Link href="/children" className="text-sm font-semibold bg-surface text-textPrimary border border-border px-4 py-2 rounded-lg hover:bg-hover transition-colors">Курсы</Link>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div className="h-px bg-border max-w-7xl mx-auto" />
+
+      {/* Support CTA */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="bg-hover border border-border rounded-2xl p-8">
+          <h2 className="text-2xl font-bold mb-3">Поддержать нас</h2>
+          <p className="text-textSecondary mb-6 max-w-xl leading-relaxed">
+            Мы рады любой помощи — финансовой или информационной. Расскажите о нас друзьям или переведите любую сумму. 40% пожертвований в конце месяца делится поровну между членами команды.
+          </p>
+          <Link href="/support" className="inline-flex items-center gap-2 bg-accent text-white px-6 py-3 rounded-xl font-semibold hover:opacity-90 transition-opacity">
+            Поддержать
+          </Link>
+        </div>
+      </section>
+
+      <div className="h-px bg-border max-w-7xl mx-auto mb-16" />
     </div>
   );
 }
