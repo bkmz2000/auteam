@@ -1,14 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import crypto from "crypto";
 
 const COOKIE_NAME = "admin_auth";
 
-function hashPassword(password: string): string {
-  const secret = process.env.NEXTAUTH_SECRET || "default-secret-change-me";
-  return crypto.createHash("sha256").update(password + secret).digest("hex");
-}
-
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method !== "POST") {
     return res.status(405).end();
   }
@@ -25,11 +22,21 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(401).json({ error: "Invalid password" });
   }
 
-  const cookieValue = hashPassword(storedPassword);
+  const secret = process.env.NEXTAUTH_SECRET || "default-secret-change-me";
+  const cookieValue = await hashPassword(storedPassword + secret);
 
-  res.setHeader("Set-Cookie", [
-    `${COOKIE_NAME}=${cookieValue}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${60 * 60 * 24 * 7}`,
-  ]);
+  res.setHeader(
+    "Set-Cookie",
+    `${COOKIE_NAME}=${cookieValue}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${60 * 60 * 24 * 7}`
+  );
 
   return res.status(200).json({ ok: true });
+}
+
+async function hashPassword(input: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(input);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
 }
