@@ -1,7 +1,7 @@
 ---
 title: Новость 1
 slug: testnews
-description: ''
+description: 'Тут какое-то описание '
 date: 2026-04-07T00:00:00.000Z
 body: 'Проверяю, работают ли новости '
 ---
