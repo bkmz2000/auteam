@@ -19,7 +19,7 @@ export default async function TeachersPage() {
     {
       name: "Соня",
       slug: "sonya",
-      languages: [{ lang: "русский" }, { lang: "английский B1" }],
+      languages: ["русский", "английский B1"],
       totalExperience: "9,5 лет",
       areasOfWork: [
         "Репетиторство и индивидуальные занятия",
@@ -32,7 +32,7 @@ export default async function TeachersPage() {
     {
       name: "Саша",
       slug: "sasha",
-      languages: [{ lang: "русский" }, { lang: "английский" }],
+      languages: ["русский", "английский"],
       totalExperience: "5+ лет",
       areasOfWork: [
         "Математика",

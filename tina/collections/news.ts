@@ -19,6 +19,6 @@ export const NewsCollection: Collection = {
       ],
     },
     { type: "datetime", name: "date", label: "Date" },
-    { type: "string", name: "body", label: "Content" },
+    { type: "rich-text", name: "body", label: "Content" },
   ],
 };

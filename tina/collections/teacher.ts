@@ -9,11 +9,10 @@ export const TeacherCollection: Collection = {
     { type: "string", name: "name", label: "Name", required: true },
     { type: "string", name: "slug", label: "Slug", required: true },
     {
-      type: "object",
       name: "languages",
       label: "Languages",
+      type: "string",
       list: true,
-      fields: [{ type: "string", name: "lang", label: "Language" }],
     },
     { type: "string", name: "totalExperience", label: "Total Experience" },
     {

@@ -9,7 +9,7 @@ export const MaterialCollection: Collection = {
     { type: "string", name: "title", label: "Title", required: true },
     { type: "string", name: "slug", label: "Slug", required: true },
     { type: "string", name: "description", label: "Description", ui: { component: "textarea" } },
-    { type: "string", name: "body", label: "Content" },
+    { type: "rich-text", name: "body", label: "Content" },
     {
       type: "object",
       name: "attachments",
