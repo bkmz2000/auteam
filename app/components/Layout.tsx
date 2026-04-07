@@ -1,12 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const ageGroups = [
+  { href: "/children", label: "Детям" },
+  { href: "/teens", label: "Подросткам" },
+  { href: "/adults", label: "Взрослым" },
+  { href: "/parents", label: "Родителям" },
+];
 
 const navLinks = [
   { href: "/", label: "Главная" },
   { href: "/about", label: "О нас" },
-  { href: "/courses", label: "Курсы" },
   { href: "/teachers", label: "Педагоги" },
   { href: "/materials", label: "Материалы" },
   { href: "/news", label: "Новости" },
@@ -15,22 +22,81 @@ const navLinks = [
   { href: "/contacts", label: "Контакты" },
 ];
 
-export function Layout({ children }: { children: React.ReactNode }) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+function AgeGroupDropdown() {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  const isActive = ["/children", "/teens", "/adults", "/parents"].some(p => pathname?.startsWith(p));
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen(!open)}
+        className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+          isActive
+            ? "text-accent bg-hoverSurface"
+            : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"
+        }`}
+      >
+        Занятия
+        <svg
+          className={`w-4 h-4 transition-transform ${open ? "rotate-180" : ""}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      {open && (
+        <div className="absolute top-full left-0 mt-1 bg-surface border border-border rounded-xl shadow-lg py-1 min-w-[160px] z-50">
+          {ageGroups.map((g) => (
+            <Link
+              key={g.href}
+              href={g.href}
+              onClick={() => setOpen(false)}
+              className="block px-4 py-2 text-sm text-textSecondary hover:text-textPrimary hover:bg-hoverSurface transition-colors"
+            >
+              {g.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function Layout({ children }: { children: React.ReactNode }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  return (
+    <div className="min-h-screen flex flex-col bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
+      <header className="sticky top-0 z-50 bg-surface border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+            <Link href="/" className="flex items-center gap-3">
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center"
+                style={{ backgroundColor: "#C4956A" }}
+              >
                 <span className="text-white font-bold text-lg">Н</span>
               </div>
-              <span className="font-bold text-xl text-gray-900 hidden sm:block">
-                Нейроотличные
+              <span className="font-semibold text-xl text-textPrimary hidden sm:block">
+                Нейроотличные нейроотличным
               </span>
             </Link>
 
@@ -40,17 +106,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-violet-600 hover:bg-violet-50 transition-colors"
+                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    pathname === link.href || (link.href !== "/" && pathname?.startsWith(link.href))
+                      ? "text-accent bg-hoverSurface"
+                      : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"
+                  }`}
                 >
                   {link.label}
                 </Link>
               ))}
+              <AgeGroupDropdown />
             </nav>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
+              className="lg:hidden p-2 rounded-lg text-textSecondary hover:bg-hoverSurface transition-colors"
               aria-label="Меню"
             >
               {mobileMenuOpen ? (
@@ -67,16 +138,29 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
           {/* Mobile Navigation */}
           {mobileMenuOpen && (
-            <nav className="lg:hidden py-4 border-t border-gray-100">
+            <nav className="lg:hidden py-4 border-t border-border">
               <div className="flex flex-col gap-1">
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:text-violet-600 hover:bg-violet-50 transition-colors"
+                    className="px-4 py-3 rounded-lg text-sm font-medium text-textSecondary hover:text-textPrimary hover:bg-hoverSurface transition-colors"
                   >
                     {link.label}
+                  </Link>
+                ))}
+                <div className="px-4 py-2 text-xs font-semibold text-textSecondary uppercase tracking-wider">
+                  Занятия
+                </div>
+                {ageGroups.map((g) => (
+                  <Link
+                    key={g.href}
+                    href={g.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-4 py-3 rounded-lg text-sm font-medium text-textSecondary hover:text-textPrimary hover:bg-hoverSurface transition-colors"
+                  >
+                    {g.label}
                   </Link>
                 ))}
               </div>
@@ -86,24 +170,27 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1">
-        {children}
-      </main>
+      <main className="flex-1">{children}</main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-100 mt-16">
+      <footer className="bg-surface border-t border-border mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <div className="flex items-center justify-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+              <div
+                className="w-8 h-8 rounded-lg flex items-center justify-center"
+                style={{ backgroundColor: "#C4956A" }}
+              >
                 <span className="text-white font-bold text-sm">Н</span>
               </div>
-              <span className="font-bold text-lg text-gray-900">Нейроотличные нейроотличным</span>
+              <span className="font-semibold text-lg text-textPrimary">
+                Нейроотличные нейроотличным
+              </span>
             </div>
-            <p className="text-gray-500 text-sm mb-4">
+            <p className="text-textSecondary text-sm mb-4">
               Платформа для нейроотличных детей, подростков, взрослых и их близких в Армении
             </p>
-            <p className="text-gray-400 text-sm">
+            <p className="text-textSecondary text-sm" style={{ color: "#6B6560" }}>
               © 2024 Нейроотличные нейроотличным
             </p>
           </div>

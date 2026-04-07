@@ -9,14 +9,32 @@ export const CourseCollection: Collection = {
     { type: "string", name: "name", label: "Name", required: true },
     { type: "string", name: "slug", label: "Slug", required: true },
     { type: "string", name: "description", label: "Description", ui: { component: "textarea" } },
-    { type: "string", name: "ageGroup", label: "Age Group" },
+    {
+      type: "string",
+      name: "ageGroup",
+      label: "Age Group",
+      options: ["children", "teens", "adults"],
+    },
+    { type: "string", name: "teacherName", label: "Teacher Name" },
     {
       type: "object",
       name: "pricing",
       label: "Pricing",
       fields: [
-        { type: "number", name: "pricePerHour", label: "Price Per Hour" },
-        { type: "string", name: "currency", label: "Currency" },
+        { type: "number", name: "price", label: "Price" },
+        {
+          type: "string",
+          name: "currency",
+          label: "Currency",
+          options: ["rub", "amd"],
+        },
+        { type: "number", name: "convertedPrice", label: "Converted Price" },
+        {
+          type: "string",
+          name: "convertedCurrency",
+          label: "Converted Currency",
+          options: ["rub", "amd"],
+        },
       ],
     },
     {
@@ -42,7 +60,6 @@ export const CourseCollection: Collection = {
       ],
     },
     { type: "string", name: "location", label: "Location" },
-    { type: "string", name: "teacherName", label: "Teacher Name" },
     {
       type: "object",
       name: "photo",

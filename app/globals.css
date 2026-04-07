@@ -3,14 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --primary: #7C3AED;
-  --primary-light: #A78BFA;
-  --primary-dark: #5B21B6;
-  --secondary: #06B6D4;
-  --bg-light: #F9FAFB;
-  --bg-white: #FFFFFF;
-  --text-dark: #1F2937;
-  --text-gray: #6B7280;
+  --background: #FDFCF9;
+  --surface: #FFFFFF;
+  --border: #E8E4DF;
+  --text-primary: #1A1A1A;
+  --text-secondary: #6B6560;
+  --accent: #C4956A;
+  --hover-surface: #F4F1EC;
 }
 
 * {
@@ -22,9 +21,9 @@ html {
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  color: var(--text-dark);
-  background-color: var(--bg-light);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: var(--text-primary);
+  background-color: var(--background);
   line-height: 1.6;
 }
 
@@ -38,4 +37,10 @@ a {
   transition-property: color, background-color, border-color;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .transition-colors {
+    transition-duration: 0ms;
+  }
 }
