@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createHash } from "node:crypto";
 
 const COOKIE_NAME = "admin_auth";
 
@@ -11,9 +12,7 @@ export function middleware(req: NextRequest) {
   }
 
   const cookie = req.cookies.get(COOKIE_NAME);
-  const expectedHash = process.env.TINA_ADMIN_PASSWORD
-    ? hashPassword(process.env.TINA_ADMIN_PASSWORD)
-    : "";
+  const expectedHash = hashPassword(process.env.TINA_ADMIN_PASSWORD || "");
 
   if (!cookie || cookie.value !== expectedHash) {
     const loginUrl = new URL("/login", req.url);
@@ -26,8 +25,7 @@ export function middleware(req: NextRequest) {
 
 function hashPassword(password: string): string {
   const secret = process.env.NEXTAUTH_SECRET || "default-secret-change-me";
-  const crypto = require("crypto");
-  return crypto.createHash("sha256").update(password + secret).digest("hex");
+  return createHash("sha256").update(password + secret).digest("hex");
 }
 
 export const config = {
