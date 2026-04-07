@@ -17,7 +17,6 @@ const navLinks = [
   { href: "/teachers", label: "Педагоги" },
   { href: "/materials", label: "Материалы" },
   { href: "/news", label: "Новости" },
-  { href: "/feedback", label: "Отзывы" },
   { href: "/join", label: "Хочу в команду" },
   { href: "/contacts", label: "Контакты" },
 ];
@@ -88,34 +87,25 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3">
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{ backgroundColor: "#C4956A" }}
-              >
-                <span className="text-white font-bold text-lg">Н</span>
+            <Link href="/" className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-textPrimary">
+                <span className="text-background font-bold text-lg" style={{ letterSpacing: '-0.5px' }}>Н</span>
               </div>
-              <span className="font-semibold text-xl text-textPrimary hidden sm:block">
+              <span className="font-semibold text-textPrimary hidden sm:block" style={{ fontSize: '17px' }}>
                 Нейроотличные нейроотличным
               </span>
             </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    pathname === link.href || (link.href !== "/" && pathname?.startsWith(link.href))
-                      ? "text-accent bg-hoverSurface"
-                      : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              <Link href="/" className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname === "/" ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}>Главная</Link>
+              <Link href="/about" className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/about") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}>О нас</Link>
               <AgeGroupDropdown />
+              <Link href="/teachers" className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/teachers") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}>Педагоги</Link>
+              <Link href="/materials" className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/materials") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}>Материалы</Link>
+              <Link href="/news" className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/news") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}>Новости</Link>
+              <Link href="/join" className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/join") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}>Хочу в команду</Link>
+              <Link href="/contacts" className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/contacts") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}>Контакты</Link>
             </nav>
 
             {/* Mobile Menu Button */}
@@ -174,25 +164,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Footer */}
       <footer className="bg-surface border-t border-border mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <div
-                className="w-8 h-8 rounded-lg flex items-center justify-center"
-                style={{ backgroundColor: "#C4956A" }}
-              >
-                <span className="text-white font-bold text-sm">Н</span>
-              </div>
-              <span className="font-semibold text-lg text-textPrimary">
-                Нейроотличные нейроотличным
-              </span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
+            <div>
+              <div className="font-bold text-textPrimary mb-2">Нейроотличные нейроотличным</div>
+              <p className="text-textSecondary text-sm max-w-sm">
+                Платформа для нейроотличных детей, подростков, взрослых и их близких в Армении.
+              </p>
             </div>
-            <p className="text-textSecondary text-sm mb-4">
-              Платформа для нейроотличных детей, подростков, взрослых и их близких в Армении
-            </p>
-            <p className="text-textSecondary text-sm" style={{ color: "#6B6560" }}>
-              © 2024 Нейроотличные нейроотличным
-            </p>
+            <div className="flex gap-6 flex-wrap">
+              <Link href="/join" className="text-sm text-textSecondary hover:text-textPrimary transition-colors">Хочу в команду</Link>
+              <Link href="/contacts" className="text-sm text-textSecondary hover:text-textPrimary transition-colors">Контакты</Link>
+              <Link href="/support" className="text-sm text-textSecondary hover:text-textPrimary transition-colors">Поддержать</Link>
+              <Link href="/login" className="text-sm text-textSecondary hover:text-textPrimary transition-colors">Вход</Link>
+            </div>
           </div>
         </div>
       </footer>
