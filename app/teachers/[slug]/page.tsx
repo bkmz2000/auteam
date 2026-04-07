@@ -42,12 +42,6 @@ export default async function TeacherPage({ params }: PageProps) {
       {/* Hero */}
       <section className="bg-background border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-          <Link
-            href="/teachers"
-            className="inline-flex items-center gap-2 text-textSecondary hover:text-textPrimary mb-6 transition-colors"
-          >
-            ← Назад к педагогам
-          </Link>
           <div className="flex items-start gap-6">
             <div className="w-24 h-24 rounded-2xl bg-white/20 flex items-center justify-center text-4xl font-bold">
               {teacher.name?.charAt(0)}
