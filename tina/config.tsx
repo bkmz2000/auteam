@@ -9,7 +9,6 @@ import { NewsCollection } from "./collections/news";
 import { FeedbackCollection } from "./collections/feedback";
 
 export default defineConfig({
-  contentApiUrlOverride: "/api/tina/gql",
   clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID!,
   build: {
     publicFolder: "public",
