@@ -14,10 +14,10 @@ const ageGroups = [
 const navLinks = [
   { href: "/", label: "Главная" },
   { href: "/about", label: "О нас" },
-  { href: "/teachers", label: "Педагоги" },
+  { href: "/teachers", label: "Участники" },
   { href: "/materials", label: "Материалы" },
   { href: "/news", label: "Новости" },
-  { href: "/join", label: "Хочу в команду" },
+  { href: "/join", label: "Присоединиться к сообществу" },
   { href: "/contacts", label: "Контакты" },
 ];
 
@@ -36,7 +36,9 @@ function AgeGroupDropdown() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
-  const isActive = ["/children", "/teens", "/adults", "/parents"].some(p => pathname?.startsWith(p));
+  const isActive = ["/children", "/teens", "/adults", "/parents"].some((p) =>
+    pathname?.startsWith(p),
+  );
 
   return (
     <div ref={ref} className="relative">
@@ -48,14 +50,19 @@ function AgeGroupDropdown() {
             : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"
         }`}
       >
-        Занятия
+        Что можем предложить
         <svg
           className={`w-4 h-4 transition-transform ${open ? "rotate-180" : ""}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </button>
       {open && (
@@ -89,23 +96,66 @@ export function Layout({ children }: { children: React.ReactNode }) {
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-textPrimary">
-                <span className="text-background font-bold text-lg" style={{ letterSpacing: '-0.5px' }}>Н</span>
+                <span
+                  className="text-background font-bold text-lg"
+                  style={{ letterSpacing: "-0.5px" }}
+                >
+                  Н
+                </span>
               </div>
-              <span className="font-semibold text-textPrimary hidden sm:block" style={{ fontSize: '17px' }}>
+              <span
+                className="font-semibold text-textPrimary hidden sm:block"
+                style={{ fontSize: "17px" }}
+              >
                 Нейроотличные нейроотличным
               </span>
             </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1">
-              <Link href="/" className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname === "/" ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}>Главная</Link>
-              <Link href="/about" className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/about") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}>О нас</Link>
+              <Link
+                href="/"
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname === "/" ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}
+              >
+                Главная
+              </Link>
+              <Link
+                href="/about"
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/about") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}
+              >
+                О нас
+              </Link>
               <AgeGroupDropdown />
-              <Link href="/teachers" className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/teachers") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}>Педагоги</Link>
-              <Link href="/materials" className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/materials") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}>Материалы</Link>
-              <Link href="/news" className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/news") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}>Новости</Link>
-              <Link href="/join" className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/join") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}>Хочу в команду</Link>
-              <Link href="/contacts" className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/contacts") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}>Контакты</Link>
+              <Link
+                href="/teachers"
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/teachers") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}
+              >
+                Участники
+              </Link>
+              <Link
+                href="/materials"
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/materials") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}
+              >
+                Материалы
+              </Link>
+              <Link
+                href="/news"
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/news") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}
+              >
+                Новости
+              </Link>
+              <Link
+                href="/join"
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/join") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}
+              >
+                Присоединиться к сообществу
+              </Link>
+              <Link
+                href="/contacts"
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/contacts") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}
+              >
+                Контакты
+              </Link>
             </nav>
 
             {/* Mobile Menu Button */}
@@ -115,12 +165,32 @@ export function Layout({ children }: { children: React.ReactNode }) {
               aria-label="Меню"
             >
               {mobileMenuOpen ? (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               ) : (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 </svg>
               )}
             </button>
@@ -167,16 +237,39 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
             <div>
-              <div className="font-bold text-textPrimary mb-2">Нейроотличные нейроотличным</div>
+              <div className="font-bold text-textPrimary mb-2">
+                Нейроотличные нейроотличным
+              </div>
               <p className="text-textSecondary text-sm max-w-sm">
-                Платформа для нейроотличных детей, подростков, взрослых и их близких в Армении.
+                Платформа для нейроотличных детей, подростков, взрослых и их
+                близких в Армении.
               </p>
             </div>
             <div className="flex gap-6 flex-wrap">
-              <Link href="/join" className="text-sm text-textSecondary hover:text-textPrimary transition-colors">Хочу в команду</Link>
-              <Link href="/contacts" className="text-sm text-textSecondary hover:text-textPrimary transition-colors">Контакты</Link>
-              <Link href="/support" className="text-sm text-textSecondary hover:text-textPrimary transition-colors">Поддержать</Link>
-              <Link href="/login" className="text-sm text-textSecondary hover:text-textPrimary transition-colors">Вход</Link>
+              <Link
+                href="/join"
+                className="text-sm text-textSecondary hover:text-textPrimary transition-colors"
+              >
+                Присоединиться к сообществу
+              </Link>
+              <Link
+                href="/contacts"
+                className="text-sm text-textSecondary hover:text-textPrimary transition-colors"
+              >
+                Контакты
+              </Link>
+              <Link
+                href="/support"
+                className="text-sm text-textSecondary hover:text-textPrimary transition-colors"
+              >
+                Поддержать
+              </Link>
+              <Link
+                href="/login"
+                className="text-sm text-textSecondary hover:text-textPrimary transition-colors"
+              >
+                Вход
+              </Link>
             </div>
           </div>
         </div>

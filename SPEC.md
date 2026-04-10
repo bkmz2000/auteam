@@ -61,7 +61,7 @@
 Взрослым
 Родителям
 Педагоги
-Хочу в команду
+Присоединиться к сообществу
 Материалы
 Новости
 Контакты
@@ -74,7 +74,7 @@
 | Route | Описание | TinaCMS |
 |-------|----------|---------|
 | `/` | Главная — краткое представление платформы | PageCollection |
-| `/about` | О нас — миссия, принципы, организаторы, финансы | PageCollection |
+| `/about` | О нас — миссия, ценности, организаторы, финансы | PageCollection |
 | `/children` | Детям — курсы для детей | PageCollection + курсы |
 | `/teens` | Подросткам — курсы для подростков | PageCollection + курсы |
 | `/adults` | Взрослым — курсы и группы для взрослых | PageCollection + курсы |
@@ -85,7 +85,7 @@
 | `/news/[slug]` | Новость | NewsCollection |
 | `/feedback` | Книга отзывов и предложений | FeedbackCollection |
 | `/materials` | Открытые материалы — статьи, методички, ссылки | MaterialsCollection |
-| `/join` | Хочу в команду — открытые вакансии, условия, форма | PageCollection |
+| `/join` | Присоединиться к сообществу — открытые вакансии, условия, форма | PageCollection |
 | `/contacts` | Контакты | PageCollection |
 | `/support` | Поддержать нас (финансово и информационно) | PageCollection |
 
@@ -212,7 +212,7 @@ hoverSurface: 'warm100', // #F4F1EC
 ## 7. Current State vs Target
 
 ### Already exists
-- Главная, О нас, Курсы, Педагоги, Материалы, Новости, Отзывы, Хочу в команду, Контакты
+- Главная, О нас, Курсы, Педагоги, Материалы, Новости, Отзывы, Присоединиться к сообществу, Контакты
 - TinaCMS collections: pages, teachers, courses, categories, news, feedback
 - Login + password protection for /admin
 

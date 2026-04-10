@@ -27,20 +27,17 @@ export default async function TeachersPage() {
         "Группы общения и поддержки",
         "Творческие занятия",
       ],
-      shortBio: "Нейроотличный педагог, основатель платформы. Специализируется на работе с нейроотличными детьми и подростками.",
+      shortBio:
+        "Нейроотличный педагог, основатель платформы. Специализируется на работе с нейроотличными детьми и подростками.",
     },
     {
       name: "Саша",
       slug: "sasha",
       languages: ["русский", "английский"],
       totalExperience: "5+ лет",
-      areasOfWork: [
-        "Математика",
-        "Английский язык",
-        "История",
-        "Киноклуб",
-      ],
-      shortBio: "Опытный педагог, ведёт занятия для подростков и взрослых по школьным предметам.",
+      areasOfWork: ["Математика", "Английский язык", "История", "Киноклуб"],
+      shortBio:
+        "Опытный педагог, ведёт занятия для подростков и взрослых по школьным предметам.",
     },
   ];
 
@@ -51,10 +48,11 @@ export default async function TeachersPage() {
       {/* Hero */}
       <section className="bg-background border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">Наши педагоги</h1>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4">Участники</h1>
           <p className="text-xl text-textSecondary max-w-3xl">
-            Все наши педагоги — нейроотличные люди или их близкие.
-            У каждого есть очень подробная страничка, чтобы вы могли выбрать подходящего специалиста.
+            Все наши участники — нейроотличные люди или их близкие. У каждого
+            есть очень подробная страничка, чтобы вы могли выбрать подходящего
+            специалиста.
           </p>
         </div>
       </section>
@@ -66,7 +64,7 @@ export default async function TeachersPage() {
             {displayTeachers.map((teacher: any) => (
               <Link
                 key={teacher.slug || teacher._sys?.filename}
-                href={`/teachers/${teacher.slug || teacher._sys?.filename?.replace('.md', '')}`}
+                href={`/teachers/${teacher.slug || teacher._sys?.filename?.replace(".md", "")}`}
                 className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 group"
               >
                 {/* Avatar */}
@@ -86,16 +84,24 @@ export default async function TeachersPage() {
 
                 {/* Languages */}
                 <div className="flex flex-wrap gap-1 mb-4">
-                  {(teacher.languages || []).slice(0, 3).map((lang: any, i: number) => (
-                    <span key={i} className="text-xs bg-background text-accent px-2 py-1 rounded-full">
-                      {typeof lang === 'string' ? lang : lang.lang}
-                    </span>
-                  ))}
+                  {(teacher.languages || [])
+                    .slice(0, 3)
+                    .map((lang: any, i: number) => (
+                      <span
+                        key={i}
+                        className="text-xs bg-background text-accent px-2 py-1 rounded-full"
+                      >
+                        {typeof lang === "string" ? lang : lang.lang}
+                      </span>
+                    ))}
                 </div>
 
                 {/* Short Bio */}
                 <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                  {teacher.shortBio || teacher.body?.slice(0, 150) || teacher.otherExperience?.slice(0, 150) || "Подробности на страничке педагога..."}
+                  {teacher.shortBio ||
+                    teacher.body?.slice(0, 150) ||
+                    teacher.otherExperience?.slice(0, 150) ||
+                    "Подробности на страничке педагога..."}
                 </p>
 
                 {/* Areas */}
@@ -103,11 +109,16 @@ export default async function TeachersPage() {
                   <div className="pt-4 border-t border-gray-100">
                     <p className="text-xs text-gray-500 mb-2">Сферы работы:</p>
                     <div className="flex flex-wrap gap-1">
-                      {teacher.areasOfWork.slice(0, 3).map((area: any, i: number) => (
-                        <span key={i} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                          {typeof area === 'string' ? area : area.area}
-                        </span>
-                      ))}
+                      {teacher.areasOfWork
+                        .slice(0, 3)
+                        .map((area: any, i: number) => (
+                          <span
+                            key={i}
+                            className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full"
+                          >
+                            {typeof area === "string" ? area : area.area}
+                          </span>
+                        ))}
                     </div>
                   </div>
                 )}
@@ -131,9 +142,9 @@ export default async function TeachersPage() {
               Как выбрать педагога?
             </h2>
             <p className="text-gray-600 mb-6">
-              У каждого педагога есть очень подробная страничка с описанием подходов,
-              резюме, особенностей преподавания и даже фотографиями домашних животных.
-              Изучите их, чтобы сделать осознанный выбор!
+              У каждого педагога есть очень подробная страничка с описанием
+              подходов, резюме, особенностей преподавания и даже фотографиями
+              домашних животных. Изучите их, чтобы сделать осознанный выбор!
             </p>
             <p className="text-gray-600">
               Если после изучения описаний у вас остались вопросы, вы можете{" "}
