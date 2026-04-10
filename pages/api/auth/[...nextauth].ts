@@ -1,25 +1,27 @@
 import { TinaNodeBackend } from "@tinacms/datalayer";
-import { AuthJsBackendAuthProvider } from "tinacms-authjs";
+import { TinaCloudBackendAuthProvider } from "@tinacms/auth";
+import { TinaAuthJSOptions } from "tinacms-authjs";
 import NextAuth from "next-auth";
-import GithubProvider from "next-auth/providers/github";
 
 import databaseClient from "../../../tina/__generated__/databaseClient";
 
-const authProvider = AuthJsBackendAuthProvider({
-  authOptions: {
-    providers: [
-      GithubProvider({
-        clientId: process.env.GITHUB_ID || "",
-        clientSecret: process.env.GITHUB_SECRET || "",
-      }),
-    ],
+const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === "true";
+
+let authHandler: any;
+
+if (isLocal) {
+  authHandler = NextAuth({
     secret: process.env.NEXTAUTH_SECRET || "fallback-secret",
-  },
-});
+    providers: [],
+  });
+} else {
+  // Tina Cloud mode - use Tina's auth
+  authHandler = NextAuth(
+    TinaAuthJSOptions({
+      databaseClient,
+      secret: process.env.NEXTAUTH_SECRET || "fallback-secret",
+    })
+  );
+}
 
-const handler = TinaNodeBackend({
-  authProvider,
-  databaseClient,
-});
-
-export default (req: any, res: any) => handler(req, res);
+export default authHandler;
