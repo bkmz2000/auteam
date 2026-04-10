@@ -12,6 +12,8 @@ const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === "true";
 
 export default defineConfig({
   clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID!,
+  branch: process.env.NEXT_PUBLIC_TINA_BRANCH!,
+  token: process.env.TINA_TOKEN!,
   build: {
     publicFolder: "public",
     outputFolder: "admin",
