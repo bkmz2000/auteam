@@ -1,9 +1,6 @@
-import { createDatabase, createLocalDatabase } from "@tinacms/datalayer";
+import { createDatabase } from "@tinacms/datalayer";
 import { RedisLevel } from "upstash-redis-level";
 import { GitHubProvider } from "tinacms-gitprovider-github";
-
-// Manage this flag in your CI/CD pipeline and make sure it is set to false in production
-const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === "true";
 
 const token = process.env.GITHUB_PERSONAL_ACCESS_TOKEN as string;
 const owner = (process.env.GITHUB_OWNER ||
@@ -22,26 +19,23 @@ if (!branch) {
 
 // Helper to clean env vars - remove whitespace and newlines
 const cleanEnv = (val: string | undefined) => {
-  const cleaned = val?.replace(/\s/g, "").trim()
-  return cleaned && cleaned.length > 0 ? cleaned : undefined
-}
+  const cleaned = val?.replace(/\s/g, "").trim();
+  return cleaned && cleaned.length > 0 ? cleaned : undefined;
+};
 
-export default isLocal
-  ? createLocalDatabase()
-  : createDatabase({
-      gitProvider: new GitHubProvider({
-        branch,
-        owner,
-        repo,
-        token,
-      }),
-      databaseAdapter: new RedisLevel<string, Record<string, any>>({
-        redis: {
-          // Try UPSTASH format first, then Vercel KV format
-          url: cleanEnv(process.env.UPSTASH_REDIS_REST_URL) || cleanEnv(process.env.KV_REST_API_URL) || cleanEnv(process.env.KV_URL) || "",
-          token: cleanEnv(process.env.UPSTASH_REDIS_REST_TOKEN) || cleanEnv(process.env.KV_REST_API_TOKEN) || "",
-        },
-        debug: process.env.DEBUG === "true" || false,
-      }),
-      namespace: branch,
-    });
+export default createDatabase({
+  gitProvider: new GitHubProvider({
+    branch,
+    owner,
+    repo,
+    token,
+  }),
+  databaseAdapter: new RedisLevel<string, Record<string, any>>({
+    redis: {
+      url: cleanEnv(process.env.UPSTASH_REDIS_REST_URL) || cleanEnv(process.env.KV_REST_API_URL) || cleanEnv(process.env.KV_URL) || "",
+      token: cleanEnv(process.env.UPSTASH_REDIS_REST_TOKEN) || cleanEnv(process.env.KV_REST_API_TOKEN) || "",
+    },
+    debug: process.env.DEBUG === "true" || false,
+  }),
+  namespace: branch,
+});
