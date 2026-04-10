@@ -1,16 +1,13 @@
 import NextAuth from "next-auth"
-import { TinaAuthJSOptions, TinaCredentialsProvider } from "tinacms-authjs"
+import { TinaAuthJSOptions } from "tinacms-authjs"
 import databaseClient from "../../../tina/__generated__/databaseClient"
 
 const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === "true"
 
-const handler = NextAuth(
+export default NextAuth(
   TinaAuthJSOptions({
     databaseClient,
-    secret: process.env.NEXTAUTH_SECRET || "dev-secret-fallback",
+    secret: process.env.NEXTAUTH_SECRET || "fallback-secret",
     ...(isLocal ? {} : { providers: [] }),
-    ...(isLocal ? { providers: [TinaCredentialsProvider({ databaseClient })] } : {}),
   })
 )
-
-export default handler
