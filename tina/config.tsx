@@ -8,13 +8,9 @@ import { CourseCollection } from "./collections/course";
 import { NewsCollection } from "./collections/news";
 import { FeedbackCollection } from "./collections/feedback";
 
-const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === "true";
-
 export default defineConfig({
+  contentApiUrlOverride: "/api/tina/gql",
   clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID!,
-  branch: process.env.NEXT_PUBLIC_TINA_BRANCH!,
-  token: process.env.TINA_TOKEN!,
-  contentApiUrlOverride: `https://content.tinajs.io/1.6/content/${process.env.NEXT_PUBLIC_TINA_CLIENT_ID}/github/${process.env.NEXT_PUBLIC_TINA_BRANCH}`,
   build: {
     publicFolder: "public",
     outputFolder: "admin",
