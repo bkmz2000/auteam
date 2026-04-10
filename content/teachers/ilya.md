@@ -2,11 +2,19 @@
 name: ilya
 slug: ilyabronner
 languages:
-  - lang: Russian
-  - lang: English
-totalExperience: '96'
+  - Russian
+  - English
+totalExperience: "96"
 education: BA in math
+certificates: []
+areasOfWork: []
 responsibilities: technical stuff
+resume: ""
+otherExperience: ""
+consultingTopics: []
+interests: ""
+teachingStyle: ""
+photos: []
 isActive: true
+body: ""
 ---
-
