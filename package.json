@@ -20,6 +20,7 @@
     "tailwindcss": "^3.4.19"
   },
   "dependencies": {
+    "@tinacms/app": "2.4.2",
     "@tinacms/auth": "^1.1.2",
     "@tinacms/cli": "^1.12.6",
     "@tinacms/datalayer": "^1.4.3",
