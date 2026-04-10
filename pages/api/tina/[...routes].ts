@@ -1,15 +1,10 @@
 import { TinaNodeBackend, LocalBackendAuthProvider } from "@tinacms/datalayer";
-import { TinaCloudBackendAuthProvider } from "@tinacms/auth";
 
 import databaseClient from "../../../tina/__generated__/databaseClient";
 
-const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === "true";
-
 const handler = TinaNodeBackend({
-  authProvider: isLocal ? LocalBackendAuthProvider() : TinaCloudBackendAuthProvider(),
+  authProvider: LocalBackendAuthProvider(),
   databaseClient,
 });
 
-export default (req, res) => {
-  return handler(req, res);
-};
+export default (req: any, res: any) => handler(req, res);
