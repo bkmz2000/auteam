@@ -14,6 +14,7 @@ export default defineConfig({
   clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID!,
   branch: process.env.NEXT_PUBLIC_TINA_BRANCH!,
   token: process.env.TINA_TOKEN!,
+  contentApiUrlOverride: `https://content.tinajs.io/1.6/content/${process.env.NEXT_PUBLIC_TINA_CLIENT_ID}/github/${process.env.NEXT_PUBLIC_TINA_BRANCH}`,
   build: {
     publicFolder: "public",
     outputFolder: "admin",
