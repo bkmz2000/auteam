@@ -22,7 +22,7 @@
   "dependencies": {
     "@tinacms/app": "2.4.2",
     "@tinacms/auth": "^1.1.2",
-    "@tinacms/cli": "^1.12.6",
+    "@tinacms/cli": "^2.2.5",
     "@tinacms/datalayer": "^1.4.3",
     "next": "14.2.35",
     "next-auth": "^4.24.13",
