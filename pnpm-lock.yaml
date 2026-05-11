@@ -7,6 +7,11 @@ settings:
 overrides:
   nanoid: ^3.3.7
 
+patchedDependencies:
+  tinacms-authjs:
+    hash: ba636a2ca3ae9a7bb391b971e1975e02f518cf67c85ded598fc3f43d9894d3b0
+    path: patches/tinacms-authjs.patch
+
 importers:
 
   .:
@@ -46,7 +51,7 @@ importers:
         version: 2.10.1(@types/react-dom@18.3.7(@types/react@18.3.27))(@types/react@18.3.27)(abstract-level@1.0.4)(immer@10.2.0)(react-dnd-html5-backend@16.0.1)(react-dnd@16.0.1(@types/hoist-non-react-statics@3.3.5)(@types/node@22.19.3)(@types/react@18.3.27)(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.23.2)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(sucrase@3.35.1)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@18.3.1))
       tinacms-authjs:
         specifier: ^5.0.9
-        version: 5.0.9(next-auth@4.24.13(next@14.2.35(@babel/core@7.28.5)(@opentelemetry/api@1.9.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@14.2.35(@babel/core@7.28.5)(@opentelemetry/api@1.9.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tinacms@2.10.1(@types/react-dom@18.3.7(@types/react@18.3.27))(@types/react@18.3.27)(abstract-level@1.0.4)(immer@10.2.0)(react-dnd-html5-backend@16.0.1)(react-dnd@16.0.1(@types/hoist-non-react-statics@3.3.5)(@types/node@22.19.3)(@types/react@18.3.27)(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.23.2)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(sucrase@3.35.1)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@18.3.1)))(yup@1.7.1)
+        version: 5.0.9(patch_hash=ba636a2ca3ae9a7bb391b971e1975e02f518cf67c85ded598fc3f43d9894d3b0)(next-auth@4.24.13(next@14.2.35(@babel/core@7.28.5)(@opentelemetry/api@1.9.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@14.2.35(@babel/core@7.28.5)(@opentelemetry/api@1.9.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tinacms@2.10.1(@types/react-dom@18.3.7(@types/react@18.3.27))(@types/react@18.3.27)(abstract-level@1.0.4)(immer@10.2.0)(react-dnd-html5-backend@16.0.1)(react-dnd@16.0.1(@types/hoist-non-react-statics@3.3.5)(@types/node@22.19.3)(@types/react@18.3.27)(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.23.2)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(sucrase@3.35.1)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@18.3.1)))(yup@1.7.1)
       tinacms-gitprovider-github:
         specifier: ^2.0.19
         version: 2.0.19(@tinacms/datalayer@1.4.3(react@18.3.1)(typescript@5.9.3))
@@ -12665,7 +12670,7 @@ snapshots:
 
   throttle-debounce@3.0.1: {}
 
-  tinacms-authjs@5.0.9(next-auth@4.24.13(next@14.2.35(@babel/core@7.28.5)(@opentelemetry/api@1.9.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@14.2.35(@babel/core@7.28.5)(@opentelemetry/api@1.9.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tinacms@2.10.1(@types/react-dom@18.3.7(@types/react@18.3.27))(@types/react@18.3.27)(abstract-level@1.0.4)(immer@10.2.0)(react-dnd-html5-backend@16.0.1)(react-dnd@16.0.1(@types/hoist-non-react-statics@3.3.5)(@types/node@22.19.3)(@types/react@18.3.27)(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.23.2)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(sucrase@3.35.1)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@18.3.1)))(yup@1.7.1):
+  tinacms-authjs@5.0.9(patch_hash=ba636a2ca3ae9a7bb391b971e1975e02f518cf67c85ded598fc3f43d9894d3b0)(next-auth@4.24.13(next@14.2.35(@babel/core@7.28.5)(@opentelemetry/api@1.9.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@14.2.35(@babel/core@7.28.5)(@opentelemetry/api@1.9.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tinacms@2.10.1(@types/react-dom@18.3.7(@types/react@18.3.27))(@types/react@18.3.27)(abstract-level@1.0.4)(immer@10.2.0)(react-dnd-html5-backend@16.0.1)(react-dnd@16.0.1(@types/hoist-non-react-statics@3.3.5)(@types/node@22.19.3)(@types/react@18.3.27)(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.23.2)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(sucrase@3.35.1)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@18.3.1)))(yup@1.7.1):
     dependencies:
       '@tinacms/schema-tools': 1.6.5(react@18.3.1)(yup@1.7.1)
       next: 14.2.35(@babel/core@7.28.5)(@opentelemetry/api@1.9.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)

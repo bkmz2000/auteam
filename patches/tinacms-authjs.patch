@@ -1,0 +1,12 @@
+diff --git a/dist/index.js b/dist/index.js
+index a860f46e9c5ac319ddfb41fbe2c5499174f55861..d3fb22019a488e45a8a2656da6451c91a72106ac 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -36,7 +36,6 @@ var import_next = require("next-auth/next");
+ 
+ // src/tinacms.ts
+ var import_react = require("next-auth/react");
+-var import_tinacms = require("tinacms");
+ var TINA_CREDENTIALS_PROVIDER_NAME = "TinaCredentials";
+ 
+ // src/index.ts

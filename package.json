@@ -25,6 +25,9 @@
   "pnpm": {
     "overrides": {
       "nanoid": "^3.3.7"
+    },
+    "patchedDependencies": {
+      "tinacms-authjs": "patches/tinacms-authjs.patch"
     }
   },
   "dependencies": {
