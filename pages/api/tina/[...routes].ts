@@ -17,4 +17,11 @@ const handler = TinaNodeBackend({
   databaseClient,
 });
 
-export default (req: any, res: any) => handler(req, res);
+export default async (req: any, res: any) => {
+  try {
+    await handler(req, res);
+  } catch (e: any) {
+    console.error("TinaNodeBackend error:", e?.message, e?.stack);
+    res.status(500).json({ error: e?.message, stack: e?.stack });
+  }
+};
