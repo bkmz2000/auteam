@@ -8,6 +8,15 @@
         "value": "tinarocks",
         "passwordChangeRequired": true
       }
+    },
+    {
+      "name": "Sonya",
+      "email": "sonya@auteam.org",
+      "username": "sonya",
+      "password": {
+        "value": "KobaBubaMasha123",
+        "passwordChangeRequired": true
+      }
     }
   ]
 }
