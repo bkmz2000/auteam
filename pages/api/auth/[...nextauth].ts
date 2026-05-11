@@ -1,6 +1,11 @@
 import NextAuth from "next-auth";
+import { TinaAuthJSOptions } from "tinacms-authjs";
 
-export default NextAuth({
-  secret: process.env.NEXTAUTH_SECRET || "fallback-secret",
-  providers: [],
-});
+import databaseClient from "../../../tina/__generated__/databaseClient";
+
+export default NextAuth(
+  TinaAuthJSOptions({
+    databaseClient,
+    secret: process.env.NEXTAUTH_SECRET!,
+  })
+);

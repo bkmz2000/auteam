@@ -8,9 +8,14 @@ import { CourseCollection } from "./collections/course";
 import { NewsCollection } from "./collections/news";
 import { FeedbackCollection } from "./collections/feedback";
 
+const branch =
+  process.env.NEXT_PUBLIC_TINA_BRANCH ||
+  process.env.VERCEL_GIT_COMMIT_REF ||
+  "main";
+
 export default defineConfig({
   contentApiUrlOverride: "/api/tina/gql",
-  clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID!,
+  branch,
   build: {
     publicFolder: "public",
     outputFolder: "admin",
