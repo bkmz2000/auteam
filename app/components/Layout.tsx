@@ -265,7 +265,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 Поддержать
               </Link>
               <Link
-                href="/login"
+                href="/admin/index.html"
                 className="text-sm text-textSecondary hover:text-textPrimary transition-colors"
               >
                 Вход
