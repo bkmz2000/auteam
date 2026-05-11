@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const info: Record<string, any> = {
+      node_version: process.version,
       NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET ? `set (${process.env.NEXTAUTH_SECRET.length} chars)` : "MISSING",
       NEXTAUTH_URL: process.env.NEXTAUTH_URL || "MISSING",
       TINA_PUBLIC_IS_LOCAL: process.env.TINA_PUBLIC_IS_LOCAL || "MISSING",
