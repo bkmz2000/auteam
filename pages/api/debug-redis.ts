@@ -69,12 +69,34 @@ export default async function handler(
       if (userKeys.length > 50) break;
     } while (Number(cursor2) !== 0);
 
+    const upstashUrl = cleanEnv(process.env.UPSTASH_REDIS_REST_URL);
+    const kvUrl = cleanEnv(process.env.KV_REST_API_URL);
+    const kvLegacyUrl = cleanEnv(process.env.KV_URL);
+
+    // Also probe the KV one if it differs
+    let kvDbsize: number | string = "not probed";
+    if (kvUrl && kvUrl !== upstashUrl) {
+      try {
+        const kvToken = cleanEnv(process.env.KV_REST_API_TOKEN) || "";
+        const kv = new Redis({ url: kvUrl, token: kvToken });
+        kvDbsize = await kv.dbsize();
+      } catch (e: any) {
+        kvDbsize = `ERR: ${e?.message}`;
+      }
+    }
+
     res.status(200).json({
       rawBranch,
       rawBranchHex: Buffer.from(rawBranch).toString("hex"),
       cleanedBranch,
       hasTrailingWhitespace: rawBranch !== cleanedBranch,
-      dbsize,
+      activeRedis: { url, dbsize },
+      envUrls: {
+        UPSTASH_REDIS_REST_URL: upstashUrl,
+        KV_REST_API_URL: kvUrl,
+        KV_URL: kvLegacyUrl ? `${kvLegacyUrl.slice(0, 40)}...` : null,
+      },
+      kvDbsizeIfDifferent: kvDbsize,
       scannedTotal: total,
       sampleKeys: sampled,
       userKeys,
