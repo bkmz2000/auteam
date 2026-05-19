@@ -34,7 +34,7 @@
     "@tinacms/app": "2.4.2",
     "@tinacms/auth": "^1.1.2",
     "@tinacms/cli": "^1.12.6",
-    "@tinacms/datalayer": "^1.4.3",
+    "@tinacms/datalayer": "^2.0.19",
     "@upstash/redis": "^1.38.0",
     "@vercel/blob": "^2.3.3",
     "next": "14.2.35",
