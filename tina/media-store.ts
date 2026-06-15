@@ -1,4 +1,3 @@
-import { upload } from "@vercel/blob/client";
 import type {
   Media,
   MediaList,
@@ -33,11 +32,17 @@ export class VercelBlobMediaStore implements MediaStore {
     for (const { file, directory } of files) {
       const dir = normalizeDirectory(directory);
       const pathname = dir ? `${dir}/${file.name}` : file.name;
-      const blob = await upload(pathname, file, {
-        access: "public",
-        handleUploadUrl: "/api/media/upload",
-      });
-      results.push(makeMedia(file.name, blob.url, directory || "/"));
+      const res = await fetch(
+        `/api/media/upload?pathname=${encodeURIComponent(pathname)}`,
+        {
+          method: "POST",
+          body: file,
+          headers: { "Content-Type": file.type || "application/octet-stream" },
+        }
+      );
+      if (!res.ok) throw new Error(`Upload failed (${res.status})`);
+      const { url } = await res.json();
+      results.push(makeMedia(file.name, url, directory || "/"));
     }
     return results;
   }

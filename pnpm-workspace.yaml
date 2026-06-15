@@ -1,0 +1,10 @@
+overrides:
+  nanoid: ^3.3.7
+patchedDependencies:
+  tinacms-authjs@5.0.9: patches/tinacms-authjs.patch
+onlyBuiltDependencies:
+  - better-sqlite3
+  - core-js
+  - esbuild
+  - protobufjs
+  - unrs-resolver
