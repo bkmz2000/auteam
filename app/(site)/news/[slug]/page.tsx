@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { reader } from "../../../../lib/reader";
+import { MarkdocContent } from "../../../../components/MarkdocContent";
 
 export const dynamic = "force-dynamic";
 
@@ -34,10 +35,8 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
       <section className="py-16 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl p-8 shadow-md">
-            {entry.body ? (
-              <div className="prose prose-lg max-w-none text-gray-600">
-                <p className="whitespace-pre-wrap">{entry.body}</p>
-              </div>
+            {entry.body?.node ? (
+              <MarkdocContent node={entry.body.node} />
             ) : (
               <p className="text-gray-500 italic">Содержимое этой новости скоро появится.</p>
             )}

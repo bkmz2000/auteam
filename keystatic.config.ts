@@ -52,7 +52,7 @@ export default config({
       label: "Участники",
       slugField: "slug",
       path: "content/teachers/*",
-      format: "yaml",
+      format: { contentField: "body" },
       schema: {
         name: fields.text({
           label: "Имя",
@@ -114,7 +114,7 @@ export default config({
           { label: "Фотографии" }
         ),
         isActive: fields.checkbox({ label: "Активен" }),
-        body: fields.text({ label: "Биография", multiline: true }),
+        body: fields.markdoc({ label: "Биография" }),
       },
     }),
 
@@ -122,7 +122,7 @@ export default config({
       label: "Курсы и занятия",
       slugField: "slug",
       path: "content/courses/*",
-      format: "yaml",
+      format: { contentField: "body" },
       schema: {
         name: fields.text({
           label: "Название",
@@ -204,7 +204,7 @@ export default config({
           }),
           { label: "Галерея" }
         ),
-        body: fields.text({ label: "Описание (подробное)", multiline: true }),
+        body: fields.markdoc({ label: "Описание (подробное)" }),
       },
     }),
 
@@ -212,7 +212,7 @@ export default config({
       label: "Новости",
       slugField: "slug",
       path: "content/news/*",
-      format: "yaml",
+      format: { contentField: "body" },
       schema: {
         title: fields.text({
           label: "Заголовок",
@@ -235,7 +235,7 @@ export default config({
           { label: "Изображение" }
         ),
         date: fields.date({ label: "Дата" }),
-        body: fields.text({ label: "Текст новости", multiline: true }),
+        body: fields.markdoc({ label: "Текст новости" }),
       },
     }),
 

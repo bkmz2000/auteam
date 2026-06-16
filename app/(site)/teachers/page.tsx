@@ -54,8 +54,7 @@ export default async function TeachersPage() {
                 </div>
 
                 <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                  {entry.body?.slice(0, 150) ||
-                    entry.otherExperience?.slice(0, 150) ||
+                  {entry.otherExperience?.slice(0, 150) ||
                     "Подробности на страничке педагога..."}
                 </p>
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { reader } from "../../../../lib/reader";
+import { MarkdocContent } from "../../../../components/MarkdocContent";
 
 export const dynamic = "force-dynamic";
 
@@ -41,12 +42,10 @@ export default async function TeacherPage({ params }: { params: { slug: string }
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-8">
-              {entry.body && (
+              {entry.body?.node && (
                 <div className="bg-white rounded-2xl p-6 shadow-md">
                   <h2 className="text-2xl font-bold text-gray-900 mb-4">О себе</h2>
-                  <div className="prose prose-gray max-w-none">
-                    <p className="text-gray-600 whitespace-pre-wrap">{entry.body}</p>
-                  </div>
+                  <MarkdocContent node={entry.body.node} />
                 </div>
               )}
 
