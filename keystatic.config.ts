@@ -114,7 +114,15 @@ export default config({
           { label: "Фотографии" }
         ),
         isActive: fields.checkbox({ label: "Активен" }),
-        body: fields.markdoc({ label: "Биография" }),
+        body: fields.markdoc({
+          label: "Биография",
+          options: {
+            image: {
+              directory: "public/images/teachers",
+              publicPath: "/images/teachers/",
+            },
+          },
+        }),
       },
     }),
 
@@ -204,7 +212,15 @@ export default config({
           }),
           { label: "Галерея" }
         ),
-        body: fields.markdoc({ label: "Описание (подробное)" }),
+        body: fields.markdoc({
+          label: "Описание (подробное)",
+          options: {
+            image: {
+              directory: "public/images/courses",
+              publicPath: "/images/courses/",
+            },
+          },
+        }),
       },
     }),
 
@@ -235,7 +251,15 @@ export default config({
           { label: "Изображение" }
         ),
         date: fields.date({ label: "Дата" }),
-        body: fields.markdoc({ label: "Текст новости" }),
+        body: fields.markdoc({
+          label: "Текст новости",
+          options: {
+            image: {
+              directory: "public/images/news",
+              publicPath: "/images/news/",
+            },
+          },
+        }),
       },
     }),
 
@@ -301,7 +325,15 @@ export default config({
         }),
         slug: fields.text({ label: "Slug" }),
         description: fields.text({ label: "Описание", multiline: true }),
-        body: fields.markdoc({ label: "Содержимое" }),
+        body: fields.markdoc({
+          label: "Содержимое",
+          options: {
+            image: {
+              directory: "public/images/materials",
+              publicPath: "/images/materials/",
+            },
+          },
+        }),
         tags: fields.text({ label: "Теги (через запятую)" }),
         author: fields.text({ label: "Автор" }),
         publishedDate: fields.text({ label: "Дата публикации" }),
