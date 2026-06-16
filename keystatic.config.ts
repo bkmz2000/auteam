@@ -1,8 +1,6 @@
 import { config, collection, singleton, fields } from "@keystatic/core";
 
-const isLocal =
-  process.env.TINA_PUBLIC_IS_LOCAL === "true" ||
-  !process.env.KEYSTATIC_GITHUB_CLIENT_ID;
+const isLocal = process.env.NODE_ENV !== "production";
 
 export default config({
   storage: isLocal
@@ -10,8 +8,8 @@ export default config({
     : {
         kind: "github",
         repo: {
-          owner: process.env.GITHUB_OWNER as string,
-          name: process.env.GITHUB_REPO as string,
+          owner: "bkmz2000",
+          name: "auteam",
         },
       },
   ui: {
