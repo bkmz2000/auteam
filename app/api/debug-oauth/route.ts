@@ -5,7 +5,7 @@ export async function GET(req: Request) {
   const code = url.searchParams.get("code");
 
   if (!code) {
-    return new Response("Pass ?code=... from a GitHub OAuth redirect", { status: 400 });
+    return new Response("Waiting for GitHub OAuth redirect...", { status: 400 });
   }
 
   const clientId = process.env.KEYSTATIC_GITHUB_CLIENT_ID ?? "(missing)";
@@ -21,18 +21,18 @@ export async function GET(req: Request) {
     headers: { Accept: "application/json" },
   });
 
-  const body = await res.text();
+  const raw = await res.text();
+  let parsed: unknown;
+  try { parsed = JSON.parse(raw); } catch { parsed = raw; }
 
-  return new Response(
-    JSON.stringify({
-      status: res.status,
-      ok: res.ok,
-      clientIdLength: clientId.length,
-      clientIdLast4: clientId.slice(-4),
-      clientSecretLength: clientSecret.length,
-      clientSecretLast4: clientSecret.slice(-4),
-      githubResponse: body,
-    }, null, 2),
-    { headers: { "content-type": "application/json" } }
-  );
+  const html = `<pre style="font:14px monospace;padding:2rem">${JSON.stringify({
+    httpStatus: res.status,
+    clientIdLength: clientId.length,
+    clientIdLast4: clientId.slice(-4),
+    clientSecretLength: clientSecret.length,
+    clientSecretLast4: clientSecret.slice(-4),
+    githubResponse: parsed,
+  }, null, 2)}</pre>`;
+
+  return new Response(html, { headers: { "content-type": "text/html" } });
 }
