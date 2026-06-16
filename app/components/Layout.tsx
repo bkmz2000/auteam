@@ -4,27 +4,34 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const ageGroups = [
-  { href: "/children", label: "Детям" },
-  { href: "/teens", label: "Подросткам" },
-  { href: "/adults", label: "Взрослым" },
-  { href: "/parents", label: "Родителям" },
-];
+export interface SiteNav {
+  siteName: string;
+  footerDescription: string;
+  navHome: string;
+  navAbout: string;
+  navDropdown: string;
+  navChildren: string;
+  navTeens: string;
+  navAdults: string;
+  navParents: string;
+  navTeachers: string;
+  navMaterials: string;
+  navNews: string;
+  navJoin: string;
+  navContacts: string;
+}
 
-const navLinks = [
-  { href: "/", label: "Главная" },
-  { href: "/about", label: "О нас" },
-  { href: "/teachers", label: "Участники" },
-  { href: "/materials", label: "Материалы" },
-  { href: "/news", label: "Новости" },
-  { href: "/join", label: "Присоединиться к сообществу" },
-  { href: "/contacts", label: "Контакты" },
-];
-
-function AgeGroupDropdown() {
+function AgeGroupDropdown({ nav }: { nav: SiteNav }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+
+  const ageGroups = [
+    { href: "/children", label: nav.navChildren },
+    { href: "/teens", label: nav.navTeens },
+    { href: "/adults", label: nav.navAdults },
+    { href: "/parents", label: nav.navParents },
+  ];
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -37,7 +44,7 @@ function AgeGroupDropdown() {
   }, []);
 
   const isActive = ["/children", "/teens", "/adults", "/parents"].some((p) =>
-    pathname?.startsWith(p),
+    pathname?.startsWith(p)
   );
 
   return (
@@ -50,7 +57,7 @@ function AgeGroupDropdown() {
             : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"
         }`}
       >
-        Что можем предложить
+        {nav.navDropdown}
         <svg
           className={`w-4 h-4 transition-transform ${open ? "rotate-180" : ""}`}
           fill="none"
@@ -83,9 +90,32 @@ function AgeGroupDropdown() {
   );
 }
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export function Layout({
+  children,
+  nav,
+}: {
+  children: React.ReactNode;
+  nav: SiteNav;
+}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+
+  const navLinks = [
+    { href: "/", label: nav.navHome },
+    { href: "/about", label: nav.navAbout },
+    { href: "/teachers", label: nav.navTeachers },
+    { href: "/materials", label: nav.navMaterials },
+    { href: "/news", label: nav.navNews },
+    { href: "/join", label: nav.navJoin },
+    { href: "/contacts", label: nav.navContacts },
+  ];
+
+  const ageGroups = [
+    { href: "/children", label: nav.navChildren },
+    { href: "/teens", label: nav.navTeens },
+    { href: "/adults", label: nav.navAdults },
+    { href: "/parents", label: nav.navParents },
+  ];
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -107,7 +137,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 className="font-semibold text-textPrimary hidden sm:block"
                 style={{ fontSize: "17px" }}
               >
-                Нейроотличные нейроотличным
+                {nav.siteName}
               </span>
             </Link>
 
@@ -117,44 +147,44 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 href="/"
                 className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname === "/" ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}
               >
-                Главная
+                {nav.navHome}
               </Link>
               <Link
                 href="/about"
                 className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/about") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}
               >
-                О нас
+                {nav.navAbout}
               </Link>
-              <AgeGroupDropdown />
+              <AgeGroupDropdown nav={nav} />
               <Link
                 href="/teachers"
                 className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/teachers") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}
               >
-                Участники
+                {nav.navTeachers}
               </Link>
               <Link
                 href="/materials"
                 className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/materials") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}
               >
-                Материалы
+                {nav.navMaterials}
               </Link>
               <Link
                 href="/news"
                 className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/news") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}
               >
-                Новости
+                {nav.navNews}
               </Link>
               <Link
                 href="/join"
                 className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/join") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}
               >
-                Присоединиться к сообществу
+                {nav.navJoin}
               </Link>
               <Link
                 href="/contacts"
                 className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname?.startsWith("/contacts") ? "text-accent bg-hoverSurface font-semibold" : "text-textSecondary hover:text-textPrimary hover:bg-hoverSurface"}`}
               >
-                Контакты
+                {nav.navContacts}
               </Link>
             </nav>
 
@@ -238,11 +268,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
             <div>
               <div className="font-bold text-textPrimary mb-2">
-                Нейроотличные нейроотличным
+                {nav.siteName}
               </div>
               <p className="text-textSecondary text-sm max-w-sm">
-                Платформа для нейроотличных детей, подростков, взрослых и их
-                близких в Армении.
+                {nav.footerDescription}
               </p>
             </div>
             <div className="flex gap-6 flex-wrap">
@@ -250,13 +279,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 href="/join"
                 className="text-sm text-textSecondary hover:text-textPrimary transition-colors"
               >
-                Присоединиться к сообществу
+                {nav.navJoin}
               </Link>
               <Link
                 href="/contacts"
                 className="text-sm text-textSecondary hover:text-textPrimary transition-colors"
               >
-                Контакты
+                {nav.navContacts}
               </Link>
               <Link
                 href="/support"
@@ -265,10 +294,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 Поддержать
               </Link>
               <Link
-                href="/admin/index.html"
+                href="/keystatic"
                 className="text-sm text-textSecondary hover:text-textPrimary transition-colors"
               >
-                Вход
+                Управление сайтом
               </Link>
             </div>
           </div>

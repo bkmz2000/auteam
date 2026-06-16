@@ -1,10 +1,20 @@
 import "./globals.css";
-import { Layout } from "./components/Layout";
+import { reader } from "../lib/reader";
 
-export const metadata = {
-  title: "Нейроотличные нейроотличным",
-  description: "Платформа для нейроотличных детей, подростков, взрослых и их близких в Армении",
-};
+export async function generateMetadata() {
+  try {
+    const g = await reader.singletons.globalSettings.read();
+    return {
+      title: g?.siteName ?? "Нейроотличные нейроотличным",
+      description: g?.siteDescription ?? "Платформа для нейроотличных детей, подростков, взрослых и их близких в Армении",
+    };
+  } catch {
+    return {
+      title: "Нейроотличные нейроотличным",
+      description: "Платформа для нейроотличных детей, подростков, взрослых и их близких в Армении",
+    };
+  }
+}
 
 export default function RootLayout({
   children,
@@ -13,9 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ru">
-      <body>
-        <Layout>{children}</Layout>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

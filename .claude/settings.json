@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(vercel logs *)",
+      "Bash(vercel ls *)",
+      "Bash(vercel inspect *)",
+      "mcp__chrome-devtools__wait_for",
+      "mcp__chrome-devtools__take_snapshot"
+    ]
+  }
+}

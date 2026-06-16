@@ -1,0 +1,29 @@
+name: Творческие мастерские
+slug: creative-workshops
+description: Художественная мастерская для детей с ЗПР — развитие творческих способностей, снятие эмоционального напряжения и социализация через творчество.
+ageGroup: children
+pricing:
+  price: 1000
+  currency: rub
+  convertedPrice: ""
+  convertedCurrency: ""
+format:
+  type: Офлайн
+  duration: 60
+  lessonsPerWeek: 1
+  minAge: 6
+  maxAge: 16
+  maxStudents: 6
+schedule:
+  days: Суббота
+  time: "10:00"
+location: Минск
+teacherName: Соня
+photo:
+  src: /images/courses/creative-workshops.jpg
+  alt: Творческие мастерские
+gallery: []
+body: |
+  **Формат:** групповое занятие (до 6 человек) или индивидуально
+
+  **Что это такое?**

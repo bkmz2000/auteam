@@ -1,5 +1,1 @@
-overrides:
-  nanoid: ^3.3.7
-patchedDependencies:
-  tinacms-authjs@5.0.9: patches/tinacms-authjs.patch
 dangerouslyAllowAllBuilds: true
