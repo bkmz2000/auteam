@@ -35,7 +35,7 @@ Astro builds static files into `dist/`; no Cloudflare Worker or Wrangler output 
 
 Do not put GitHub tokens, OAuth secrets, or other credentials in the CMS config or source tree. DecapBridge authorization and webhook credentials must be created separately for Auteam; do not reuse Bronner's credentials or deploy target.
 
-The latest full `npm audit` still reports 27 moderate advisories in Decap CMS transitive rich-text/backend packages; there are no high or critical advisories after upgrading Astro and removing the optional local server. The suggested forced CMS downgrade is not applied because it may change editor behavior; recheck for an upstream compatible fix. (The static-site-only `npm audit --omit=dev` is clean, but the Decap assets are also published under `/admin/`.)
+The full `npm audit` currently reports 8 findings (5 moderate, 3 low; no high/critical) after pinning Decap CMS 3.16.0 and overriding `uuid` and `minimatch` to patched versions. A clean install, build, and headless admin-login smoke test passed. Two upstream advisory roots remain: `@platejs/core` is fixed upstream at 53.3.11, but Decap's rich-text widget currently depends on Plate 49; `deepmerge` has no patched release published. Avoid forcing incompatible majors. The CMS config uses Markdown widgets, not rich-text. Decap ships prebuilt browser assets, so package-lock overrides do not rebuild their bundled code; revisit once Decap publishes a compatible fixed bundle.
 
 ## VPS deployment status
 
