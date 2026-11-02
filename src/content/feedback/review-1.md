@@ -3,7 +3,7 @@ type: review
 author: Родитель
 content: >-
   <p>Спасибо Соне за занятия с нашим сыном! Очень внимательный и понимающий педагог.</p>
-isPublic: true
+isPublic: false
 date: 2024-01-15
 ---
 

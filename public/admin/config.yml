@@ -1,125 +1,228 @@
+# Local development fallback; production builds generate config.yml from the template.
 backend:
-  name: github
+  name: git-gateway
   repo: bkmz2000/auteam
   branch: main
+  identity_url: https://auth.decapbridge.com/sites/3469b5b9-7a86-4682-b923-9d6d1b91fa02
+  gateway_url: https://gateway.decapbridge.com
+  commit_messages:
+    create: 'Create {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge'
+    update: 'Update {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge'
+    delete: 'Delete {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge'
+    uploadMedia: 'Upload “{{path}}” - {{author-name}} <{{author-login}}> via DecapBridge'
+    deleteMedia: 'Delete “{{path}}” - {{author-name}} <{{author-login}}> via DecapBridge'
+    openAuthoring: 'Message {{message}} - {{author-name}} <{{author-login}}> via DecapBridge'
 
-media_folder: "src/assets/images"
-public_folder: "src/assets/images"
+logo_url: https://decapbridge.com/decapcms-with-bridge.svg
+site_url: https://auteam-test.duckdns.org
 
+local_backend: false
+locale: ru
+publish_mode: simple
+media_folder: public/images
+public_folder: /images
 editor:
-  default_editor: visual
+  preview: false
 
 collections:
-  - name: "posts"
-    label: "Posts"
-    folder: "content/posts"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string" }
-      - { label: "Publish Date", name: "date", widget: "datetime" }
-      - { label: "Body", name: "body", widget: "markdown" }
-
-  - name: "news"
-    label: "News"
-    folder: "content/news"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string" }
-      - { label: "Date", name: "date", widget: "datetime" }
-      - { label: "Content", name: "content", widget: "markdown" }
-      - label: "Language"
-        name: "language"
-        widget: "select"
-        multiple: true
-        options: ["russian", "english", "armenian"]
-
-  - name: "categories"
-    label: "Categories"
-    folder: "content/categories"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Name", name: "name", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string" }
-      - { label: "Description", name: "description", widget: "markdown" }
-      - label: "Age Group"
-        name: "ageGroup"
-        widget: "select"
-        multiple: true
-        options: ["children", "teens", "adults"]
-      - label: "Language"
-        name: "language"
-        widget: "select"
-        multiple: true
-        options: ["russian", "english", "armenian"]
-      - { label: "Order", name: "order", widget: "number" }
-
-  - name: "courses"
-    label: "Courses"
-    folder: "content/courses"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Name", name: "name", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string" }
-      - { label: "Description", name: "description", widget: "markdown" }
-      - { label: "Price (RUB)", name: "priceRub", widget: "number" }
-      - { label: "Price (AMD)", name: "priceDram", widget: "number" }
-      - { label: "Duration", name: "duration", widget: "string" }
-      - label: "Age Group"
-        name: "ageGroup"
-        widget: "select"
-        multiple: true
-        options: ["children", "teens", "adults"]
-      - label: "Language"
-        name: "language"
-        widget: "select"
-        multiple: true
-        options: ["russian", "english", "armenian"]
-      - { label: "Category", name: "category", widget: "string" }
-      - { label: "Sign Up URL", name: "signUpUrl", widget: "string" }
-      - { label: "Is Active", name: "isActive", widget: "boolean" }
-
-  - name: "feedback"
-    label: "Feedback"
-    folder: "content/feedback"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Author", name: "author", widget: "string" }
-      - { label: "Content", name: "content", widget: "markdown" }
-      - { label: "Date", name: "date", widget: "datetime" }
-
-  - name: "pages"
-    label: "Pages"
-    folder: "content/pages"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string" }
-      - { label: "Content", name: "content", widget: "markdown" }
-
-  - name: "settings"
-    label: "Settings"
-    folder: "content/settings"
+  - name: pages
+    label: Страницы
+    folder: src/content/pages
     create: false
-    slug: "site"
+    extension: md
+    format: frontmatter
+    slug: '{{slug}}'
     fields:
-      - { label: "Organization Name", name: "organizationName", widget: "string" }
-      - { label: "Mission", name: "mission", widget: "markdown" }
-      - { label: "Payment Info", name: "paymentInfo", widget: "markdown" }
-      - { label: "Ethics Guidelines", name: "ethicsGuidelines", widget: "markdown" }
-      - { label: "Contact Email", name: "contactEmail", widget: "string" }
-      - { label: "Contact Phones", name: "contactPhones", widget: "list", fields: [{ label: "Phone", name: "phone", widget: "string" }] }
-      - label: "Social Links"
-        name: "socialLinks"
-        widget: "object"
+      - { name: title, label: Заголовок вкладки, widget: string }
+      - { name: description, label: Описание для поисковиков, widget: text, required: false }
+      - { name: heading, label: Заголовок страницы, widget: string, required: false }
+      - { name: lead, label: Короткое вступление, widget: text, required: false }
+      - { name: heroEyebrow, label: Надзаголовок главной, widget: string, required: false }
+      - { name: heroAsideTitle, label: Заголовок карточки главной, widget: string, required: false }
+      - { name: heroAsideText, label: Текст карточки главной, widget: text, required: false }
+      - { name: ctaPrimaryLabel, label: Текст основной кнопки, widget: string, required: false }
+      - { name: ctaPrimaryUrl, label: Ссылка основной кнопки, widget: string, required: false }
+      - { name: ctaSecondaryLabel, label: Текст второй кнопки, widget: string, required: false }
+      - { name: ctaSecondaryUrl, label: Ссылка второй кнопки, widget: string, required: false }
+      - { name: body, label: Основной текст, widget: markdown, required: false }
+
+  - name: courses
+    label: Курсы и занятия
+    label_singular: Курс или занятие
+    folder: src/content/courses
+    create: true
+    extension: md
+    format: frontmatter
+    slug: '{{slug}}'
+    summary: '{{name}}'
+    sortable_fields: [name, ageGroup]
+    fields:
+      - { name: name, label: Название, widget: string }
+      - { name: slug, label: Адрес страницы, widget: string, required: false }
+      - { name: description, label: Короткое описание, widget: text, required: false }
+      - label: Возрастные группы
+        name: ageGroup
+        widget: select
+        multiple: true
+        options:
+          - { label: Детям, value: children }
+          - { label: Подросткам, value: teens }
+          - { label: Взрослым, value: adults }
+      - { name: category, label: Категория, widget: relation, collection: categories, search_fields: [name], value_field: slug, display_fields: [name], required: false }
+      - { name: teacherName, label: Педагог, widget: string, required: false }
+      - { name: priceRub, label: Цена (рубли), widget: number, required: false }
+      - { name: priceDram, label: Цена (драмы), widget: number, required: false }
+      - { name: duration, label: Длительность (текст), widget: string, required: false }
+      - label: Формат и возраст
+        name: format
+        widget: object
+        required: false
         fields:
-          - { label: "VK", name: "vk", widget: "string" }
-          - { label: "WhatsApp", name: "whatsapp", widget: "string" }
-          - { label: "Telegram", name: "telegram", widget: "string" }
+          - { name: type, label: Формат проведения, widget: string, required: false }
+          - { name: duration, label: Длительность (минуты), widget: number, required: false }
+          - { name: lessonsPerWeek, label: Занятий в неделю, widget: number, required: false }
+          - { name: minAge, label: Возраст от, widget: number, required: false }
+          - { name: maxAge, label: Возраст до, widget: number, required: false }
+          - { name: maxStudents, label: Максимум участников, widget: number, required: false }
+      - label: Расписание
+        name: schedule
+        widget: object
+        required: false
+        fields:
+          - { name: days, label: Дни, widget: string, required: false }
+          - { name: time, label: Время, widget: string, required: false }
+          - { name: location, label: Место или ссылка, widget: string, required: false }
+      - label: Обложка
+        name: photo
+        widget: object
+        required: false
+        fields:
+          - { name: src, label: Изображение, widget: image }
+          - { name: alt, label: Описание изображения, widget: string, required: false }
+      - { name: signUpUrl, label: Ссылка для записи, widget: string, required: false }
+      - { name: isActive, label: Показывать на сайте, widget: boolean, default: true }
+      - { name: language, label: Языки, widget: list, required: false, field: { label: Язык, name: language, widget: string } }
+      - { name: body, label: Подробное описание, widget: markdown, required: false }
+
+  - name: teachers
+    label: Педагоги
+    label_singular: Педагог
+    folder: src/content/teachers
+    create: true
+    extension: md
+    format: frontmatter
+    slug: '{{slug}}'
+    summary: '{{name}}'
+    fields:
+      - { name: name, label: Имя, widget: string }
+      - { name: slug, label: Адрес страницы, widget: string, required: false }
+      - { name: languages, label: Языки, widget: list, required: false, field: { label: Язык, name: language, widget: string } }
+      - { name: totalExperience, label: Общий опыт, widget: string, required: false }
+      - { name: education, label: Образование, widget: text, required: false }
+      - { name: certificates, label: Сертификаты, widget: list, required: false, field: { label: Сертификат, name: certificate, widget: string } }
+      - { name: areasOfWork, label: С чем работаете, widget: list, required: false, field: { label: Направление, name: area, widget: string } }
+      - { name: responsibilities, label: Обязанности, widget: text, required: false }
+      - { name: resume, label: Резюме, widget: text, required: false }
+      - { name: otherExperience, label: Другой опыт, widget: text, required: false }
+      - { name: consultingTopics, label: Темы консультирования, widget: list, required: false, field: { label: Тема, name: topic, widget: string } }
+      - { name: interests, label: Интересы, widget: text, required: false }
+      - { name: teachingStyle, label: Особенности преподавания, widget: text, required: false }
+      - { name: photos, label: Фотографии, widget: list, required: false, field: { label: Фото, name: photo, widget: image } }
+      - { name: isActive, label: Показывать на сайте, widget: boolean, default: true }
+      - { name: body, label: Биография, widget: markdown, required: false }
+
+  - name: news
+    label: Новости
+    label_singular: Новость
+    folder: src/content/news
+    create: true
+    extension: md
+    format: frontmatter
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    summary: '{{title}}'
+    sortable_fields: [date, title]
+    fields:
+      - { name: title, label: Заголовок, widget: string }
+      - { name: slug, label: Адрес страницы, widget: string, required: false }
+      - { name: date, label: Дата публикации, widget: datetime, date_format: DD.MM.YYYY, time_format: false, picker_utc: true }
+      - { name: summary, label: Короткий анонс, widget: text, required: false }
+      - { name: isPublished, label: Опубликовать на сайте, widget: boolean, default: true }
+      - { name: language, label: Языки, widget: list, required: false, field: { label: Язык, name: language, widget: string } }
+      - { name: body, label: Текст новости, widget: markdown }
+
+  - name: categories
+    label: Категории занятий
+    folder: src/content/categories
+    create: true
+    extension: md
+    format: frontmatter
+    slug: '{{slug}}'
+    fields:
+      - { name: name, label: Название, widget: string }
+      - { name: slug, label: Адрес страницы, widget: string, required: false }
+      - { name: description, label: Описание, widget: text, required: false }
+      - label: Возрастные группы
+        name: ageGroup
+        widget: select
+        multiple: true
+        options: [children, teens, adults]
+      - { name: order, label: Порядок сортировки, widget: number, required: false }
+
+  - name: feedback
+    label: Отзывы
+    folder: src/content/feedback
+    create: true
+    extension: md
+    format: frontmatter
+    slug: '{{slug}}'
+    fields:
+      - { name: author, label: Имя или роль, widget: string }
+      - { name: type, label: Тип, widget: string, required: false }
+      - { name: date, label: Дата, widget: datetime, date_format: DD.MM.YYYY, time_format: false, picker_utc: true, required: false }
+      - { name: isPublic, label: Показывать на сайте (с разрешения автора), widget: boolean, default: false }
+      - { name: content, label: Отзыв, widget: text }
+      - { name: body, label: Дополнительный текст, widget: markdown, required: false }
+
+  - name: materials
+    label: Материалы
+    folder: src/content/materials
+    create: true
+    extension: md
+    format: frontmatter
+    slug: '{{slug}}'
+    fields:
+      - { name: title, label: Название, widget: string }
+      - { name: slug, label: Адрес страницы, widget: string, required: false }
+      - { name: description, label: Короткое описание, widget: text, required: false }
+      - { name: author, label: Автор, widget: string, required: false }
+      - { name: publishedDate, label: Дата публикации, widget: datetime, date_format: DD.MM.YYYY, time_format: false, picker_utc: true, required: false }
+      - { name: tags, label: Темы, widget: list, required: false, field: { label: Тема, name: tag, widget: string } }
+      - label: Вложения
+        name: attachments
+        widget: list
+        required: false
+        fields:
+          - { name: title, label: Название файла или ссылки, widget: string }
+          - { name: url, label: Файл или ссылка, widget: file }
+      - { name: body, label: Содержимое, widget: markdown, required: false }
+
+  - name: settings
+    label: Настройки сайта
+    files:
+      - name: site
+        label: Название, навигация и подвал
+        file: src/content/settings/site.md
+        fields:
+          - { name: siteName, label: Название сайта, widget: string }
+          - { name: organizationName, label: Название организации, widget: string, required: false }
+          - { name: mission, label: Миссия, widget: text, required: false }
+          - { name: footerDescription, label: Текст в подвале, widget: text, required: false }
+          - { name: contactEmail, label: Email для связи, widget: string, required: false }
+          - { name: telegramUrl, label: Ссылка на Telegram, widget: string, required: false }
+          - { name: city, label: Город или регион, widget: string, required: false }
+          - name: nav
+            label: Навигация
+            widget: list
+            fields:
+              - { name: label, label: Название пункта, widget: string }
+              - { name: href, label: Ссылка, widget: string }

@@ -1,0 +1,31 @@
+---
+import { ageGroups, courseDuration, coursePrice, hasConvertedPrice, plainText, supportsAgeGroup } from '../lib/content';
+
+const { course } = Astro.props;
+const groups = ageGroups.filter((group) => supportsAgeGroup(course.data.ageGroup, group.id));
+const description = plainText(course.data.description);
+---
+<a class="card course-card" href={`/courses/${course.data.slug?.trim() || course.id}`}>
+  {course.data.photo?.src && <img class="course-photo" src={course.data.photo.src} alt={course.data.photo.alt ?? course.data.name} loading="lazy" />}
+  <div class="course-meta">
+    {groups.map((group) => <span class="tag">{group.label}</span>)}
+    {course.data.teacherName && <span class="muted">{course.data.teacherName}</span>}
+  </div>
+  <h2>{course.data.name}</h2>
+  {description && <p class="muted">{description}</p>}
+  <div class="course-foot">
+    <div><strong>{coursePrice(course.data)}</strong>{hasConvertedPrice(course.data) && <small class="muted price-note">* курс примерный, может отличаться</small>}</div>
+    {courseDuration(course.data) && <span class="muted">{courseDuration(course.data)}</span>}
+  </div>
+</a>
+
+<style>
+  .course-card { height: 100%; }
+  .course-photo { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: .6rem; margin-bottom: 1rem; }
+  .price-note { display: block; font-size: .75rem; }
+  .course-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-bottom: .8rem; }
+  .tag { display: inline-block; padding: .15rem .55rem; border-radius: 999px; background: var(--soft); color: var(--muted); font-size: .78rem; }
+  .course-card h2 { font-size: 1.2rem; margin: 0 0 .5rem; }
+  .course-card p { font-size: .95rem; }
+  .course-foot { display: flex; justify-content: space-between; align-items: baseline; gap: .75rem; border-top: 1px solid var(--border); margin-top: 1rem; padding-top: .8rem; font-size: .9rem; }
+</style>

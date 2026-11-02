@@ -1,55 +1,49 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
+import { plainText } from '../../lib/content';
 
-export function getStaticPaths() {
-  return [
-    { params: { slug: 'sonya' } },
-    { params: { slug: 'sasha' } },
-  ];
+export async function getStaticPaths() {
+  const teachers = await getCollection('teachers');
+  return teachers.filter((teacher) => teacher.data.isActive).map((teacher) => ({
+    params: { slug: teacher.data.slug?.trim() || teacher.id },
+    props: { teacher },
+  }));
 }
 
-const { slug } = Astro.params;
-const [teacher] = await getCollection('teachers', t => t.id.includes(slug));
+const { teacher } = Astro.props;
 const { Content } = await render(teacher);
 ---
-
-<BaseLayout title={teacher?.data.name || 'Педагог'}>
-  <a href="/teachers">&larr; Все педагоги</a>
-
-  {teacher && (
-    <>
+<BaseLayout title={teacher.data.name}>
+  <article class="container">
+    <header class="page-head">
+      <a href="/teachers">← Все педагоги</a>
+      {teacher.data.photos?.[0] && <img class="profile-photo" src={teacher.data.photos[0]} alt="" />}
       <h1>{teacher.data.name}</h1>
-      <p>Языки: {teacher.data.languages?.join(', ')}</p>
-      <p>Опыт: {teacher.data.totalExperience}</p>
-
-      {teacher.data.education && <div set:html={teacher.data.education} />}
-
-      {teacher.data.areasOfWork?.length > 0 && (
-        <>
-          <h2>Сферы работы</h2>
-          <ul>
-            {teacher.data.areasOfWork.map((area: string) => (
-              <li>{area}</li>
-            ))}
-          </ul>
-        </>
-      )}
-
-      {teacher.data.consultingTopics?.length > 0 && (
-        <>
-          <h2>Темы равного консультирования</h2>
-          <ul>
-            {teacher.data.consultingTopics.map((topic: string) => (
-              <li>{topic}</li>
-            ))}
-          </ul>
-        </>
-      )}
-
-      <Content />
-    </>
-  )}
-
-  <a href="/contacts">Записаться на занятие</a>
+      {teacher.data.totalExperience && <p class="lead">Опыт: {teacher.data.totalExperience}</p>}
+    </header>
+    <div class="profile-grid">
+      <div class="prose"><Content /></div>
+      <aside class="card">
+        {teacher.data.languages.length > 0 && <><h2>Языки</h2><p>{teacher.data.languages.join(', ')}</p></>}
+        {teacher.data.education && <><h2>Образование</h2><p>{plainText(teacher.data.education)}</p></>}
+        {teacher.data.certificates.length > 0 && <><h2>Сертификаты</h2><ul>{teacher.data.certificates.map((item) => <li>{item}</li>)}</ul></>}
+        {teacher.data.areasOfWork.length > 0 && <><h2>Направления</h2><ul>{teacher.data.areasOfWork.map((item) => <li>{item}</li>)}</ul></>}
+        {teacher.data.responsibilities && <><h2>Роль в проекте</h2><p>{teacher.data.responsibilities}</p></>}
+        {teacher.data.resume && <><h2>Опыт</h2><p>{plainText(teacher.data.resume)}</p></>}
+        {teacher.data.otherExperience && <><h2>Другой опыт</h2><p>{plainText(teacher.data.otherExperience)}</p></>}
+        {teacher.data.consultingTopics.length > 0 && <><h2>Темы консультаций</h2><ul>{teacher.data.consultingTopics.map((item) => <li>{item}</li>)}</ul></>}
+        {teacher.data.interests && <><h2>Интересы</h2><p>{teacher.data.interests}</p></>}
+        {teacher.data.teachingStyle && <><h2>Подход к занятиям</h2><p>{plainText(teacher.data.teachingStyle)}</p></>}
+      </aside>
+    </div>
+  </article>
 </BaseLayout>
+
+<style>
+  .profile-photo { width: 6rem; height: 6rem; object-fit: cover; border-radius: 50%; }
+  .profile-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(240px, .7fr); gap: 2rem; padding-bottom: 2rem; }
+  .profile-grid aside h2 { font-size: 1.05rem; margin-top: 1.2rem; }
+  .profile-grid aside h2:first-child { margin-top: 0; }
+  @media (max-width: 760px) { .profile-grid { grid-template-columns: 1fr; } }
+</style>

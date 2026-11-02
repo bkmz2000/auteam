@@ -1,18 +1,32 @@
 ---
+siteName: Нейроотличные нейроотличным
 organizationName: Нейроотличные нейроотличным
-mission: >-
-  <p>Мы верим в инклюзивное, самонаправленное и самоуправляемое общество. Наша цель — помочь нейроотличным людям реализоваться.</p>
-paymentInfo: >-
-  <p>Оплата происходит через внешние сервисы (VK, WhatsApp). Педагоги устанавливают свои цены, мы добавляем 500 рублей для оплаты налогов и нужд организации.</p>
-ethicsGuidelines: >-
-  <p>Уважительно относитесь к участникам и клиентам. Избегайте языка вражды и ненависти. Соблюдайте конфиденциальность.</p>
-contactEmail: info@neurootlichnie.example
-contactPhones:
-  - "+1 234 567 890"
-socialLinks:
-  vk: https://vk.com/neurootlichnie
-  whatsapp: https://wa.me/1234567890
-  telegram: https://t.me/neurootlichnie
+mission: Сообщество, занятия и поддержка для нейроотличных людей и их близких в Армении.
+footerDescription: Поддержка, занятия и сообщество — вместе.
+contactEmail: info@neurodiverse.am
+telegramUrl: https://t.me/neurodiverse_am
+city: Армения, Ереван
+nav:
+  - label: Главная
+    href: /
+  - label: О нас
+    href: /about
+  - label: Детям
+    href: /children
+  - label: Подросткам
+    href: /teens
+  - label: Взрослым
+    href: /adults
+  - label: Родителям
+    href: /parents
+  - label: Педагоги
+    href: /teachers
+  - label: Присоединиться
+    href: /join
+  - label: Материалы
+    href: /materials
+  - label: Новости
+    href: /news
+  - label: Контакты
+    href: /contacts
 ---
-
-Настройки сайта.

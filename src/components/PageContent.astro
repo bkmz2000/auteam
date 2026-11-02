@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CourseCard from './CourseCard.astro';
+import { getEntry, render } from 'astro:content';
+import { plainText } from '../lib/content';
+
+const { page, ageGroup, courses = [], materials = [], feedback = [] } = Astro.props;
+const { Content } = await render(page);
+const settings = await getEntry('settings', 'site');
+const heading = page.data.heading ?? page.data.title;
+---
+<BaseLayout title={page.data.title} description={page.data.description}>
+  <div class="container">
+    <header class="page-head">
+      <h1>{heading}</h1>
+      {page.data.lead && <p class="lead">{page.data.lead}</p>}
+    </header>
+
+    <article class="prose">
+      <Content />
+    </article>
+
+    {ageGroup && (
+      <section class="page-section" aria-labelledby="courses-heading">
+        <h2 id="courses-heading">Подходящие занятия</h2>
+        {courses.length
+          ? <div class="card-grid">{courses.map((course) => <CourseCard course={course} />)}</div>
+          : <p class="muted">Подходящие занятия скоро появятся. Напишите нам — поможем сориентироваться.</p>}
+      </section>
+    )}
+
+    {page.id === 'materials' && (
+      <section class="page-section" aria-labelledby="materials-heading">
+        <h2 id="materials-heading">Материалы</h2>
+        {materials.length
+          ? <div class="card-grid">{materials.map((item) => (
+              <article class="card">
+                <h3>{item.data.title}</h3>
+                {item.data.description && <p class="muted">{plainText(item.data.description)}</p>}
+                {item.data.tags?.length > 0 && <p class="tag-list">{item.data.tags.join(' · ')}</p>}
+                <a href={`/materials/${item.data.slug?.trim() || item.id}`}>Открыть материал</a>
+              </article>
+            ))}</div>
+          : <p class="muted">Материалы постепенно появятся в этом разделе.</p>}
+      </section>
+    )}
+
+    {page.id === 'contacts' && (
+      <section class="page-section contact-options" aria-label="Способы связи">
+        {settings?.data.contactEmail && <article class="card"><h2>Email</h2><a href={`mailto:${settings.data.contactEmail}`}>{settings.data.contactEmail}</a></article>}
+        {settings?.data.telegramUrl && <article class="card"><h2>Telegram</h2><a href={settings.data.telegramUrl} target="_blank" rel="noopener noreferrer">Написать в Telegram</a></article>}
+        {settings?.data.city && <p class="muted">{settings.data.city}</p>}
+      </section>
+    )}
+
+    {page.id === 'feedback' && (
+      <section class="page-section" aria-labelledby="feedback-heading">
+        <h2 id="feedback-heading">Отзывы</h2>
+        {feedback.length
+          ? <div class="card-grid">{feedback.map((item) => (
+              <blockquote class="card">
+                <p>{plainText(item.data.content) || 'Отзыв'}</p>
+                <footer class="muted">{item.data.author}{item.data.date ? ` · ${item.data.date.toLocaleDateString('ru-RU')}` : ''}</footer>
+              </blockquote>
+            ))}</div>
+          : <p class="muted">Публичных отзывов пока нет.</p>}
+      </section>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .page-section { margin: 2.5rem 0; }
+  .page-section h2 { margin-bottom: 1rem; }
+  .contact-options { display: flex; flex-wrap: wrap; gap: 1rem; }
+  .contact-options .card { min-width: min(100%, 250px); }
+  .page-section blockquote { margin: 0; }
+  .page-section blockquote p { margin-top: 0; }
+  .page-section blockquote footer { font-size: .9rem; }
+  .tag-list { color: var(--muted); font-size: .85rem; }
+</style>

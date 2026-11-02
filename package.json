@@ -1,28 +1,29 @@
 {
   "name": "auteam",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "private": true,
   "engines": {
     "node": ">=22.12.0"
   },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "npm run build && wrangler dev",
+    "preview": "astro preview",
     "astro": "astro",
-    "generate-types": "wrangler types",
-    "deploy": "npm run build && wrangler deploy",
-    "cf-typegen": "wrangler types"
+    "cms:assets": "mkdir -p public/admin/cms && cp node_modules/decap-cms/dist/*decap-cms.js public/admin/cms/",
+    "cms:config": "node scripts/build-cms-config.mjs",
+    "predev": "npm run cms:assets",
+    "prebuild": "npm run cms:assets",
+    "postbuild": "npm run cms:config"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "12",
-    "astro": "^5.18.1",
-    "decap-cms-app": "^3.11.0"
-  },
-  "overrides": {
-    "vite": "^7"
+    "astro": "7.4.1"
   },
   "devDependencies": {
-    "wrangler": "^4.80.0"
+    "decap-cms": "3.17.3"
+  },
+  "overrides": {
+    "trim": ">=0.0.3"
   }
 }

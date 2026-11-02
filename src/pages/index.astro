@@ -1,6 +1,96 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
----
+import CourseCard from '../components/CourseCard.astro';
+import { getCollection, getEntry, render } from 'astro:content';
+import { ageGroups } from '../lib/content';
 
-<BaseLayout title="О нас">
+const page = await getEntry('pages', 'home');
+if (!page) throw new Error('Missing src/content/pages/home.md');
+const { Content } = await render(page);
+const courses = (await getCollection('courses')).filter((course) => course.data.isActive);
+const news = (await getCollection('news'))
+  .filter((item) => item.data.isPublished)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+<BaseLayout title={page.data.title} description={page.data.description}>
+  <section class="hero container">
+    <div>
+      <p class="eyebrow">{page.data.heroEyebrow ?? 'Сообщество в Армении'}</p>
+      <h1>{page.data.heading ?? page.data.title}</h1>
+      {page.data.lead && <p class="lead">{page.data.lead}</p>}
+      <div class="actions">
+        <a class="button" href={page.data.ctaPrimaryUrl ?? '/children'}>{page.data.ctaPrimaryLabel ?? 'Найти занятия'}</a>
+        <a class="button secondary" href={page.data.ctaSecondaryUrl ?? '/join'}>{page.data.ctaSecondaryLabel ?? 'Присоединиться'}</a>
+      </div>
+    </div>
+    <aside class="hero-note">
+      <h2>{page.data.heroAsideTitle ?? 'Нейроотличные — эксперты своей жизни'}</h2>
+      <p>{page.data.heroAsideText ?? 'Здесь можно искать подходящих специалистов, получать поддержку и вместе запускать важные инициативы.'}</p>
+    </aside>
+  </section>
+
+  <section class="container prose home-copy"><Content /></section>
+
+  <section class="container section">
+    <div class="section-head">
+      <div><p class="eyebrow">Выберите направление</p><h2>Занятия и поддержка</h2></div>
+    </div>
+    <div class="card-grid age-grid">
+      {ageGroups.map((group) => {
+        const count = courses.filter((course) =>
+          Array.isArray(course.data.ageGroup)
+            ? course.data.ageGroup.includes(group.id)
+            : course.data.ageGroup === group.id
+        ).length;
+        return (
+          <a class="card age-card" href={`/${group.id}`}>
+            <h3>{group.label}</h3>
+            <p class="muted">{count} занятий</p>
+            <span>Подробнее →</span>
+          </a>
+        );
+      })}
+      <a class="card age-card" href="/parents">
+        <h3>Родителям</h3><p class="muted">Поддержка и полезные материалы для близких.</p><span>Подробнее →</span>
+      </a>
+    </div>
+  </section>
+
+  {courses.length > 0 && (
+    <section class="container section">
+      <div class="section-head"><div><p class="eyebrow">Можно начать с этого</p><h2>Популярные занятия</h2></div><a href="/courses">Все занятия</a></div>
+      <div class="card-grid">{courses.slice(0, 3).map((course) => <CourseCard course={course} />)}</div>
+    </section>
+  )}
+
+  {news.length > 0 && (
+    <section class="container section">
+      <div class="section-head"><div><p class="eyebrow">Обновления</p><h2>Новости</h2></div><a href="/news">Все новости</a></div>
+      <div class="card-grid">
+        {news.map((item) => (
+          <a class="card" href={`/news/${item.data.slug?.trim() || item.id}`}>
+            <time datetime={item.data.date.toISOString()}>{item.data.date.toLocaleDateString('ru-RU')}</time>
+            <h3>{item.data.title}</h3><p class="muted">{item.data.summary ?? 'Подробнее о новости'}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
 </BaseLayout>
+
+<style>
+  .hero { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(240px, .7fr); gap: 2rem; align-items: center; padding-top: 4rem; padding-bottom: 3rem; }
+  .hero h1 { max-width: 15ch; font-size: clamp(2.5rem, 6vw, 4.2rem); margin: .4rem 0 1rem; }
+  .hero-note { padding: 1.5rem; border-left: 3px solid var(--accent); background: var(--soft); }
+  .hero-note h2 { font-size: 1.25rem; }
+  .actions { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1.5rem; }
+  .home-copy { padding-bottom: 1rem; }
+  .section { margin-top: 3rem; }
+  .section-head { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin-bottom: 1rem; }
+  .section-head h2 { margin: .2rem 0 0; }
+  .age-card h3 { margin-top: 0; }
+  .age-card p { margin-bottom: .8rem; }
+  time { color: var(--muted); font-size: .85rem; }
+  @media (max-width: 760px) { .hero { grid-template-columns: 1fr; padding-top: 2.5rem; } }
+</style>

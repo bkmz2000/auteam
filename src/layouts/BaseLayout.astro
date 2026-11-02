@@ -1,127 +1,128 @@
 ---
+import { getEntry } from 'astro:content';
+
 interface Props {
   title: string;
   description?: string;
 }
 
-const { title, description = "Платформа для нейроотличных детей, подростков, взрослых и их близких" } = Astro.props;
+const { title, description = 'Сообщество нейроотличных людей, специалистов и их близких.' } = Astro.props;
+const settings = await getEntry('settings', 'site');
+const siteName = settings?.data.siteName ?? settings?.data.organizationName ?? 'Нейроотличные нейроотличным';
+const nav = settings?.data.nav?.length ? settings.data.nav : [
+  { label: 'Главная', href: '/' },
+  { label: 'О нас', href: '/about' },
+  { label: 'Детям', href: '/children' },
+  { label: 'Подросткам', href: '/teens' },
+  { label: 'Взрослым', href: '/adults' },
+  { label: 'Родителям', href: '/parents' },
+  { label: 'Педагоги', href: '/teachers' },
+  { label: 'Материалы', href: '/materials' },
+  { label: 'Новости', href: '/news' },
+  { label: 'Контакты', href: '/contacts' },
+];
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title} | Нейроотличные нейроотличным</title>
+    <title>{title} · {siteName}</title>
   </head>
   <body>
-    <header>
-      <nav>
-        <a href="/">Главная</a>
-        <a href="/about">О нас</a>
-        <a href="/courses">Курсы</a>
-        <a href="/teachers">Педагоги</a>
-        <a href="/materials">Материалы</a>
-        <a href="/news">Новости</a>
-        <a href="/feedback">Отзывы</a>
-        <a href="/join">Хочу в команду</a>
-        <a href="/contacts">Контакты</a>
-      </nav>
+    <a class="skip-link" href="#main">Перейти к содержимому</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label={`${siteName} — главная`}>
+          <span class="brand-mark" aria-hidden="true">Н</span>
+          <span>{siteName}</span>
+        </a>
+        <nav aria-label="Основная навигация">
+          {nav.map((item) => (
+            <a href={item.href} aria-current={path === item.href ? 'page' : undefined}>{item.label}</a>
+          ))}
+        </nav>
+      </div>
     </header>
-
-    <main>
-      <slot />
-    </main>
-
-    <footer>
-      <p>&copy; 2024 Нейроотличные нейроотличным</p>
+    <main id="main"><slot /></main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p>{settings?.data.footerDescription ?? 'Поддержка, занятия и сообщество — вместе.'}</p>
+        <div class="footer-links">
+          <a href="/join">Присоединиться</a>
+          <a href="/support">Поддержать</a>
+          <a href="/contacts">Контакты</a>
+          <a href="/admin/">Редактор сайта</a>
+        </div>
+        <small>© {new Date().getFullYear()} {siteName}</small>
+      </div>
     </footer>
   </body>
 </html>
 
 <style is:global>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  :root {
+    color-scheme: light;
+    --bg: #fdfcf9;
+    --surface: #ffffff;
+    --border: #e8e4df;
+    --text: #1a1a1a;
+    --muted: #6b6560;
+    --accent: #a86d47;
+    --soft: #f4f1ec;
+    --content: 1120px;
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    background: var(--bg);
   }
-
-  body {
-    font-family: system-ui, -apple-system, sans-serif;
-    line-height: 1.6;
-    color: #333;
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; line-height: 1.65; }
+  a { color: var(--accent); }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .skip-link { position: absolute; top: -5rem; left: 1rem; z-index: 100; background: var(--text); color: white; padding: .7rem 1rem; }
+  .skip-link:focus { top: 1rem; }
+  .site-header { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--border); }
+  .header-inner { max-width: var(--content); margin: auto; padding: .75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .brand { display: flex; align-items: center; gap: .65rem; color: var(--text); text-decoration: none; font-weight: 700; }
+  .brand-mark { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--text); color: white; }
+  nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .2rem; }
+  nav a { padding: .45rem .6rem; border-radius: .5rem; color: var(--muted); text-decoration: none; font-size: .9rem; }
+  nav a:hover, nav a[aria-current="page"] { background: var(--soft); color: var(--text); }
+  main { min-height: 60vh; }
+  .container { max-width: var(--content); margin: 0 auto; padding: 0 1rem; }
+  .site-footer { margin-top: 4rem; border-top: 1px solid var(--border); background: var(--surface); }
+  .footer-inner { max-width: var(--content); margin: auto; padding: 2rem 1rem; display: grid; grid-template-columns: 1fr auto; gap: .75rem 2rem; color: var(--muted); }
+  .footer-inner p { margin: 0; max-width: 50ch; }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+  .footer-links a { color: var(--muted); }
+  .footer-inner small { grid-column: 1 / -1; }
+  h1, h2, h3 { line-height: 1.2; color: var(--text); }
+  .page-head { padding: 3rem 0 1.5rem; }
+  .page-head h1 { font-size: clamp(2rem, 5vw, 3.3rem); margin: .35rem 0 .8rem; }
+  .lead { max-width: 68ch; color: var(--muted); font-size: 1.15rem; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 1rem; }
+  .card { display: block; padding: 1.35rem; border: 1px solid var(--border); border-radius: 1rem; background: var(--surface); color: inherit; text-decoration: none; }
+  .card:hover { border-color: var(--accent); box-shadow: 0 8px 24px rgb(26 26 26 / 7%); }
+  .muted { color: var(--muted); }
+  .prose { max-width: 72ch; }
+  .prose p, .prose ul, .prose ol { color: var(--muted); }
+  .prose h2 { margin-top: 2rem; }
+  .button { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--accent); border-radius: .7rem; padding: .75rem 1.1rem; background: var(--accent); color: white; font-weight: 700; text-decoration: none; }
+  .button.secondary { background: transparent; color: var(--accent); }
+  @media (max-width: 760px) {
+    .header-inner { align-items: flex-start; flex-direction: column; }
+    nav { justify-content: flex-start; }
+    nav a { padding: .4rem .5rem; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .footer-inner small { grid-column: auto; }
   }
-
-  header {
-    background: #f5f5f5;
-    padding: 1rem;
-  }
-
-  nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  nav a {
-    color: #333;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-  }
-
-  nav a:hover {
-    background: #e0e0e0;
-  }
-
-  main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-  }
-
-  footer {
-    background: #f5f5f5;
-    padding: 2rem;
-    text-align: center;
-    margin-top: 4rem;
-  }
-
-  h1, h2, h3 {
-    margin-bottom: 1rem;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-  }
-
-  p {
-    margin-bottom: 1rem;
-  }
-
-  a {
-    color: #0066cc;
-  }
-
-  .button {
-    display: inline-block;
-    background: #0066cc;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    text-decoration: none;
-    margin-top: 1rem;
-  }
-
-  .button:hover {
-    background: #0052a3;
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
   }
 </style>

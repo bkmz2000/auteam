@@ -1,43 +1,44 @@
-# Astro Starter Kit: Minimal
+# Auteam website
+
+Auteam is a static Astro site with Decap CMS/DecapBridge for browser-based content editing. It uses its own Auteam pages and visual design; Bronner is only the technology reference.
+
+## Local development
+
+Requirements: Node.js `>=22.12.0` and npm.
 
 ```sh
-npm create astro@latest -- --template minimal
+npm ci
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The CMS admin is at `/admin/`. The generated Decap bundle assets are copied from `node_modules` before development and builds. CMS login requires Auteam's DecapBridge site configuration.
 
-## 🚀 Project Structure
+## Build
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```sh
+npm run build
+npm run preview
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Astro builds static files into `dist/`; no Cloudflare Worker or Wrangler output is used. `postbuild` generates `dist/admin/config.yml`. Set `DECAPBRIDGE_SITE_ID` in the production build environment to the site's own DecapBridge ID. Without it, the build emits a warning and writes `SETUP_REQUIRED`; CMS login is not ready for production.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Content and CMS
 
-Any static assets, like images, can be placed in the `public/` directory.
+- Content schemas and readers: `src/content.config.ts`
+- Published content: `src/content/`
+- DecapBridge config template: `scripts/config.template.yml`
+- CMS config generator: `scripts/build-cms-config.mjs`
+- Admin shell: `public/admin/index.html`
+- CMS writes to `src/content/` and uploads to `public/images/`.
+- CMS is configured to commit to Git branch `main`; the VPS build/webhook must use that same branch.
+- `legacy-content/` is an archived copy of the old duplicated content tree and is not loaded or published.
 
-## 🧞 Commands
+Do not put GitHub tokens, OAuth secrets, or other credentials in the CMS config or source tree. DecapBridge authorization and webhook credentials must be created separately for Auteam; do not reuse Bronner's credentials or deploy target.
 
-All commands are run from the root of the project, from a terminal:
+The latest full `npm audit` still reports 27 moderate advisories in Decap CMS transitive rich-text/backend packages; there are no high or critical advisories after upgrading Astro and removing the optional local server. The suggested forced CMS downgrade is not applied because it may change editor behavior; recheck for an upstream compatible fix. (The static-site-only `npm audit --omit=dev` is clean, but the Decap assets are also published under `/admin/`.)
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## VPS deployment status
 
-## 👀 Want to learn more?
+The deploy destination is intentionally not hard-coded. Before deployment, confirm the new VPS SSH host/alias and target directory, then configure the VPS to build this checkout from branch `main` and serve `dist/` through its web server or shared ingress. The old Wrangler config was removed because it pointed to a Worker entry that the static Astro build does not create.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Before public launch, verify the email and Telegram links in `src/content/settings/site.md`, confirm current course prices/availability, and obtain permission for any testimonials marked public. The previous fake contact form was removed because it did not submit messages.

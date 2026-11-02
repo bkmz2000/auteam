@@ -2,20 +2,28 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-const teachers = await getCollection('teachers');
+const teachers = (await getCollection('teachers')).filter((teacher) => teacher.data.isActive);
 ---
-
 <BaseLayout title="Педагоги">
-  <h1>Наши педагоги</h1>
-  <p>Выберите педагога, чтобы узнать подробнее о его опыте.</p>
-
-  <div class="teachers-grid">
+  <section class="container page-head">
+    <p class="eyebrow">Команда</p><h1>Педагоги и участники</h1>
+    <p class="lead">Познакомьтесь с командой и её подходами. Решение о занятиях принимается вместе с участником.</p>
+  </section>
+  <section class="container card-grid">
     {teachers.map((teacher) => (
-      <a href={`/teachers/${teacher.data.slug}`} class="teacher-card">
+      <a class="card" href={`/teachers/${teacher.data.slug?.trim() || teacher.id}`}>
+        {teacher.data.photos?.[0] && <img class="teacher-photo" src={teacher.data.photos[0]} alt="" loading="lazy" />}
         <h2>{teacher.data.name}</h2>
-        <p>{teacher.data.languages?.join(', ')}</p>
-        <p>{teacher.data.totalExperience}</p>
+        {teacher.data.totalExperience && <p class="muted">{teacher.data.totalExperience} опыта</p>}
+        <p class="muted">{teacher.data.languages.join(' · ')}</p>
+        <p>{teacher.data.areasOfWork.slice(0, 3).join(' · ')}</p>
+        <span>Подробнее →</span>
       </a>
     ))}
-  </div>
+  </section>
+  {teachers.length === 0 && <p class="container muted">Профили команды скоро появятся.</p>}
 </BaseLayout>
+
+<style>
+  .teacher-photo { width: 4.5rem; height: 4.5rem; object-fit: cover; border-radius: 50%; }
+</style>

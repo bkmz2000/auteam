@@ -1,60 +1,28 @@
-# Agents Documentation
+# Auteam project notes
 
-## Project Overview
+## Architecture
 
-**Project:** Auteam - Astro-based website with Decap CMS
-**Location:** `/home/rennorb/Documents/auteam/auteam-fresh/`
-**Framework:** Astro v5.18.1 with Cloudflare adapter
-**CMS:** Decap CMS v3.11.0 (formerly Netlify CMS)
+- Astro static site; production output is `dist/` and is served by a VPS web server.
+- Decap CMS/DecapBridge editor is at `/admin/`.
+- Astro content collections are defined in `src/content.config.ts` and read from `src/content/`.
+- Decap writes to the same `src/content/` tree; image uploads go to `public/images/`.
+- CMS commits to GitHub branch `main`; deployment must build that same branch.
+- `legacy-content/` is an unserved archive. Do not add new content there.
 
-## Key Files
+## Commands
 
-| Purpose | Path |
-|---------|------|
-| CMS Config | `public/admin/config.yml` |
-| Admin Entry | `public/admin/index.html` |
-| Astro Config | `astro.config.mjs` |
-| Content (Astro) | `src/content/` |
-| Pages | `src/pages/` |
-| API Auth | `src/pages/api/auth.ts` |
-| API Callback | `src/pages/api/callback.ts` |
-
-## CMS Collections
-
-| Collection | Folder | Purpose |
-|------------|--------|---------|
-| posts | `content/posts` | Blog posts |
-| news | `content/news` | News items |
-| categories | `content/categories` | Course categories |
-| courses | `content/courses` | Course listings |
-| feedback | `content/feedback` | Reviews/testimonials |
-| pages | `content/pages` | Static pages |
-| settings | `content/settings` | Site settings |
-
-## Common Tasks
-
-### Adding a WYSIWYG Editor
-Decap CMS uses markdown widgets with a "Visual" mode that provides WYSIWYG editing. To enhance the editor:
-1. The markdown widget in Decap CMS v3 has built-in visual/rich text editing
-2. Users click "Visual" tab in the editor to switch from raw markdown to WYSIWYG
-3. No additional packages needed - it's built into decap-cms-app
-
-### Running the Project
-```bash
-cd /home/rennorb/Documents/auteam/auteam-fresh
-npm run dev      # Development server
-npm run build    # Production build
-npm run preview  # Preview production build
+```sh
+npm ci
+npm run dev
+npm run build
+npm run preview
 ```
 
-### Deploy to Cloudflare
-```bash
-npm run deploy   # Deploys to Cloudflare Workers via Wrangler
-```
+`npm run build` creates a static site. It does not create a Cloudflare Worker. `postbuild` generates the production CMS config in `dist/admin/config.yml`; production CMS login requires `DECAPBRIDGE_SITE_ID` from Auteam's own DecapBridge site.
 
-## Tech Stack
+## Editing guidance
 
-- **Astro 5.18.1** - Static site generator
-- **@astrojs/cloudflare** - Cloudflare Workers adapter
-- **decap-cms-app 3.11.0** - Content management system
-- **Wrangler 4.78.0** - Cloudflare Workers CLI
+- Keep CMS field names compatible with `src/content.config.ts` and the Astro templates that render them.
+- Keep editor-written content and images on the `src/content/` and `public/images/` paths.
+- Do not add credentials to tracked CMS config. Do not reuse Bronner credentials, webhook, SSH host, or deployment path.
+- Auteam has its own site structure and design; Bronner is a technology reference only.

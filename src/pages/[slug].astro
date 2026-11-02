@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import PageContent from '../components/PageContent.astro';
+import { ageGroups, supportsAgeGroup } from '../lib/content';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  return pages
+    .filter((page) => page.id !== 'home')
+    .map((page) => ({
+      params: { slug: page.data.slug?.trim() || page.id },
+      props: { page },
+    }));
+}
+
+const { page } = Astro.props;
+const group = ageGroups.find((item) => item.id === page.id);
+const allCourses = await getCollection('courses');
+const courses = group
+  ? allCourses.filter((course) => course.data.isActive && supportsAgeGroup(course.data.ageGroup, group.id))
+  : [];
+const materials = page.id === 'materials' ? await getCollection('materials') : [];
+const allFeedback = await getCollection('feedback');
+const feedback = allFeedback.filter((item) => item.data.isPublic);
+---
+<PageContent page={page} ageGroup={group?.id} courses={courses} materials={materials} feedback={feedback} />

@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const materials = await getCollection('materials');
+  return materials.map((item) => ({
+    params: { slug: item.data.slug?.trim() || item.id },
+    props: { item },
+  }));
+}
+
+const { item } = Astro.props;
+const { Content } = await render(item);
+---
+<BaseLayout title={item.data.title} description={item.data.description}>
+  <article class="container">
+    <header class="page-head">
+      <a href="/materials">← Все материалы</a>
+      {item.data.publishedDate && <p class="eyebrow">{item.data.publishedDate.toLocaleDateString('ru-RU')}</p>}
+      <h1>{item.data.title}</h1>
+      {item.data.description && <p class="lead">{item.data.description}</p>}
+      {item.data.author && <p class="muted">Автор: {item.data.author}</p>}
+    </header>
+    <div class="prose"><Content /></div>
+    {item.data.attachments.length > 0 && (
+      <section class="attachments">
+        <h2>Файлы и ссылки</h2>
+        <ul>{item.data.attachments.map((file) => <li><a href={file.url}>{file.title}</a></li>)}</ul>
+      </section>
+    )}
+  </article>
+</BaseLayout>
+
+<style>
+  .attachments { margin: 2rem 0; padding: 1.25rem; border: 1px solid var(--border); border-radius: 1rem; background: var(--surface); }
+</style>

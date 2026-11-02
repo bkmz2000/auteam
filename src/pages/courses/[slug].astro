@@ -1,23 +1,49 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { courseDuration, coursePrice, hasConvertedPrice, plainText } from '../../lib/content';
 
-export function getStaticPaths() {
-  return [
-    { params: { slug: 'accompaniment' } },
-    { params: { slug: 'tutoring' } },
-    { params: { slug: 'support-groups' } },
-    { params: { slug: 'creative-workshops' } },
-    { params: { slug: 'social-training' } },
-    { params: { slug: 'reading-club' } },
-    { params: { slug: 'peer-consulting' } },
-  ];
+export async function getStaticPaths() {
+  const courses = await getCollection('courses');
+  return courses.filter((course) => course.data.isActive).map((course) => ({
+    params: { slug: course.data.slug?.trim() || course.id },
+    props: { course },
+  }));
 }
----
 
-<BaseLayout title="Курс">
-  <a href="/courses">&larr; Все курсы</a>
-  <h1>Сопровождение в обучении</h1>
-  <p>Цена: от 1500 ₽ / 7000 ֏</p>
-  <p>Длительность: до 2 часов</p>
-  <a href="/contacts">Записаться</a>
+const { course } = Astro.props;
+const { Content } = await render(course);
+---
+<BaseLayout title={course.data.name} description={plainText(course.data.description)}>
+  <article class="container">
+    <header class="page-head">
+      <a href="/courses">← Все занятия</a>
+      <h1>{course.data.name}</h1>
+      {course.data.description && <p class="lead">{plainText(course.data.description)}</p>}
+      <p><strong>{coursePrice(course.data)}</strong>{courseDuration(course.data) && <span class="muted"> · {courseDuration(course.data)}</span>}</p>
+      {course.data.teacherName && <p class="muted">Педагог: {course.data.teacherName}</p>}
+      {hasConvertedPrice(course.data) && <p class="muted price-note">* Курс примерный, может отличаться.</p>}
+      <a class="button" href={course.data.signUpUrl || '/contacts'}>Записаться</a>
+    </header>
+    {course.data.photo?.src && <img class="course-photo" src={course.data.photo.src} alt={course.data.photo.alt ?? course.data.name} />}
+    {(course.data.format?.type || course.data.format?.minAge || course.data.format?.maxAge || course.data.format?.lessonsPerWeek || course.data.schedule?.days || course.data.schedule?.time || course.data.schedule?.location) && (
+      <dl class="course-facts">
+        {course.data.format?.type && <><dt>Формат</dt><dd>{course.data.format.type}</dd></>}
+        {(course.data.format?.minAge || course.data.format?.maxAge) && <><dt>Возраст</dt><dd>{course.data.format.minAge ?? '—'}–{course.data.format.maxAge ?? '—'}</dd></>}
+        {course.data.format?.maxStudents && <><dt>Размер группы</dt><dd>до {course.data.format.maxStudents} участников</dd></>}
+        {course.data.format?.lessonsPerWeek && <><dt>Занятий в неделю</dt><dd>{course.data.format.lessonsPerWeek}</dd></>}
+        {course.data.schedule?.days && <><dt>Расписание</dt><dd>{course.data.schedule.days}{course.data.schedule.time ? ` · ${course.data.schedule.time}` : ''}</dd></>}
+        {course.data.schedule?.location && <><dt>Место</dt><dd>{course.data.schedule.location}</dd></>}
+      </dl>
+    )}
+    <div class="prose"><Content /></div>
+  </article>
 </BaseLayout>
+
+<style>
+  .course-photo { width: min(100%, 760px); height: auto; border-radius: 1rem; }
+  .price-note { font-size: .85rem; }
+  .course-facts { max-width: 45rem; display: grid; grid-template-columns: minmax(8rem, auto) 1fr; gap: .35rem 1rem; margin: 1.5rem 0; }
+  .course-facts dt { color: var(--muted); }
+  .course-facts dd { margin: 0; }
+</style>
