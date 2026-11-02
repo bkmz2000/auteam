@@ -6,7 +6,7 @@
 - Decap CMS/DecapBridge editor is at `/admin/`.
 - Astro content collections are defined in `src/content.config.ts` and read from `src/content/`.
 - Decap writes to the same `src/content/` tree; image uploads go to `public/images/`.
-- CMS commits to GitHub branch `main`; deployment must build that same branch.
+- CMS commits to GitHub branch `auteam-test`; deployment must build that same branch.
 - `legacy-content/` is an unserved archive. Do not add new content there.
 
 ## Commands

@@ -2,7 +2,7 @@
 backend:
   name: git-gateway
   repo: bkmz2000/auteam
-  branch: main
+  branch: auteam-test
   identity_url: https://auth.decapbridge.com/sites/3469b5b9-7a86-4682-b923-9d6d1b91fa02
   gateway_url: https://gateway.decapbridge.com
   commit_messages:
