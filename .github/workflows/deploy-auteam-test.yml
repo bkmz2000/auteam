@@ -1,0 +1,86 @@
+name: Deploy Auteam test site
+
+on:
+  push:
+    branches:
+      - auteam-test
+
+permissions:
+  contents: read
+
+concurrency:
+  group: auteam-test-deploy
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out deployment branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static site
+        env:
+          DECAPBRIDGE_SITE_ID: ${{ vars.DECAPBRIDGE_SITE_ID }}
+        run: |
+          test -n "$DECAPBRIDGE_SITE_ID"
+          npm run build
+
+      - name: Verify generated CMS configuration
+        run: |
+          grep -Fq 'branch: auteam-test' dist/admin/config.yml
+          grep -Fq 'site_url: https://auteam-test.duckdns.org' dist/admin/config.yml
+          grep -Fq 'identity_url: https://auth.decapbridge.com/sites/' dist/admin/config.yml
+          ! grep -q 'SETUP_REQUIRED' dist/admin/config.yml
+
+      - name: Install deployment SSH credentials
+        env:
+          AUTEAM_DEPLOY_KEY: ${{ secrets.AUTEAM_DEPLOY_KEY }}
+          AUTEAM_DEPLOY_KNOWN_HOSTS: ${{ vars.AUTEAM_DEPLOY_KNOWN_HOSTS }}
+        run: |
+          test -n "$AUTEAM_DEPLOY_KEY"
+          test -n "$AUTEAM_DEPLOY_KNOWN_HOSTS"
+          install -d -m 0700 "$HOME/.ssh"
+          printf '%s\n' "$AUTEAM_DEPLOY_KEY" > "$HOME/.ssh/id_ed25519"
+          printf '%s\n' "$AUTEAM_DEPLOY_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
+          chmod 0600 "$HOME/.ssh/id_ed25519" "$HOME/.ssh/known_hosts"
+
+      - name: Upload and atomically activate release
+        env:
+          AUTEAM_DEPLOY_HOST: ${{ vars.AUTEAM_DEPLOY_HOST }}
+        run: |
+          set -euo pipefail
+          test -n "$AUTEAM_DEPLOY_HOST"
+          [[ "$GITHUB_SHA" =~ ^[0-9a-f]{40}$ ]]
+          release="/srv/auteam/releases/$GITHUB_SHA"
+          user_host="auteam-deploy@$AUTEAM_DEPLOY_HOST"
+          ssh_opts=(-i "$HOME/.ssh/id_ed25519" -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes)
+          rsync_ssh="ssh -i $HOME/.ssh/id_ed25519 -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes"
+
+          "${ssh_opts[@]}" "$user_host" "mkdir -p '$release'"
+          rsync -az --delete --chmod=D755,F644 -e "$rsync_ssh" dist/ "$user_host:$release/"
+          "${ssh_opts[@]}" "$user_host" "bash -s -- '$GITHUB_SHA'" < scripts/deploy/activate-release.sh
+
+      - name: Verify deployed site
+        run: |
+          for attempt in {1..12}; do
+            if curl --fail --silent --show-error https://auteam-test.duckdns.org/admin/config.yml -o /tmp/auteam-live-config.yml; then
+              break
+            fi
+            sleep 5
+          done
+          grep -Fq 'branch: auteam-test' /tmp/auteam-live-config.yml
+          grep -Fq 'site_url: https://auteam-test.duckdns.org' /tmp/auteam-live-config.yml
